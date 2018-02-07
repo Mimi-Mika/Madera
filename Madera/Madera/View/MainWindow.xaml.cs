@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Madera.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,15 @@ namespace Madera
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (true)
+            {
+                Home home = new Home();
+                this.Content = home;
+            }
         }
     }
 }
