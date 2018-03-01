@@ -24,6 +24,7 @@ namespace Madera.View
         {
             InitializeComponent();
 
+            //modif Eliott
         }
     }
 }
