@@ -23,6 +23,7 @@ namespace Madera.View
         public Home()
         {
             InitializeComponent();
+
         }
     }
 }
