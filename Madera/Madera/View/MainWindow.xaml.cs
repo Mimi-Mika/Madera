@@ -31,8 +31,8 @@ namespace Madera
         {
             if (true)
             {
-                Home home = new Home();
-                this.Content = home;
+                Apercu3D windows3D = new Apercu3D();
+                this.Content = windows3D;
             }
         }
 
