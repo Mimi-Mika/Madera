@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using MahApps.Metro.Controls;
 using System.Windows.Shapes;
 
 namespace Madera
@@ -19,7 +20,7 @@ namespace Madera
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         public MainWindow()
         {
@@ -33,6 +34,11 @@ namespace Madera
                 Home home = new Home();
                 this.Content = home;
             }
+        }
+
+        private void ConnectionClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

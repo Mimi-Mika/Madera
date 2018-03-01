@@ -1,11 +1,27 @@
-﻿<Window x:Class="Madera.MainWindow"
+﻿<controls:MetroWindow
+        x:Class="Madera.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Madera"
+        xmlns:ignore="http://www.galasoft.ch/ignore"
         mc:Ignorable="d"
         Title="MainWindow" Height="451.42" Width="584.659" WindowState="Maximized">
+    
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Click="ConnectionClick">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconModern Width="24" Height="24" Kind="Cupcake" />
+                    <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Connection..." />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    
     <Grid>
         <Grid Margin="140,46,140,23">
             <Rectangle Stroke="Black" Margin="0,136,0,0"/>
@@ -20,4 +36,4 @@
         <Image Height="72" VerticalAlignment="Top" HorizontalAlignment="Right" Width="77" Source="/Madera;component/Pictures/CESI-SMALL1000.png"/>
 
     </Grid>
-</Window>
+</controls:MetroWindow>
