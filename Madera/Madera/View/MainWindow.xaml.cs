@@ -31,7 +31,7 @@ namespace Madera
         {
             if (true)
             {
-                Apercu3D windows3D = new Apercu3D();
+                Vue2D windows3D = new Vue2D();
                 this.Content = windows3D;
             }
         }
