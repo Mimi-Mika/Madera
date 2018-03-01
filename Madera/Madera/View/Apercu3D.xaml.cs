@@ -89,12 +89,12 @@ namespace Madera.View
             MeshGeometry3D meshGround = new MeshGeometry3D();
             MeshGeometry3D meshInt = new MeshGeometry3D();
 
-            dessiner(meshGround, 0, 0, 100, 70, -0.2, -0.000000000001);
+            dessiner(meshGround, 0, 0, 100, 70, -0.2, -0.0001);
             dessiner(meshWall, 0, 0, 3, 70, 0, 25);    // gauche
             dessiner(meshWall, 0, 0, 100, 3, 0, 25);    // haut
             dessiner(meshWall, 99, 0, 100, 70, 0, 25);  // droite
             dessiner(meshWall, 0, 69, 100, 70, 0, 25);  // bas
-            dessiner(meshInt, 0, 29, 20, 30, 0, 25);    // 1er bout cloison  
+            dessiner(meshInt, 0, 29, 20, 30, 0, 25);    // 1er bout cloison
             dessiner(meshInt, 30, 29, 45, 30, 0, 25);   // 2eme bout cloison
             dessiner(meshInt, 20, 29, 30, 30, 20, 25);   // haut porte
             dessiner(meshInt, 44, 29, 45, 70, 0, 25);   // retour cloison
@@ -180,7 +180,6 @@ namespace Madera.View
 
         private void dessiner(MeshGeometry3D mesh, double xdeb, double zdeb, double xfin, double zfin, double hdeb, double hfin)
         {
-
 
             double xDeb = xdeb / 10;
             double zDeb = zdeb / 10;
