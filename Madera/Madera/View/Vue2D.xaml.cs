@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Madera.View
         public Vue2D()
         {
             InitializeComponent();
+            //test maj github
             CreateEmptyFloorPlan();
         }
 
@@ -53,7 +55,7 @@ namespace Madera.View
             {
                 for (int j = 0; j < grid2D.ColumnDefinitions.Count; j++)
                 {
-
+                    //TODO faire des templates de button
                     Button MyControl1 = new Button();
                     MyControl1.Content = ("x" + (j + 1).ToString() + " y" + (i + 1).ToString());
                     MyControl1.Name = "Button" + count.ToString();
@@ -61,6 +63,8 @@ namespace Madera.View
                     Grid.SetColumn(MyControl1, j);
                     Grid.SetRow(MyControl1, i);
                     MyControl1.Click += new RoutedEventHandler(btnClick);
+                    MyControl1.PreviewMouseDown += new MouseButtonEventHandler(btnDown);
+                    MyControl1.PreviewMouseUp += new MouseButtonEventHandler(btnUp);
                     //MyControl1.MouseEnter += new System.Windows.Input.MouseEventArgs(mouseEnter);
                     grid2D.Children.Add(MyControl1);
 
@@ -81,6 +85,8 @@ namespace Madera.View
 
             //} 
         }
+
+
         private void btnClick(object sender, RoutedEventArgs e)
         {
             //Button obj = ((FrameworkElement)sender).DataContext as Button;
@@ -109,17 +115,7 @@ namespace Madera.View
 
         }
 
-        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-        }
-
-        private void mouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void mouseEnter(object sender, MouseEventArgs e)
         {
             //if ((Mouse)e.Button == MouseButtons.Left)
             //{
@@ -127,9 +123,30 @@ namespace Madera.View
             //}
         }
 
-        private void btnPorte_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void btnUp(object sender, MouseButtonEventArgs e)
         {
+            
+            int row = Grid.GetRow(sender as Button);
+            int column = Grid.GetColumn(sender as Button);
+            MessageBox.Show("row " + row + " column " + column);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDown(object sender, MouseButtonEventArgs e)
+        {
+            //enregistre position en x et y du bouton
+            //int row = Grid.GetRow(sender as Button);
+            //int column = Grid.GetColumn(sender as Button);
+            //MessageBox.Show("row " + row + " column " + column);
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Apercu3D windows3D = new Apercu3D();
+            ((MetroWindow)this.Parent).Content = windows3D;
         }
     }
 }

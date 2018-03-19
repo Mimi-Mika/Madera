@@ -23,15 +23,15 @@
     </controls:MetroWindow.RightWindowCommands>
     
     <Grid>
-        <Grid Margin="140,46,140,23">
-            <Rectangle Stroke="Black" Margin="0,136,0,0"/>
-            <TextBox x:Name="txtUser" TextWrapping="Wrap" Height="25" VerticalAlignment="Bottom" Margin="56,0,56,146"/>
-            <Button x:Name="btnLogin" Content="Login" Click="btnLogin_Click" Height="34" VerticalAlignment="Top" Margin="56,298,0,0" HorizontalAlignment="Left" Width="185"/>
-            <CheckBox Content="Conserver mon identifiant" Margin="56,278,56,58"/>
-            <Label Content="Identifiant :" HorizontalAlignment="Left" Margin="56,154,0,0" VerticalAlignment="Top" Width="116"/>
-            <Label Content="Password :" HorizontalAlignment="Left" Margin="56,217,0,0" VerticalAlignment="Top" Width="116"/>
+        <Grid Margin="0,46,0,23">
+            <Rectangle Stroke="Black" Margin="0,136,0,0" Width="300" Height="220" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtUser" TextWrapping="Wrap" Height="25" VerticalAlignment="Center" Margin="0,65,0,0" Width="185" HorizontalAlignment="Center"/>
+            <Button x:Name="btnLogin" Content="Login" Click="btnLogin_Click" Height="34" VerticalAlignment="Center" Margin="0,298,0,0" HorizontalAlignment="Center" Width="185"/>
+            <CheckBox Content="Conserver mon identifiant" Margin="0,220,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Content="Identifiant :" HorizontalAlignment="Center" Margin="0,0,56,0" VerticalAlignment="Center" Width="116"/>
+            <Label Content="Password :" HorizontalAlignment="Center" Margin="0,120,56,0" VerticalAlignment="Center" Width="116"/>
             <Image HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="297" Source="/Madera;component/Pictures/logoMadera2000.jpg" Stretch="UniformToFill"/>
-            <PasswordBox HorizontalAlignment="Left" Margin="56,243,0,0" VerticalAlignment="Top" Width="185" Height="30"/>
+            <PasswordBox HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Center" Width="185" Height="21"/>
         </Grid>
         <Image Height="72" VerticalAlignment="Top" HorizontalAlignment="Right" Width="77" Source="/Madera;component/Pictures/CESI-SMALL1000.png"/>
 
