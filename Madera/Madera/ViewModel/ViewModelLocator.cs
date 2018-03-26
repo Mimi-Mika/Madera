@@ -56,7 +56,7 @@ namespace Madera.ViewModel
         
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            //TODO Clear the ViewModels
         }
     }
 }
