@@ -81,6 +81,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\cFenetrePlan.cs" />
+    <Compile Include="Model\cMaisonPlan.cs" />
+    <Compile Include="Model\cMurIntPlan.cs" />
+    <Compile Include="Model\cMurExtPlan.cs" />
+    <Compile Include="Model\cPortePlan.cs" />
+    <Compile Include="Model\cSolPlan.cs" />
     <Compile Include="View\Vue2D.xaml.cs">
       <DependentUpon>Vue2D.xaml</DependentUpon>
     </Compile>
@@ -150,8 +156,6 @@
   <ItemGroup>
     <Resource Include="Pictures\CESI-SMALL1000.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

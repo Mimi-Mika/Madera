@@ -17,6 +17,7 @@ namespace Madera.View
 {
     /// <summary>
     /// Logique d'interaction pour Vue2D.xaml
+    /// 
     /// </summary>
     public partial class Vue2D : Page
     {
@@ -30,6 +31,8 @@ namespace Madera.View
         {
             int col = 20;
             int lig = 15;
+
+
 
 
             // Fois 2 + 1 pour mur (ext et interieur)
