@@ -1,19 +1,6 @@
 ﻿using Madera.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using MahApps.Metro.Controls;
-using System.Windows.Shapes;
+using System.Windows;
 
 namespace Madera
 {
@@ -22,23 +9,19 @@ namespace Madera
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-            if (true)
-            {
+        private void btn_connexion_Click(object sender, RoutedEventArgs e) {
+            if(login.Text == "madera" && password.Password == "madera") {
                 Home home = new Home();
-                this.Content = home;
+                home.Show();
+                Close();
             }
-        }
-
-        private void ConnectionClick(object sender, RoutedEventArgs e)
-        {
-
+            else {
+                error_message.Content = "Login ou mot de passe incorrect !";
+            }
         }
     }
 }

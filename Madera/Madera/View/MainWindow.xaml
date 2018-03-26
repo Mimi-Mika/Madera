@@ -9,31 +9,21 @@
         xmlns:local="clr-namespace:Madera"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         mc:Ignorable="d"
-        Title="MainWindow" Height="451.42" Width="584.659" WindowState="Maximized">
-    
-    <controls:MetroWindow.RightWindowCommands>
-        <controls:WindowCommands>
-            <Button Click="ConnectionClick">
-                <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern Width="24" Height="24" Kind="Cupcake" />
-                    <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Connection..." />
-                </StackPanel>
-            </Button>
-        </controls:WindowCommands>
-    </controls:MetroWindow.RightWindowCommands>
-    
+        Title="MADERA" Height="800" Width="1280" WindowState="Maximized">
     <Grid>
-        <Grid Margin="140,46,140,23">
-            <Rectangle Stroke="Black" Margin="0,136,0,0"/>
-            <TextBox x:Name="txtUser" TextWrapping="Wrap" Height="25" VerticalAlignment="Bottom" Margin="56,0,56,146"/>
-            <Button x:Name="btnLogin" Content="Login" Click="btnLogin_Click" Height="34" VerticalAlignment="Top" Margin="56,298,0,0" HorizontalAlignment="Left" Width="185"/>
-            <CheckBox Content="Conserver mon identifiant" Margin="56,278,56,58"/>
-            <Label Content="Identifiant :" HorizontalAlignment="Left" Margin="56,154,0,0" VerticalAlignment="Top" Width="116"/>
-            <Label Content="Password :" HorizontalAlignment="Left" Margin="56,217,0,0" VerticalAlignment="Top" Width="116"/>
-            <Image HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="297" Source="/Madera;component/Pictures/logoMadera2000.jpg" Stretch="UniformToFill"/>
-            <PasswordBox HorizontalAlignment="Left" Margin="56,243,0,0" VerticalAlignment="Top" Width="185" Height="30"/>
-        </Grid>
-        <Image Height="72" VerticalAlignment="Top" HorizontalAlignment="Right" Width="77" Source="/Madera;component/Pictures/CESI-SMALL1000.png"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="640*"/>
+            <ColumnDefinition Width="633*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="White" Height="307" Margin="0,210,0,0" Stroke="#FF3D40B6" VerticalAlignment="Top" Grid.ColumnSpan="2" StrokeThickness="2" Width="383"/>
+        <Image Height="192" Margin="0,12,0,0" VerticalAlignment="Top" Source="/Madera;component/Pictures/logoMadera2000.jpg" Grid.ColumnSpan="2"/>
+        <Label x:Name="error_message" Content="" Margin="0,235,-4,0" VerticalAlignment="Top" Foreground="#FFC01515" Width="350" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="18" HorizontalContentAlignment="Center"/>
+        <Label Content="Identifiant :" Margin="0,290,0,0" VerticalAlignment="Top" Width="350" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+        <TextBox x:Name="login" controls:TextBoxHelper.ClearTextButton="True" Height="23" Margin="0,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+        <Label Content="Mot de passe :" Margin="0,366,0,0" VerticalAlignment="Top" Width="350" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+        <PasswordBox x:Name="password" controls:TextBoxHelper.ClearTextButton="True" Height="23" Margin="0,392,0,0" VerticalAlignment="Top" Width="350" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+        <Image Height="72" VerticalAlignment="Top" HorizontalAlignment="Right" Width="77" Source="/Madera;component/Pictures/CESI-SMALL1000.png" Margin="0,8,11.6,0" Grid.Column="1"/>
+        <Button x:Name="btn_connexion" Style="{StaticResource AccentedSquareButtonStyle}" Content="Connexion" Margin="0,455,0,0" VerticalAlignment="Top" Click="btn_connexion_Click" VerticalContentAlignment="Center" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" IsDefault="True" Width="90"/>
 
     </Grid>
 </controls:MetroWindow>
