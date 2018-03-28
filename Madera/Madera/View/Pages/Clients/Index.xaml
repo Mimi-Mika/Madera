@@ -31,15 +31,6 @@
             <iconPacks:PackIconModern Kind="BaseSelect" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="14" Height="14"  />
         </Button>
         <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Editer un client" HorizontalAlignment="Left" Margin="285,60,0,0" VerticalAlignment="Top" Width="207" Background="#CC2411DA" mah:ControlsHelper.ContentCharacterCasing="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Click="btn_edit_client"/>
-        <Grid x:Name="ClientList"  HorizontalAlignment="Left" Height="534" Margin="20,256,0,0" VerticalAlignment="Top" Width="1249">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="208*"/>
-                <ColumnDefinition Width="249*"/>
-                <ColumnDefinition Width="240*"/>
-                <ColumnDefinition Width="195*"/>
-                <ColumnDefinition Width="185*"/>
-                <ColumnDefinition Width="172*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
+        <DataGrid x:Name="ListeClient" HorizontalAlignment="Left" Height="503" Margin="21,260,0,0" VerticalAlignment="Top" Width="1225"/>
     </Grid>
 </Page>

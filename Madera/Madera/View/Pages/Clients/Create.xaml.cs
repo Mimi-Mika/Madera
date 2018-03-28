@@ -23,5 +23,10 @@ namespace Madera.View.Pages.Clients
             Tableau_de_bord tdb = new Tableau_de_bord();
             ((MetroWindow)this.Parent).Content = tdb;
         }
+
+        private void Click_btn_save(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

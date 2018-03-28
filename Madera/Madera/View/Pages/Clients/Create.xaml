@@ -43,7 +43,7 @@
         <Label Content="Surface (m²)" HorizontalAlignment="Left" Margin="1043,360,0,0" VerticalAlignment="Top" Width="150"/>
         <DatePicker HorizontalAlignment="Left" Margin="781,560,0,0" VerticalAlignment="Top" Width="200"/>
         <Label Content="Date  de remise des cléf souhaiter *" HorizontalAlignment="Left" Margin="780,530,0,0" VerticalAlignment="Top" Width="200"/>
-        <Button x:Name="btn_save" Style="{StaticResource AccentedSquareButtonStyle}" Content="Ajouter" HorizontalAlignment="Left" Margin="683,726,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal"/>
+        <Button x:Name="btn_save" Style="{StaticResource AccentedSquareButtonStyle}" Content="Ajouter" HorizontalAlignment="Left" Margin="683,726,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Click="Click_btn_save"/>
         <Button x:Name="btn_annuler" Style="{StaticResource AccentedSquareButtonStyle}" Content="Annuler" HorizontalAlignment="Left" Margin="483,726,0,0" VerticalAlignment="Top" Width="75" Background="#CCDA1F11" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Click="Click_btn_annuler"/>
     </Grid>
 </Page>
