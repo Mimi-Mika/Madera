@@ -1,4 +1,5 @@
-﻿using Madera.View;
+﻿using Madera.Model;
+using Madera.View;
 using MahApps.Metro.Controls;
 using System.Windows;
 
@@ -14,7 +15,12 @@ namespace Madera
         }
 
         private void btn_connexion_Click(object sender, RoutedEventArgs e) {
-            if(login.Text == "madera" && password.Password == "madera") {
+
+            DBEntities DB = new DBEntities();
+
+      
+
+            if (login.Text == "madera" && password.Password == "madera") {
                 Home home = new Home();
                 home.Show();
                 Close();
@@ -22,6 +28,9 @@ namespace Madera
             else {
                 error_message.Content = "Login ou mot de passe incorrect !";
             }
+
+
+
         }
     }
 }

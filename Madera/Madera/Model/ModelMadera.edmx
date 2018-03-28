@@ -1,0 +1,1288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=/bdd_madera.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="tel" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="mail" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Commercial">
+          <Key>
+            <PropertyRef Name="idCommercial" />
+          </Key>
+          <Property Name="idCommercial" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="tel" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="mail" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="mdp" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Couleur">
+          <Key>
+            <PropertyRef Name="idCouleur" />
+          </Key>
+          <Property Name="idCouleur" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="surCout" Type="real" />
+        </EntityType>
+        <EntityType Name="Empreinte">
+          <Key>
+            <PropertyRef Name="idEmpreinte" />
+          </Key>
+          <Property Name="idEmpreinte" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="longueur" Type="real" />
+          <Property Name="largeur" Type="real" />
+          <Property Name="idZoneMorte" Type="integer" />
+        </EntityType>
+        <EntityType Name="EtatCommande">
+          <Key>
+            <PropertyRef Name="idEtatCommande" />
+          </Key>
+          <Property Name="idEtatCommande" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Favori">
+          <Key>
+            <PropertyRef Name="idFavori" />
+          </Key>
+          <Property Name="idFavori" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="tailleSlot" Type="real" />
+        </EntityType>
+        <EntityType Name="Finition">
+          <Key>
+            <PropertyRef Name="idFinition" />
+          </Key>
+          <Property Name="idFinition" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="surCout" Type="real" />
+        </EntityType>
+        <EntityType Name="Gamme">
+          <Key>
+            <PropertyRef Name="idGamme" />
+          </Key>
+          <Property Name="idGamme" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="idFinition" Type="integer" />
+        </EntityType>
+        <EntityType Name="Maison">
+          <Key>
+            <PropertyRef Name="idMaison" />
+          </Key>
+          <Property Name="idMaison" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomMaison" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="idEmpreinte" Type="integer" />
+        </EntityType>
+        <EntityType Name="Maison_TypeDalle">
+          <Key>
+            <PropertyRef Name="idMaison" />
+            <PropertyRef Name="idTypeDalle" />
+          </Key>
+          <Property Name="historiquePrixM2" Type="real" />
+          <Property Name="idMaison" Type="integer" Nullable="false" />
+          <Property Name="idTypeDalle" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="idModule" />
+          </Key>
+          <Property Name="idModule" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="hauteur" Type="integer" />
+          <Property Name="largeur" Type="integer" />
+          <Property Name="prix" Type="real" />
+          <Property Name="idGamme" Type="integer" />
+          <Property Name="idCouleur" Type="integer" />
+          <Property Name="idType" Type="integer" />
+        </EntityType>
+        <EntityType Name="Module_Favori">
+          <Key>
+            <PropertyRef Name="idModule" />
+            <PropertyRef Name="idFavori" />
+          </Key>
+          <Property Name="distanceSol" Type="real" />
+          <Property Name="numSlot" Type="integer" />
+          <Property Name="idModule" Type="integer" Nullable="false" />
+          <Property Name="idFavori" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Module_Maison">
+          <Key>
+            <PropertyRef Name="idModule" />
+            <PropertyRef Name="idMaison" />
+          </Key>
+          <Property Name="posXDebut" Type="integer" />
+          <Property Name="posYDebut" Type="integer" />
+          <Property Name="posXFin" Type="integer" />
+          <Property Name="posYFin" Type="integer" />
+          <Property Name="distanceSol" Type="real" />
+          <Property Name="historiquePrixModule" Type="real" />
+          <Property Name="historiquePrixCouleur" Type="real" />
+          <Property Name="historiquePrixFinition" Type="real" />
+          <Property Name="idModule" Type="integer" Nullable="false" />
+          <Property Name="idMaison" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projet">
+          <Key>
+            <PropertyRef Name="idProjet" />
+          </Key>
+          <Property Name="idProjet" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="devisSynchro" Type="integer" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="prixFabrication" Type="real" />
+          <Property Name="prixComposant" Type="real" />
+          <Property Name="prixInstallation" Type="real" />
+          <Property Name="prixFinal" Type="real" />
+          <Property Name="reductionMarge" Type="real" />
+          <Property Name="numDevis" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="numFacture" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="numOF" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="numOM" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="kitMonte" Type="integer" />
+          <Property Name="idMaison" Type="integer" />
+          <Property Name="idClient" Type="integer" />
+        </EntityType>
+        <EntityType Name="Projet_Commercial">
+          <Key>
+            <PropertyRef Name="idProjet" />
+            <PropertyRef Name="idCommercial" />
+          </Key>
+          <Property Name="idProjet" Type="integer" Nullable="false" />
+          <Property Name="idCommercial" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projet_EtatCommande">
+          <Key>
+            <PropertyRef Name="idProjet" />
+            <PropertyRef Name="idEtatCommande" />
+          </Key>
+          <Property Name="dates" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="prix" Type="real" />
+          <Property Name="paiementValide" Type="integer" />
+          <Property Name="idProjet" Type="integer" Nullable="false" />
+          <Property Name="idEtatCommande" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeDalle">
+          <Key>
+            <PropertyRef Name="idTypeDalle" />
+          </Key>
+          <Property Name="idTypeDalle" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="prixM2" Type="real" />
+        </EntityType>
+        <EntityType Name="TypeModule">
+          <Key>
+            <PropertyRef Name="idType" />
+          </Key>
+          <Property Name="idType" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomType" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ZoneMorte">
+          <Key>
+            <PropertyRef Name="idZoneMorte" />
+          </Key>
+          <Property Name="idZoneMorte" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="longueur" Type="integer" />
+          <Property Name="largeur" Type="integer" />
+          <Property Name="coordonneeX" Type="integer" />
+          <Property Name="coordonneeY" Type="integer" />
+          <Property Name="idEmpreinte" Type="integer" />
+        </EntityType>
+        <Association Name="FK_Empreinte_0_0">
+          <End Role="ZoneMorte" Type="Self.ZoneMorte" Multiplicity="0..1" />
+          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZoneMorte">
+              <PropertyRef Name="idZoneMorte" />
+            </Principal>
+            <Dependent Role="Empreinte">
+              <PropertyRef Name="idZoneMorte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gamme_0_0">
+          <End Role="Finition" Type="Self.Finition" Multiplicity="0..1" />
+          <End Role="Gamme" Type="Self.Gamme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Finition">
+              <PropertyRef Name="idFinition" />
+            </Principal>
+            <Dependent Role="Gamme">
+              <PropertyRef Name="idFinition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maison_0_0">
+          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="0..1" />
+          <End Role="Maison" Type="Self.Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empreinte">
+              <PropertyRef Name="idEmpreinte" />
+            </Principal>
+            <Dependent Role="Maison">
+              <PropertyRef Name="idEmpreinte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maison_TypeDalle_0_0">
+          <End Role="TypeDalle" Type="Self.TypeDalle" Multiplicity="1" />
+          <End Role="Maison_TypeDalle" Type="Self.Maison_TypeDalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeDalle">
+              <PropertyRef Name="idTypeDalle" />
+            </Principal>
+            <Dependent Role="Maison_TypeDalle">
+              <PropertyRef Name="idTypeDalle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maison_TypeDalle_1_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
+          <End Role="Maison_TypeDalle" Type="Self.Maison_TypeDalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
+            </Principal>
+            <Dependent Role="Maison_TypeDalle">
+              <PropertyRef Name="idMaison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_0_0">
+          <End Role="TypeModule" Type="Self.TypeModule" Multiplicity="0..1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeModule">
+              <PropertyRef Name="idType" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_1_0">
+          <End Role="Couleur" Type="Self.Couleur" Multiplicity="0..1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Couleur">
+              <PropertyRef Name="idCouleur" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idCouleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_2_0">
+          <End Role="Gamme" Type="Self.Gamme" Multiplicity="0..1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gamme">
+              <PropertyRef Name="idGamme" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idGamme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Favori_0_0">
+          <End Role="Favori" Type="Self.Favori" Multiplicity="1" />
+          <End Role="Module_Favori" Type="Self.Module_Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Favori">
+              <PropertyRef Name="idFavori" />
+            </Principal>
+            <Dependent Role="Module_Favori">
+              <PropertyRef Name="idFavori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Favori_1_0">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Module_Favori" Type="Self.Module_Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="idModule" />
+            </Principal>
+            <Dependent Role="Module_Favori">
+              <PropertyRef Name="idModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Maison_0_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
+          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
+            </Principal>
+            <Dependent Role="Module_Maison">
+              <PropertyRef Name="idMaison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Maison_1_0">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="idModule" />
+            </Principal>
+            <Dependent Role="Module_Maison">
+              <PropertyRef Name="idModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_0_0">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="idClient" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_1_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="0..1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="idMaison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_Commercial_0_0">
+          <End Role="Commercial" Type="Self.Commercial" Multiplicity="1" />
+          <End Role="Projet_Commercial" Type="Self.Projet_Commercial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commercial">
+              <PropertyRef Name="idCommercial" />
+            </Principal>
+            <Dependent Role="Projet_Commercial">
+              <PropertyRef Name="idCommercial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_Commercial_1_0">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="1" />
+          <End Role="Projet_Commercial" Type="Self.Projet_Commercial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="idProjet" />
+            </Principal>
+            <Dependent Role="Projet_Commercial">
+              <PropertyRef Name="idProjet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_EtatCommande_0_0">
+          <End Role="EtatCommande" Type="Self.EtatCommande" Multiplicity="1" />
+          <End Role="Projet_EtatCommande" Type="Self.Projet_EtatCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EtatCommande">
+              <PropertyRef Name="idEtatCommande" />
+            </Principal>
+            <Dependent Role="Projet_EtatCommande">
+              <PropertyRef Name="idEtatCommande" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_EtatCommande_1_0">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="1" />
+          <End Role="Projet_EtatCommande" Type="Self.Projet_EtatCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="idProjet" />
+            </Principal>
+            <Dependent Role="Projet_EtatCommande">
+              <PropertyRef Name="idProjet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZoneMorte_0_0">
+          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="0..1" />
+          <End Role="ZoneMorte" Type="Self.ZoneMorte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empreinte">
+              <PropertyRef Name="idEmpreinte" />
+            </Principal>
+            <Dependent Role="ZoneMorte">
+              <PropertyRef Name="idEmpreinte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" store:Type="Tables" />
+          <EntitySet Name="Commercial" EntityType="Self.Commercial" store:Type="Tables" />
+          <EntitySet Name="Couleur" EntityType="Self.Couleur" store:Type="Tables" />
+          <EntitySet Name="Empreinte" EntityType="Self.Empreinte" store:Type="Tables" />
+          <EntitySet Name="EtatCommande" EntityType="Self.EtatCommande" store:Type="Tables" />
+          <EntitySet Name="Favori" EntityType="Self.Favori" store:Type="Tables" />
+          <EntitySet Name="Finition" EntityType="Self.Finition" store:Type="Tables" />
+          <EntitySet Name="Gamme" EntityType="Self.Gamme" store:Type="Tables" />
+          <EntitySet Name="Maison" EntityType="Self.Maison" store:Type="Tables" />
+          <EntitySet Name="Maison_TypeDalle" EntityType="Self.Maison_TypeDalle" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" store:Type="Tables" />
+          <EntitySet Name="Module_Favori" EntityType="Self.Module_Favori" store:Type="Tables" />
+          <EntitySet Name="Module_Maison" EntityType="Self.Module_Maison" store:Type="Tables" />
+          <EntitySet Name="Projet" EntityType="Self.Projet" store:Type="Tables" />
+          <EntitySet Name="Projet_Commercial" EntityType="Self.Projet_Commercial" store:Type="Tables" />
+          <EntitySet Name="Projet_EtatCommande" EntityType="Self.Projet_EtatCommande" store:Type="Tables" />
+          <EntitySet Name="TypeDalle" EntityType="Self.TypeDalle" store:Type="Tables" />
+          <EntitySet Name="TypeModule" EntityType="Self.TypeModule" store:Type="Tables" />
+          <EntitySet Name="ZoneMorte" EntityType="Self.ZoneMorte" store:Type="Tables" />
+          <AssociationSet Name="FK_Empreinte_0_0" Association="Self.FK_Empreinte_0_0">
+            <End Role="ZoneMorte" EntitySet="ZoneMorte" />
+            <End Role="Empreinte" EntitySet="Empreinte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gamme_0_0" Association="Self.FK_Gamme_0_0">
+            <End Role="Finition" EntitySet="Finition" />
+            <End Role="Gamme" EntitySet="Gamme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maison_0_0" Association="Self.FK_Maison_0_0">
+            <End Role="Empreinte" EntitySet="Empreinte" />
+            <End Role="Maison" EntitySet="Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maison_TypeDalle_0_0" Association="Self.FK_Maison_TypeDalle_0_0">
+            <End Role="TypeDalle" EntitySet="TypeDalle" />
+            <End Role="Maison_TypeDalle" EntitySet="Maison_TypeDalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maison_TypeDalle_1_0" Association="Self.FK_Maison_TypeDalle_1_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Maison_TypeDalle" EntitySet="Maison_TypeDalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_0_0" Association="Self.FK_Module_0_0">
+            <End Role="TypeModule" EntitySet="TypeModule" />
+            <End Role="Module" EntitySet="Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_1_0" Association="Self.FK_Module_1_0">
+            <End Role="Couleur" EntitySet="Couleur" />
+            <End Role="Module" EntitySet="Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_2_0" Association="Self.FK_Module_2_0">
+            <End Role="Gamme" EntitySet="Gamme" />
+            <End Role="Module" EntitySet="Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Favori_0_0" Association="Self.FK_Module_Favori_0_0">
+            <End Role="Favori" EntitySet="Favori" />
+            <End Role="Module_Favori" EntitySet="Module_Favori" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Favori_1_0" Association="Self.FK_Module_Favori_1_0">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Module_Favori" EntitySet="Module_Favori" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Maison_0_0" Association="Self.FK_Module_Maison_0_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Module_Maison" EntitySet="Module_Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Maison_1_0" Association="Self.FK_Module_Maison_1_0">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Module_Maison" EntitySet="Module_Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_0_0" Association="Self.FK_Projet_0_0">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_1_0" Association="Self.FK_Projet_1_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_Commercial_0_0" Association="Self.FK_Projet_Commercial_0_0">
+            <End Role="Commercial" EntitySet="Commercial" />
+            <End Role="Projet_Commercial" EntitySet="Projet_Commercial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_Commercial_1_0" Association="Self.FK_Projet_Commercial_1_0">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Projet_Commercial" EntitySet="Projet_Commercial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_EtatCommande_0_0" Association="Self.FK_Projet_EtatCommande_0_0">
+            <End Role="EtatCommande" EntitySet="EtatCommande" />
+            <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_EtatCommande_1_0" Association="Self.FK_Projet_EtatCommande_1_0">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZoneMorte_0_0" Association="Self.FK_ZoneMorte_0_0">
+            <End Role="Empreinte" EntitySet="Empreinte" />
+            <End Role="ZoneMorte" EntitySet="ZoneMorte" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="tel" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="mail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projet" Relationship="Self.FK_Projet_0_0" FromRole="Client" ToRole="Projet" />
+        </EntityType>
+        <EntityType Name="Commercial">
+          <Key>
+            <PropertyRef Name="idCommercial" />
+          </Key>
+          <Property Name="idCommercial" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="tel" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="mail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="mdp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projet" Relationship="Self.Projet_Commercial" FromRole="Commercial" ToRole="Projet" />
+        </EntityType>
+        <EntityType Name="Couleur">
+          <Key>
+            <PropertyRef Name="idCouleur" />
+          </Key>
+          <Property Name="idCouleur" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="surCout" Type="Double" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Module_1_0" FromRole="Couleur" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Empreinte">
+          <Key>
+            <PropertyRef Name="idEmpreinte" />
+          </Key>
+          <Property Name="idEmpreinte" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="longueur" Type="Double" />
+          <Property Name="largeur" Type="Double" />
+          <Property Name="idZoneMorte" Type="Int64" />
+          <NavigationProperty Name="ZoneMorte" Relationship="Self.FK_Empreinte_0_0" FromRole="Empreinte" ToRole="ZoneMorte" />
+          <NavigationProperty Name="Maison" Relationship="Self.FK_Maison_0_0" FromRole="Empreinte" ToRole="Maison" />
+          <NavigationProperty Name="ZoneMorte1" Relationship="Self.FK_ZoneMorte_0_0" FromRole="Empreinte" ToRole="ZoneMorte" />
+        </EntityType>
+        <EntityType Name="EtatCommande">
+          <Key>
+            <PropertyRef Name="idEtatCommande" />
+          </Key>
+          <Property Name="idEtatCommande" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projet_EtatCommande" Relationship="Self.FK_Projet_EtatCommande_0_0" FromRole="EtatCommande" ToRole="Projet_EtatCommande" />
+        </EntityType>
+        <EntityType Name="Favori">
+          <Key>
+            <PropertyRef Name="idFavori" />
+          </Key>
+          <Property Name="idFavori" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="tailleSlot" Type="Double" />
+          <NavigationProperty Name="Module_Favori" Relationship="Self.FK_Module_Favori_0_0" FromRole="Favori" ToRole="Module_Favori" />
+        </EntityType>
+        <EntityType Name="Finition">
+          <Key>
+            <PropertyRef Name="idFinition" />
+          </Key>
+          <Property Name="idFinition" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="surCout" Type="Double" />
+          <NavigationProperty Name="Gamme" Relationship="Self.FK_Gamme_0_0" FromRole="Finition" ToRole="Gamme" />
+        </EntityType>
+        <EntityType Name="Gamme">
+          <Key>
+            <PropertyRef Name="idGamme" />
+          </Key>
+          <Property Name="idGamme" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="idFinition" Type="Int64" />
+          <NavigationProperty Name="Finition" Relationship="Self.FK_Gamme_0_0" FromRole="Gamme" ToRole="Finition" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Module_2_0" FromRole="Gamme" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Maison">
+          <Key>
+            <PropertyRef Name="idMaison" />
+          </Key>
+          <Property Name="idMaison" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomMaison" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="idEmpreinte" Type="Int64" />
+          <NavigationProperty Name="Empreinte" Relationship="Self.FK_Maison_0_0" FromRole="Maison" ToRole="Empreinte" />
+          <NavigationProperty Name="Maison_TypeDalle" Relationship="Self.FK_Maison_TypeDalle_1_0" FromRole="Maison" ToRole="Maison_TypeDalle" />
+          <NavigationProperty Name="Module_Maison" Relationship="Self.FK_Module_Maison_0_0" FromRole="Maison" ToRole="Module_Maison" />
+          <NavigationProperty Name="Projet" Relationship="Self.FK_Projet_1_0" FromRole="Maison" ToRole="Projet" />
+        </EntityType>
+        <EntityType Name="Maison_TypeDalle">
+          <Key>
+            <PropertyRef Name="idMaison" />
+            <PropertyRef Name="idTypeDalle" />
+          </Key>
+          <Property Name="historiquePrixM2" Type="Double" />
+          <Property Name="idMaison" Type="Int64" Nullable="false" />
+          <Property Name="idTypeDalle" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Maison" Relationship="Self.FK_Maison_TypeDalle_1_0" FromRole="Maison_TypeDalle" ToRole="Maison" />
+          <NavigationProperty Name="TypeDalle" Relationship="Self.FK_Maison_TypeDalle_0_0" FromRole="Maison_TypeDalle" ToRole="TypeDalle" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="idModule" />
+          </Key>
+          <Property Name="idModule" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="hauteur" Type="Int64" />
+          <Property Name="largeur" Type="Int64" />
+          <Property Name="prix" Type="Double" />
+          <Property Name="idGamme" Type="Int64" />
+          <Property Name="idCouleur" Type="Int64" />
+          <Property Name="idType" Type="Int64" />
+          <NavigationProperty Name="Couleur" Relationship="Self.FK_Module_1_0" FromRole="Module" ToRole="Couleur" />
+          <NavigationProperty Name="Gamme" Relationship="Self.FK_Module_2_0" FromRole="Module" ToRole="Gamme" />
+          <NavigationProperty Name="TypeModule" Relationship="Self.FK_Module_0_0" FromRole="Module" ToRole="TypeModule" />
+          <NavigationProperty Name="Module_Favori" Relationship="Self.FK_Module_Favori_1_0" FromRole="Module" ToRole="Module_Favori" />
+          <NavigationProperty Name="Module_Maison" Relationship="Self.FK_Module_Maison_1_0" FromRole="Module" ToRole="Module_Maison" />
+        </EntityType>
+        <EntityType Name="Module_Favori">
+          <Key>
+            <PropertyRef Name="idModule" />
+            <PropertyRef Name="idFavori" />
+          </Key>
+          <Property Name="distanceSol" Type="Double" />
+          <Property Name="numSlot" Type="Int64" />
+          <Property Name="idModule" Type="Int64" Nullable="false" />
+          <Property Name="idFavori" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Favori" Relationship="Self.FK_Module_Favori_0_0" FromRole="Module_Favori" ToRole="Favori" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Module_Favori_1_0" FromRole="Module_Favori" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Module_Maison">
+          <Key>
+            <PropertyRef Name="idModule" />
+            <PropertyRef Name="idMaison" />
+          </Key>
+          <Property Name="posXDebut" Type="Int64" />
+          <Property Name="posYDebut" Type="Int64" />
+          <Property Name="posXFin" Type="Int64" />
+          <Property Name="posYFin" Type="Int64" />
+          <Property Name="distanceSol" Type="Double" />
+          <Property Name="historiquePrixModule" Type="Double" />
+          <Property Name="historiquePrixCouleur" Type="Double" />
+          <Property Name="historiquePrixFinition" Type="Double" />
+          <Property Name="idModule" Type="Int64" Nullable="false" />
+          <Property Name="idMaison" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Maison" Relationship="Self.FK_Module_Maison_0_0" FromRole="Module_Maison" ToRole="Maison" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Module_Maison_1_0" FromRole="Module_Maison" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="Projet">
+          <Key>
+            <PropertyRef Name="idProjet" />
+          </Key>
+          <Property Name="idProjet" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="devisSynchro" Type="Int64" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="prixFabrication" Type="Double" />
+          <Property Name="prixComposant" Type="Double" />
+          <Property Name="prixInstallation" Type="Double" />
+          <Property Name="prixFinal" Type="Double" />
+          <Property Name="reductionMarge" Type="Double" />
+          <Property Name="numDevis" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numFacture" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numOF" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numOM" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kitMonte" Type="Int64" />
+          <Property Name="idMaison" Type="Int64" />
+          <Property Name="idClient" Type="Int64" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Projet_0_0" FromRole="Projet" ToRole="Client" />
+          <NavigationProperty Name="Maison" Relationship="Self.FK_Projet_1_0" FromRole="Projet" ToRole="Maison" />
+          <NavigationProperty Name="Projet_EtatCommande" Relationship="Self.FK_Projet_EtatCommande_1_0" FromRole="Projet" ToRole="Projet_EtatCommande" />
+          <NavigationProperty Name="Commercial" Relationship="Self.Projet_Commercial" FromRole="Projet" ToRole="Commercial" />
+        </EntityType>
+        <EntityType Name="Projet_EtatCommande">
+          <Key>
+            <PropertyRef Name="idProjet" />
+            <PropertyRef Name="idEtatCommande" />
+          </Key>
+          <Property Name="dates" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="prix" Type="Double" />
+          <Property Name="paiementValide" Type="Int64" />
+          <Property Name="idProjet" Type="Int64" Nullable="false" />
+          <Property Name="idEtatCommande" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="EtatCommande" Relationship="Self.FK_Projet_EtatCommande_0_0" FromRole="Projet_EtatCommande" ToRole="EtatCommande" />
+          <NavigationProperty Name="Projet" Relationship="Self.FK_Projet_EtatCommande_1_0" FromRole="Projet_EtatCommande" ToRole="Projet" />
+        </EntityType>
+        <EntityType Name="TypeDalle">
+          <Key>
+            <PropertyRef Name="idTypeDalle" />
+          </Key>
+          <Property Name="idTypeDalle" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="prixM2" Type="Double" />
+          <NavigationProperty Name="Maison_TypeDalle" Relationship="Self.FK_Maison_TypeDalle_0_0" FromRole="TypeDalle" ToRole="Maison_TypeDalle" />
+        </EntityType>
+        <EntityType Name="TypeModule">
+          <Key>
+            <PropertyRef Name="idType" />
+          </Key>
+          <Property Name="idType" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomType" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_Module_0_0" FromRole="TypeModule" ToRole="Module" />
+        </EntityType>
+        <EntityType Name="ZoneMorte">
+          <Key>
+            <PropertyRef Name="idZoneMorte" />
+          </Key>
+          <Property Name="idZoneMorte" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="longueur" Type="Int64" />
+          <Property Name="largeur" Type="Int64" />
+          <Property Name="coordonneeX" Type="Int64" />
+          <Property Name="coordonneeY" Type="Int64" />
+          <Property Name="idEmpreinte" Type="Int64" />
+          <NavigationProperty Name="Empreinte" Relationship="Self.FK_Empreinte_0_0" FromRole="ZoneMorte" ToRole="Empreinte" />
+          <NavigationProperty Name="Empreinte1" Relationship="Self.FK_ZoneMorte_0_0" FromRole="ZoneMorte" ToRole="Empreinte" />
+        </EntityType>
+        <Association Name="FK_Projet_0_0">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="idClient" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_1_0">
+          <End Role="Couleur" Type="Self.Couleur" Multiplicity="0..1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Couleur">
+              <PropertyRef Name="idCouleur" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idCouleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empreinte_0_0">
+          <End Role="ZoneMorte" Type="Self.ZoneMorte" Multiplicity="0..1" />
+          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ZoneMorte">
+              <PropertyRef Name="idZoneMorte" />
+            </Principal>
+            <Dependent Role="Empreinte">
+              <PropertyRef Name="idZoneMorte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maison_0_0">
+          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="0..1" />
+          <End Role="Maison" Type="Self.Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empreinte">
+              <PropertyRef Name="idEmpreinte" />
+            </Principal>
+            <Dependent Role="Maison">
+              <PropertyRef Name="idEmpreinte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZoneMorte_0_0">
+          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="0..1" />
+          <End Role="ZoneMorte" Type="Self.ZoneMorte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empreinte">
+              <PropertyRef Name="idEmpreinte" />
+            </Principal>
+            <Dependent Role="ZoneMorte">
+              <PropertyRef Name="idEmpreinte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_EtatCommande_0_0">
+          <End Role="EtatCommande" Type="Self.EtatCommande" Multiplicity="1" />
+          <End Role="Projet_EtatCommande" Type="Self.Projet_EtatCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EtatCommande">
+              <PropertyRef Name="idEtatCommande" />
+            </Principal>
+            <Dependent Role="Projet_EtatCommande">
+              <PropertyRef Name="idEtatCommande" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Favori_0_0">
+          <End Role="Favori" Type="Self.Favori" Multiplicity="1" />
+          <End Role="Module_Favori" Type="Self.Module_Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Favori">
+              <PropertyRef Name="idFavori" />
+            </Principal>
+            <Dependent Role="Module_Favori">
+              <PropertyRef Name="idFavori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gamme_0_0">
+          <End Role="Finition" Type="Self.Finition" Multiplicity="0..1" />
+          <End Role="Gamme" Type="Self.Gamme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Finition">
+              <PropertyRef Name="idFinition" />
+            </Principal>
+            <Dependent Role="Gamme">
+              <PropertyRef Name="idFinition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_2_0">
+          <End Role="Gamme" Type="Self.Gamme" Multiplicity="0..1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gamme">
+              <PropertyRef Name="idGamme" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idGamme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maison_TypeDalle_1_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
+          <End Role="Maison_TypeDalle" Type="Self.Maison_TypeDalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
+            </Principal>
+            <Dependent Role="Maison_TypeDalle">
+              <PropertyRef Name="idMaison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Maison_0_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
+          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
+            </Principal>
+            <Dependent Role="Module_Maison">
+              <PropertyRef Name="idMaison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_1_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="0..1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="idMaison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Maison_TypeDalle_0_0">
+          <End Role="TypeDalle" Type="Self.TypeDalle" Multiplicity="1" />
+          <End Role="Maison_TypeDalle" Type="Self.Maison_TypeDalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeDalle">
+              <PropertyRef Name="idTypeDalle" />
+            </Principal>
+            <Dependent Role="Maison_TypeDalle">
+              <PropertyRef Name="idTypeDalle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_0_0">
+          <End Role="TypeModule" Type="Self.TypeModule" Multiplicity="0..1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeModule">
+              <PropertyRef Name="idType" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Favori_1_0">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Module_Favori" Type="Self.Module_Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="idModule" />
+            </Principal>
+            <Dependent Role="Module_Favori">
+              <PropertyRef Name="idModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Maison_1_0">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="idModule" />
+            </Principal>
+            <Dependent Role="Module_Maison">
+              <PropertyRef Name="idModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_EtatCommande_1_0">
+          <End Role="Projet" Type="Self.Projet" Multiplicity="1" />
+          <End Role="Projet_EtatCommande" Type="Self.Projet_EtatCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="idProjet" />
+            </Principal>
+            <Dependent Role="Projet_EtatCommande">
+              <PropertyRef Name="idProjet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Projet_Commercial">
+          <End Role="Commercial" Type="Self.Commercial" Multiplicity="*" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Commercial" EntityType="Self.Commercial" />
+          <EntitySet Name="Couleur" EntityType="Self.Couleur" />
+          <EntitySet Name="Empreinte" EntityType="Self.Empreinte" />
+          <EntitySet Name="EtatCommande" EntityType="Self.EtatCommande" />
+          <EntitySet Name="Favori" EntityType="Self.Favori" />
+          <EntitySet Name="Finition" EntityType="Self.Finition" />
+          <EntitySet Name="Gamme" EntityType="Self.Gamme" />
+          <EntitySet Name="Maison" EntityType="Self.Maison" />
+          <EntitySet Name="Maison_TypeDalle" EntityType="Self.Maison_TypeDalle" />
+          <EntitySet Name="Module" EntityType="Self.Module" />
+          <EntitySet Name="Module_Favori" EntityType="Self.Module_Favori" />
+          <EntitySet Name="Module_Maison" EntityType="Self.Module_Maison" />
+          <EntitySet Name="Projet" EntityType="Self.Projet" />
+          <EntitySet Name="Projet_EtatCommande" EntityType="Self.Projet_EtatCommande" />
+          <EntitySet Name="TypeDalle" EntityType="Self.TypeDalle" />
+          <EntitySet Name="TypeModule" EntityType="Self.TypeModule" />
+          <EntitySet Name="ZoneMorte" EntityType="Self.ZoneMorte" />
+          <AssociationSet Name="FK_Projet_0_0" Association="Self.FK_Projet_0_0">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_1_0" Association="Self.FK_Module_1_0">
+            <End Role="Couleur" EntitySet="Couleur" />
+            <End Role="Module" EntitySet="Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empreinte_0_0" Association="Self.FK_Empreinte_0_0">
+            <End Role="ZoneMorte" EntitySet="ZoneMorte" />
+            <End Role="Empreinte" EntitySet="Empreinte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maison_0_0" Association="Self.FK_Maison_0_0">
+            <End Role="Empreinte" EntitySet="Empreinte" />
+            <End Role="Maison" EntitySet="Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZoneMorte_0_0" Association="Self.FK_ZoneMorte_0_0">
+            <End Role="Empreinte" EntitySet="Empreinte" />
+            <End Role="ZoneMorte" EntitySet="ZoneMorte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_EtatCommande_0_0" Association="Self.FK_Projet_EtatCommande_0_0">
+            <End Role="EtatCommande" EntitySet="EtatCommande" />
+            <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Favori_0_0" Association="Self.FK_Module_Favori_0_0">
+            <End Role="Favori" EntitySet="Favori" />
+            <End Role="Module_Favori" EntitySet="Module_Favori" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gamme_0_0" Association="Self.FK_Gamme_0_0">
+            <End Role="Finition" EntitySet="Finition" />
+            <End Role="Gamme" EntitySet="Gamme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_2_0" Association="Self.FK_Module_2_0">
+            <End Role="Gamme" EntitySet="Gamme" />
+            <End Role="Module" EntitySet="Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maison_TypeDalle_1_0" Association="Self.FK_Maison_TypeDalle_1_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Maison_TypeDalle" EntitySet="Maison_TypeDalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Maison_0_0" Association="Self.FK_Module_Maison_0_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Module_Maison" EntitySet="Module_Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_1_0" Association="Self.FK_Projet_1_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Maison_TypeDalle_0_0" Association="Self.FK_Maison_TypeDalle_0_0">
+            <End Role="TypeDalle" EntitySet="TypeDalle" />
+            <End Role="Maison_TypeDalle" EntitySet="Maison_TypeDalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_0_0" Association="Self.FK_Module_0_0">
+            <End Role="TypeModule" EntitySet="TypeModule" />
+            <End Role="Module" EntitySet="Module" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Favori_1_0" Association="Self.FK_Module_Favori_1_0">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Module_Favori" EntitySet="Module_Favori" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Maison_1_0" Association="Self.FK_Module_Maison_1_0">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Module_Maison" EntitySet="Module_Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_EtatCommande_1_0" Association="Self.FK_Projet_EtatCommande_1_0">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
+          </AssociationSet>
+          <AssociationSet Name="Projet_Commercial" Association="Self.Projet_Commercial">
+            <End Role="Commercial" EntitySet="Commercial" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="DBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commercial">
+            <EntityTypeMapping TypeName="DBModel.Commercial">
+              <MappingFragment StoreEntitySet="Commercial">
+                <ScalarProperty Name="idCommercial" ColumnName="idCommercial" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="mdp" ColumnName="mdp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Couleur">
+            <EntityTypeMapping TypeName="DBModel.Couleur">
+              <MappingFragment StoreEntitySet="Couleur">
+                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="surCout" ColumnName="surCout" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empreinte">
+            <EntityTypeMapping TypeName="DBModel.Empreinte">
+              <MappingFragment StoreEntitySet="Empreinte">
+                <ScalarProperty Name="idEmpreinte" ColumnName="idEmpreinte" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="longueur" ColumnName="longueur" />
+                <ScalarProperty Name="largeur" ColumnName="largeur" />
+                <ScalarProperty Name="idZoneMorte" ColumnName="idZoneMorte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EtatCommande">
+            <EntityTypeMapping TypeName="DBModel.EtatCommande">
+              <MappingFragment StoreEntitySet="EtatCommande">
+                <ScalarProperty Name="idEtatCommande" ColumnName="idEtatCommande" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favori">
+            <EntityTypeMapping TypeName="DBModel.Favori">
+              <MappingFragment StoreEntitySet="Favori">
+                <ScalarProperty Name="idFavori" ColumnName="idFavori" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="tailleSlot" ColumnName="tailleSlot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Finition">
+            <EntityTypeMapping TypeName="DBModel.Finition">
+              <MappingFragment StoreEntitySet="Finition">
+                <ScalarProperty Name="idFinition" ColumnName="idFinition" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="surCout" ColumnName="surCout" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gamme">
+            <EntityTypeMapping TypeName="DBModel.Gamme">
+              <MappingFragment StoreEntitySet="Gamme">
+                <ScalarProperty Name="idGamme" ColumnName="idGamme" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="idFinition" ColumnName="idFinition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maison">
+            <EntityTypeMapping TypeName="DBModel.Maison">
+              <MappingFragment StoreEntitySet="Maison">
+                <ScalarProperty Name="idMaison" ColumnName="idMaison" />
+                <ScalarProperty Name="nomMaison" ColumnName="nomMaison" />
+                <ScalarProperty Name="idEmpreinte" ColumnName="idEmpreinte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Maison_TypeDalle">
+            <EntityTypeMapping TypeName="DBModel.Maison_TypeDalle">
+              <MappingFragment StoreEntitySet="Maison_TypeDalle">
+                <ScalarProperty Name="historiquePrixM2" ColumnName="historiquePrixM2" />
+                <ScalarProperty Name="idMaison" ColumnName="idMaison" />
+                <ScalarProperty Name="idTypeDalle" ColumnName="idTypeDalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Module">
+            <EntityTypeMapping TypeName="DBModel.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="idModule" ColumnName="idModule" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="hauteur" ColumnName="hauteur" />
+                <ScalarProperty Name="largeur" ColumnName="largeur" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="idGamme" ColumnName="idGamme" />
+                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Module_Favori">
+            <EntityTypeMapping TypeName="DBModel.Module_Favori">
+              <MappingFragment StoreEntitySet="Module_Favori">
+                <ScalarProperty Name="distanceSol" ColumnName="distanceSol" />
+                <ScalarProperty Name="numSlot" ColumnName="numSlot" />
+                <ScalarProperty Name="idModule" ColumnName="idModule" />
+                <ScalarProperty Name="idFavori" ColumnName="idFavori" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Module_Maison">
+            <EntityTypeMapping TypeName="DBModel.Module_Maison">
+              <MappingFragment StoreEntitySet="Module_Maison">
+                <ScalarProperty Name="posXDebut" ColumnName="posXDebut" />
+                <ScalarProperty Name="posYDebut" ColumnName="posYDebut" />
+                <ScalarProperty Name="posXFin" ColumnName="posXFin" />
+                <ScalarProperty Name="posYFin" ColumnName="posYFin" />
+                <ScalarProperty Name="distanceSol" ColumnName="distanceSol" />
+                <ScalarProperty Name="historiquePrixModule" ColumnName="historiquePrixModule" />
+                <ScalarProperty Name="historiquePrixCouleur" ColumnName="historiquePrixCouleur" />
+                <ScalarProperty Name="historiquePrixFinition" ColumnName="historiquePrixFinition" />
+                <ScalarProperty Name="idModule" ColumnName="idModule" />
+                <ScalarProperty Name="idMaison" ColumnName="idMaison" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projet">
+            <EntityTypeMapping TypeName="DBModel.Projet">
+              <MappingFragment StoreEntitySet="Projet">
+                <ScalarProperty Name="idProjet" ColumnName="idProjet" />
+                <ScalarProperty Name="devisSynchro" ColumnName="devisSynchro" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prixFabrication" ColumnName="prixFabrication" />
+                <ScalarProperty Name="prixComposant" ColumnName="prixComposant" />
+                <ScalarProperty Name="prixInstallation" ColumnName="prixInstallation" />
+                <ScalarProperty Name="prixFinal" ColumnName="prixFinal" />
+                <ScalarProperty Name="reductionMarge" ColumnName="reductionMarge" />
+                <ScalarProperty Name="numDevis" ColumnName="numDevis" />
+                <ScalarProperty Name="numFacture" ColumnName="numFacture" />
+                <ScalarProperty Name="numOF" ColumnName="numOF" />
+                <ScalarProperty Name="numOM" ColumnName="numOM" />
+                <ScalarProperty Name="kitMonte" ColumnName="kitMonte" />
+                <ScalarProperty Name="idMaison" ColumnName="idMaison" />
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projet_EtatCommande">
+            <EntityTypeMapping TypeName="DBModel.Projet_EtatCommande">
+              <MappingFragment StoreEntitySet="Projet_EtatCommande">
+                <ScalarProperty Name="dates" ColumnName="dates" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="paiementValide" ColumnName="paiementValide" />
+                <ScalarProperty Name="idProjet" ColumnName="idProjet" />
+                <ScalarProperty Name="idEtatCommande" ColumnName="idEtatCommande" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeDalle">
+            <EntityTypeMapping TypeName="DBModel.TypeDalle">
+              <MappingFragment StoreEntitySet="TypeDalle">
+                <ScalarProperty Name="idTypeDalle" ColumnName="idTypeDalle" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prixM2" ColumnName="prixM2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeModule">
+            <EntityTypeMapping TypeName="DBModel.TypeModule">
+              <MappingFragment StoreEntitySet="TypeModule">
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="nomType" ColumnName="nomType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ZoneMorte">
+            <EntityTypeMapping TypeName="DBModel.ZoneMorte">
+              <MappingFragment StoreEntitySet="ZoneMorte">
+                <ScalarProperty Name="idZoneMorte" ColumnName="idZoneMorte" />
+                <ScalarProperty Name="longueur" ColumnName="longueur" />
+                <ScalarProperty Name="largeur" ColumnName="largeur" />
+                <ScalarProperty Name="coordonneeX" ColumnName="coordonneeX" />
+                <ScalarProperty Name="coordonneeY" ColumnName="coordonneeY" />
+                <ScalarProperty Name="idEmpreinte" ColumnName="idEmpreinte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Projet_Commercial" TypeName="DBModel.Projet_Commercial" StoreEntitySet="Projet_Commercial">
+            <EndProperty Name="Commercial">
+              <ScalarProperty Name="idCommercial" ColumnName="idCommercial" />
+            </EndProperty>
+            <EndProperty Name="Projet">
+              <ScalarProperty Name="idProjet" ColumnName="idProjet" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
