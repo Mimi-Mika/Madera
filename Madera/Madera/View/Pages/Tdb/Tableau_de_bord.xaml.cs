@@ -1,4 +1,5 @@
 ﻿using Madera.View.Pages.Clients;
+using Madera.View.Pages.Devis;
 using MahApps.Metro.Controls;
 using System;
 using System.Windows;
@@ -17,13 +18,25 @@ namespace Madera.View.Pages.Tdb
 
         private void Click_btn_clients(object sender, RoutedEventArgs e) {
 
-            Index listing_clients = new Index();
+            Clients.Index listing_clients = new Clients.Index();
             ((MetroWindow)this.Parent).Content = listing_clients;
         }
 
         private void btn_add_client(object sender, RoutedEventArgs e) {
-            Create add_client = new Create();
+            Clients.Create add_client = new Clients.Create();
             ((MetroWindow)this.Parent).Content = add_client;
+        }
+
+        private void btn_add_devis(object sender, RoutedEventArgs e)
+        {
+            Devis.Create add_devis = new Devis.Create();
+            ((MetroWindow)this.Parent).Content = add_devis;
+        }
+
+        private void Click_btn_devis(object sender, RoutedEventArgs e)
+        {
+            Devis.Index listing_devis = new Devis.Index();
+            ((MetroWindow)this.Parent).Content = listing_devis;
         }
     }
 }

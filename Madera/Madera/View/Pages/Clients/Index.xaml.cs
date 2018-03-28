@@ -16,8 +16,6 @@ namespace Madera.View.Pages.Clients
         public Index() {
             InitializeComponent();
             loadClient();
-           
-            var k = 2;
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e) {
