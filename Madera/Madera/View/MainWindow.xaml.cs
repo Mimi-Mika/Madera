@@ -1,7 +1,9 @@
 ﻿using Madera.Model;
 using Madera.View;
 using MahApps.Metro.Controls;
+using System.Linq;
 using System.Windows;
+
 
 namespace Madera
 {
@@ -18,9 +20,11 @@ namespace Madera
 
             DBEntities DB = new DBEntities();
 
+            var testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text
+                     && u.mdp == password.Password);
       
 
-            if (login.Text == "madera" && password.Password == "madera") {
+            if (testLogin !=null) {
                 Home home = new Home();
                 home.Show();
                 Close();
