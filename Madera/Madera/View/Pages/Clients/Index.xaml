@@ -19,7 +19,6 @@
         <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Ajouter" HorizontalAlignment="Left" Margin="45,60,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" mah:ControlsHelper.ContentCharacterCasing="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Click="btn_add_client"/>
         <Button Content="retour" Margin="0,9,10,0" VerticalAlignment="Top" Width="75" Background="#FFA3A3A3" mah:ControlsHelper.ContentCharacterCasing="Lower" Click="Click_btn_retour" HorizontalAlignment="Right"/>
         <iconPacks:PackIconModern Width="75" Height="75" Kind="UserTie" VerticalContentAlignment="Stretch" Margin="0,60,10,0" HorizontalAlignment="Right" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
-        <ListBox x:Name="lisiting_users" HorizontalAlignment="Center" Height="524" Margin="20,259,31,17" VerticalAlignment="Center" Width="1229" HorizontalContentAlignment="Center"></ListBox>
         <Label Content="Nom :" HorizontalAlignment="Left" Margin="21,182,0,0" VerticalAlignment="Top" Width="270"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="20,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
         <Label Content="Identifiant client :" HorizontalAlignment="Left" Margin="362,182,0,0" VerticalAlignment="Top" Width="270"/>
@@ -32,5 +31,15 @@
             <iconPacks:PackIconModern Kind="BaseSelect" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="14" Height="14"  />
         </Button>
         <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Editer un client" HorizontalAlignment="Left" Margin="285,60,0,0" VerticalAlignment="Top" Width="207" Background="#CC2411DA" mah:ControlsHelper.ContentCharacterCasing="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Click="btn_edit_client"/>
+        <Grid x:Name="ClientList"  HorizontalAlignment="Left" Height="534" Margin="20,256,0,0" VerticalAlignment="Top" Width="1249">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="208*"/>
+                <ColumnDefinition Width="249*"/>
+                <ColumnDefinition Width="240*"/>
+                <ColumnDefinition Width="195*"/>
+                <ColumnDefinition Width="185*"/>
+                <ColumnDefinition Width="172*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
     </Grid>
 </Page>
