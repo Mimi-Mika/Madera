@@ -1,6 +1,4 @@
-﻿using Madera.View.Pages.Tdb;
-using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Madera.View.Pages.Devis
+namespace Madera.View.Pages.PlanVues
 {
     /// <summary>
-    /// Logique d'interaction pour Edit.xaml
+    /// Logique d'interaction pour Vue2D.xaml
     /// </summary>
-    public partial class Edit : Page
+    public partial class Vue2D : Page
     {
-        public Edit()
+        public Vue2D()
         {
             InitializeComponent();
-        }
-
-        private void Click_btn_retour(object sender, RoutedEventArgs e)
-        {
-            Tableau_de_bord tdb = new Tableau_de_bord();
-            ((MetroWindow)this.Parent).Content = tdb;
         }
     }
 }

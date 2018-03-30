@@ -32,5 +32,11 @@ namespace Madera.View.Pages.Devis
             Tableau_de_bord tdb = new Tableau_de_bord();
             ((MetroWindow)this.Parent).Content = tdb;
         }
+
+        private void btn_ajout(object sender, RoutedEventArgs e)
+        {
+            Devis.Create tdb = new Devis.Create();
+            ((MetroWindow)this.Parent).Content = tdb;
+        }
     }
 }

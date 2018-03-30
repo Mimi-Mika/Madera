@@ -18,11 +18,11 @@ using System.Windows.Shapes;
 namespace Madera.View.Pages.Devis
 {
     /// <summary>
-    /// Logique d'interaction pour Edit.xaml
+    /// Logique d'interaction pour ChoixEmpreinte.xaml
     /// </summary>
-    public partial class Edit : Page
+    public partial class ChoixEmpreinte : Page
     {
-        public Edit()
+        public ChoixEmpreinte()
         {
             InitializeComponent();
         }
