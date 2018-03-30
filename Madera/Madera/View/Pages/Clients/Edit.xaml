@@ -36,8 +36,8 @@
         <TextBox x:Name="adresse" HorizontalAlignment="Left" Height="150" Margin="20,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="660"/>
         <Label Content="Adresse *" HorizontalAlignment="Left" Margin="20,380,0,0" VerticalAlignment="Top" Width="300"/>
         <Rectangle HorizontalAlignment="Left" Height="357" Margin="752,309,0,0" Stroke="#FFA1CCDC" VerticalAlignment="Top" Width="500" StrokeThickness="3"/>
-        <Label Content="Budjet du client *" HorizontalAlignment="Left" Margin="780,360,0,0" VerticalAlignment="Top" Width="170"/>
-        <TextBox x:Name="budjet" HorizontalAlignment="Left" Height="23" Margin="780,390,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <Label Content="Budget du client *" HorizontalAlignment="Left" Margin="780,360,0,0" VerticalAlignment="Top" Width="170"/>
+        <TextBox x:Name="budget" HorizontalAlignment="Left" Height="23" Margin="780,390,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
         <iconPacks:PackIconModern Width="25" Height="25" Kind="CurrencyEuro" VerticalContentAlignment="Stretch" Margin="0,390,294,0" HorizontalAlignment="Right" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
         <ComboBox x:Name="surface" HorizontalAlignment="Left" Margin="1043,390,0,0" VerticalAlignment="Top" Width="180"/>
         <Label Content="Surface (m²)" HorizontalAlignment="Left" Margin="1043,360,0,0" VerticalAlignment="Top" Width="150"/>
