@@ -39,7 +39,22 @@ namespace Madera
                 mail="astiJ@gogo.com"
             });
 
+            DB.Client.ToList();
+
+
+
+
+            //var Maison=DB.Maison.Include("Maison_TypeDalle").Include("TypeDalle").Include("Empreinte");
+            var Maison = DB.Maison.Where(s => s.idMaison == 1).FirstOrDefault();
+            
+            var bob=Maison.Maison_TypeDalle.FirstOrDefault().TypeDalle.prixM2;
+            
+            Maison_TypeDalle testajout = new Maison_TypeDalle() {historiquePrixM2=25, idMaison=Maison.idMaison,idTypeDalle=2 };
+
+            DB.Maison_TypeDalle.Add(testajout);
             DB.SaveChanges();
+            
+
             if (testLogin !=null) {
                 Home home = new Home();
                 home.Show();
