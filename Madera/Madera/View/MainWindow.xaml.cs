@@ -40,9 +40,10 @@ namespace Madera
             });
 
             DB.Client.ToList();
-
-
-
+            int bb= 2;
+            Empreinte empreinteSelection= new Empreinte();
+            empreinteSelection=DB.Empreinte.Where(i => i.idEmpreinte == bb).FirstOrDefault();
+            
 
             //var Maison=DB.Maison.Include("Maison_TypeDalle").Include("TypeDalle").Include("Empreinte");
             var Maison = DB.Maison.Where(s => s.idMaison == 1).FirstOrDefault();
