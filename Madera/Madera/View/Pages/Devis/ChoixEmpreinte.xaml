@@ -26,14 +26,19 @@
         <Label x:Name="lblCommercial" Content="Label" HorizontalAlignment="Left" Margin="945,73,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblNumDossier" Content="Label" HorizontalAlignment="Left" Margin="938,104,0,0" VerticalAlignment="Top"/>
         <Label Content="Choisir la forme de la maison :" Margin="0,165,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-        <ListView HorizontalAlignment="Left" Height="472" Margin="60,207,0,0" VerticalAlignment="Top" Width="1169">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+        <ListView x:Name="lstV" Margin="31,207,26,91">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel 
+                        Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                        ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"
+                        MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                        ItemHeight="200" >
+                    </WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
         </ListView>
         <Button Content="Annuler" HorizontalAlignment="Left" Margin="480,736,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Ajouter" HorizontalAlignment="Left" Margin="681,736,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Ajouter" HorizontalAlignment="Left" Margin="681,736,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
     </Grid>
 </Page>

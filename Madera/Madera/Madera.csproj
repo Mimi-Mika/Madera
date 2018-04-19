@@ -336,6 +336,13 @@
       <DependentUpon>ModelMadera.edmx</DependentUpon>
       <LastGenOutput>ModelMadera.cs</LastGenOutput>
     </Content>
+    <Resource Include="Pictures\bigCarre.png" />
+    <Resource Include="Pictures\bigRect.png" />
+    <Resource Include="Pictures\midCarre.png" />
+    <Resource Include="Pictures\midRect.png" />
+    <Resource Include="Pictures\smCarre.png" />
+    <Resource Include="Pictures\smL.png" />
+    <Resource Include="Pictures\smRect.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
