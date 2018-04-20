@@ -336,6 +336,7 @@
       <DependentUpon>ModelMadera.edmx</DependentUpon>
       <LastGenOutput>ModelMadera.cs</LastGenOutput>
     </Content>
+    <Resource Include="Pictures\imgMurExt.jpg" />
     <Resource Include="Pictures\bigCarre.png" />
     <Resource Include="Pictures\bigRect.png" />
     <Resource Include="Pictures\midCarre.png" />

@@ -56,39 +56,9 @@ namespace Madera.View.Pages.Devis
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //int test = lstV.SelectedIndex;
-            int col = 0;
-            int lig = 0;
-            //int i = 0;
-            int idZoneMorte = 0;
+            int idEmpreinte = lstV.SelectedIndex + 1;
 
-
-            DBEntities DB = new DBEntities();
-            //foreach (var item in DB.Empreinte)
-            //{
-            //    if (i == test)
-            //    {
-            //        col = (int)item.longueur;
-            //        lig = (int)item.largeur;
-            //        idZoneMorte = (int)item.idZoneMorte;
-            //        break;
-            //    }
-            //    i++;
-            //}
-
-            int bb = lstV.SelectedIndex + 1;
-            Empreinte empreinteSelection = new Empreinte();
-            empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == bb).FirstOrDefault();
-
-            col = (int)empreinteSelection.longueur;
-            lig = (int)empreinteSelection.largeur;
-            if (empreinteSelection.idZoneMorte != null)
-            {
-                idZoneMorte = (int)empreinteSelection.idZoneMorte;
-            }
-
-
-            Vue2D vue2D = new Vue2D(col, lig, idZoneMorte);
+            Vue2D vue2D = new Vue2D(idEmpreinte);
             ((MetroWindow)this.Parent).Content = vue2D;
         }
     }
