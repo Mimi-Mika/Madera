@@ -1,7 +1,9 @@
 ﻿using Madera.Model;
 using Madera.View;
+using Madera.View.Pages.PlanVues;
 using MahApps.Metro.Controls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -43,7 +45,10 @@ namespace Madera
             int bb= 2;
             Empreinte empreinteSelection= new Empreinte();
             empreinteSelection=DB.Empreinte.Where(i => i.idEmpreinte == bb).FirstOrDefault();
-            
+
+            //List<Module> ModuleList = new List<Module>();
+
+            //ModuleList = DB.Module.ToList();
 
             //var Maison=DB.Maison.Include("Maison_TypeDalle").Include("TypeDalle").Include("Empreinte");
             var Maison = DB.Maison.Where(s => s.idMaison == 1).FirstOrDefault();
@@ -53,13 +58,15 @@ namespace Madera
             Maison_TypeDalle testajout = new Maison_TypeDalle() {historiquePrixM2=25, idMaison=Maison.idMaison,idTypeDalle=2 };
 
             DB.Maison_TypeDalle.Add(testajout);
-            DB.SaveChanges();
+            //DB.SaveChanges();
             
 
             if (testLogin !=null) {
-                Home home = new Home();
-                home.Show();
-                Close();
+                //Home home = new Home();
+                //home.Show();
+                Vue2D vue2d= new Vue2D();
+                this.Content = new Vue2D();
+               // Close();
             }
             else {
                 error_message.Content = "Login ou mot de passe incorrect !";
