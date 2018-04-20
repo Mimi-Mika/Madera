@@ -37,7 +37,10 @@ namespace Madera.View.Pages.PlanVues
                 ModuleList.Add(item);
             }
 
+            listModule.ItemsSource = ModuleList;
+
         }
+
         private ObservableCollection<Module> moduleList;
         public ObservableCollection<Module> ModuleList
         {
