@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Windows;
+using Madera.Model;
 
 namespace Madera.View.Pages.Clients
 {
@@ -15,19 +16,6 @@ namespace Madera.View.Pages.Clients
         public Create()
         {
             InitializeComponent();
-            bool valid = ControleFormEmpty();
-            if (valid)
-            {
-                AddCustomer();
-            }
-            else
-            {
-                DisplayMsgError();
-            }
-        }
-
-        private void AddCustomer()
-        {
         }
 
         private void Click_btn_annuler(object sender, System.Windows.RoutedEventArgs e)
@@ -44,6 +32,18 @@ namespace Madera.View.Pages.Clients
 
         private void Click_btn_valid(object sender, System.Windows.RoutedEventArgs e)
         {
+            DBEntities DB = new DBEntities();
+            Client client = new Client();
+            client.nom = nom.Text;
+            client.mail = mail.Text;
+            client.prenom = prenom.Text;
+            client.tel = telephone.Text;
+            client.adresse = adresse.Text;
+            Client.ItemsSource = DB.Client.Add(client);
+
+            // budget
+            // surface
+            //date remise des clefs souhaité
         }
 
         private void DatePicker_DateChanged(object sender, SelectionChangedEventArgs e)
@@ -114,14 +114,6 @@ namespace Madera.View.Pages.Clients
             {
                 valid = false;
             }
-            else if (!(new Regex(@"^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B))[0-9]{3}+$")).IsMatch(code_postal.Text) && code_postal.Text == null)
-            {
-                valid = false;
-            }
-            else if (!(new Regex((@"^[A-Za-z]+$")).IsMatch(ville.Text)) && ville.Text == null)
-            {
-                valid = false;
-            }
             else if (!(new Regex((@"^[A-Za-z]+$")).IsMatch(adresse.Text)) && adresse.Text == null)
             {
                 valid = false;
@@ -134,7 +126,6 @@ namespace Madera.View.Pages.Clients
             {
                 valid = true;
             }
-
             return valid;
         }
 

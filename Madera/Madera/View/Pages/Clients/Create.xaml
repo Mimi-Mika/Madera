@@ -21,28 +21,20 @@
         <TextBox x:Name="nom" HorizontalAlignment="Left" Height="23" Margin="20,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" TextChanged="TextBox_TextChanged" />
         <Label Content="Prénom *" HorizontalAlignment="Left" Margin="380,190,0,0" VerticalAlignment="Top" Width="300" />
         <TextBox x:Name="prenom" HorizontalAlignment="Left" Height="23" Margin="380,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" TextChanged="TextBox_TextChanged" />
-        <ComboBox x:Name="departement" HorizontalAlignment="Left" Margin="753,220,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="Combobox_SelectChanged" />
-        <Label Content="Département *" HorizontalAlignment="Left" Margin="753,190,0,0" VerticalAlignment="Top" Width="150" />
-        <ComboBox x:Name="commercial" HorizontalAlignment="Left" Margin="953,220,0,0" VerticalAlignment="Top" Width="300" SelectionChanged="Combobox_SelectChanged" />
-        <Label Content="Commercial *" HorizontalAlignment="Left" Margin="953,190,0,0" VerticalAlignment="Top" Width="300" />
         <Label Content="Adresse mail *" HorizontalAlignment="Left" Margin="20,280,0,0" VerticalAlignment="Top" Width="300" />
         <TextBox x:Name="mail" HorizontalAlignment="Left" Height="23" Margin="20,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" TextChanged="TextBox_TextChanged" />
         <Label Content="Téléphone *" HorizontalAlignment="Left" Margin="380,280,0,0" VerticalAlignment="Top" Width="300" />
         <TextBox x:Name="telephone" HorizontalAlignment="Left" Height="23" Margin="380,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" TextChanged="TextBox_TextChanged" />
-        <Label Content="Code postal *" HorizontalAlignment="Left" Margin="20,610,0,0" VerticalAlignment="Top" Width="300" />
-        <TextBox x:Name="code_postal" HorizontalAlignment="Left" Height="23" Margin="20,640,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" TextChanged="TextBox_TextChanged" />
-        <Label Content="Ville *" HorizontalAlignment="Left" Margin="380,610,0,0" VerticalAlignment="Top" Width="300" />
-        <TextBox x:Name="ville" HorizontalAlignment="Left" Height="23" Margin="380,640,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" TextChanged="TextBox_TextChanged" />
-        <TextBox x:Name="adresse" HorizontalAlignment="Left" Height="150" Margin="20,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="660" TextChanged="TextBox_TextChanged" />
+        <TextBox x:Name="adresse" HorizontalAlignment="Left" Height="254" Margin="20,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="660" TextChanged="TextBox_TextChanged" />
         <Label Content="Adresse *" HorizontalAlignment="Left" Margin="20,380,0,0" VerticalAlignment="Top" Width="300" />
-        <Rectangle HorizontalAlignment="Left" Height="357" Margin="752,309,0,0" Stroke="#FFA1CCDC" VerticalAlignment="Top" Width="500" StrokeThickness="3" />
-        <Label Content="Budget du client *" HorizontalAlignment="Left" Margin="780,360,0,0" VerticalAlignment="Top" Width="170" />
-        <TextBox x:Name="budget" HorizontalAlignment="Left" Height="23" Margin="780,390,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" TextChanged="TextBox_TextChanged" />
-        <iconPacks:PackIconModern Width="25" Height="25" Kind="CurrencyEuro" VerticalContentAlignment="Stretch" Margin="0,390,294,0" HorizontalAlignment="Right" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
-        <ComboBox x:Name="surface" HorizontalAlignment="Left" Margin="1043,390,0,0" VerticalAlignment="Top" Width="180" SelectionChanged="Combobox_SelectChanged" />
-        <Label Content="Surface (m²)" HorizontalAlignment="Left" Margin="1043,360,0,0" VerticalAlignment="Top" Width="150" />
-        <DatePicker Name="date_souhaite" HorizontalAlignment="Left" Margin="781,560,0,0" VerticalAlignment="Top" Width="200" SelectedDateChanged="DatePicker_DateChanged" />
-        <Label Content="Date  de remise des cléf souhaiter *" HorizontalAlignment="Left" Margin="780,530,0,0" VerticalAlignment="Top" Width="200" />
+        <Rectangle HorizontalAlignment="Left" Height="446" Margin="707,206,0,0" Stroke="#FFA1CCDC" VerticalAlignment="Top" Width="534" StrokeThickness="3" />
+        <Label Content="Budget du client *" HorizontalAlignment="Left" Margin="765,281,0,0" VerticalAlignment="Top" Width="170" />
+        <TextBox x:Name="budget" HorizontalAlignment="Left" Height="23" Margin="765,311,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" TextChanged="TextBox_TextChanged" />
+        <iconPacks:PackIconModern Width="25" Height="25" Kind="CurrencyEuro" VerticalContentAlignment="Stretch" Margin="0,311,309,0" HorizontalAlignment="Right" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center" />
+        <ComboBox x:Name="surface" HorizontalAlignment="Left" Margin="765,439,0,0" VerticalAlignment="Top" Width="180" SelectionChanged="Combobox_SelectChanged" />
+        <Label Content="Surface (m²)" HorizontalAlignment="Left" Margin="765,409,0,0" VerticalAlignment="Top" Width="150" />
+        <DatePicker Name="date_souhaite" HorizontalAlignment="Left" Margin="765,585,0,0" VerticalAlignment="Top" Width="200" SelectedDateChanged="DatePicker_DateChanged" />
+        <Label Content="Date  de remise des cléf souhaiter *" HorizontalAlignment="Left" Margin="764,555,0,0" VerticalAlignment="Top" Width="200" />
         <Button x:Name="btn_save" Style="{StaticResource AccentedSquareButtonStyle}" Content="Ajouter" HorizontalAlignment="Left" Margin="683,726,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Click="Click_btn_valid" />
         <Button x:Name="btn_annuler" Style="{StaticResource AccentedSquareButtonStyle}" Content="Annuler" HorizontalAlignment="Left" Margin="483,726,0,0" VerticalAlignment="Top" Width="75" Background="#CCDA1F11" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Click="Click_btn_annuler" />
     </Grid>
