@@ -23,6 +23,7 @@ namespace Madera.Model
         public long idFinition { get; set; }
         public string nom { get; set; }
         public Nullable<double> surCout { get; set; }
+        public string imgUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Gamme> Gamme { get; set; }

@@ -4,24 +4,36 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Madera.View.Pages.PlanVues"
-      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="Madera.View.Pages.PlanVues.Vue2D"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:system="clr-namespace:System;assembly=mscorlib" x:Class="Madera.View.Pages.PlanVues.Vue2D"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Vue2D">
 
-    <Grid Margin="0,0,0,9.6">
+    <Grid Margin="-4,0,4,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <ListBox x:Name="listTypeModule" ItemsSource="{Binding TypeModuleList}" MaxWidth="200"
+            ScrollViewer.CanContentScroll="False" Margin="20,10,251,284.4" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" >
+            <ListBox.ItemTemplate >
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding idType}" FontWeight="Bold" MaxWidth="20" />
+                        <TextBlock Margin="20" Text="{Binding nomType}" MaxWidth="200" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <ListBox x:Name="listModule" ItemsSource="{Binding ModuleList}"
          ScrollViewer.CanContentScroll="False" Margin="20,202,251,23" IsSynchronizedWithCurrentItem="False">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Source="{Binding idModule}" Height="100"/>-->
+                        <Image Source="{Binding imgUrl}" Height="200" Width="150"/>
                         <StackPanel Margin="10,0">
                             <TextBlock Text="{Binding nom}" FontWeight="Bold" />
                             <TextBlock Text="{Binding hauteur}"/>
@@ -31,6 +43,39 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <ListBox x:Name="listCouleur" ItemsSource="{Binding CouleurList}"
+            ScrollViewer.CanContentScroll="False" Margin="67,87,204,240.4" IsSynchronizedWithCurrentItem="False" Grid.Column="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding imgUrl}" Height="200" Width="150"/>
+                        <StackPanel Margin="10,0">
+                            <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding surCout}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox x:Name="listModule_Copy1" ItemsSource="{Binding ModuleList}"
+            ScrollViewer.CanContentScroll="False" Margin="271,43,0,284.4" IsSynchronizedWithCurrentItem="False">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding imgUrl}" Height="200" Width="150"/>
+                        <StackPanel Margin="10,0">
+                            <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding hauteur}"/>
+                            <TextBlock Text="{Binding largeur}" FontStyle="Italic"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+
+
 
     </Grid>
 </Page>

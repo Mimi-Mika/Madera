@@ -29,6 +29,7 @@ namespace Madera.Model
         public Nullable<long> idGamme { get; set; }
         public Nullable<long> idCouleur { get; set; }
         public Nullable<long> idType { get; set; }
+        public string imgUrl { get; set; }
     
         public virtual Couleur Couleur { get; set; }
         public virtual Gamme Gamme { get; set; }

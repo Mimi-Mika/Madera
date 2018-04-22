@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,29 +31,50 @@ namespace Madera.View.Pages.PlanVues
 
             this.DataContext = this;
 
-            //List<Module> ModuleList = new List<Module>();
-            ObservableCollection<Module> ModuleList = new ObservableCollection<Module>();
-            foreach (var item in DB.Module.ToList())
-            {
-                ModuleList.Add(item);
-            }
+            List<TypeModule> TypeModuleList = new List<TypeModule>();
+            TypeModuleList = DB.TypeModule.ToList();
+            listTypeModule.ItemsSource = TypeModuleList;
+            listTypeModule.SelectedIndex = 0;
 
+
+            List<Module> ModuleList = new List<Module>();
+            ModuleList = DB.Module.Where(i=>i.TypeModule.idType == listTypeModule.SelectedIndex+1).ToList();
             listModule.ItemsSource = ModuleList;
 
+            List<Couleur> CouleurList = new List<Couleur>();
+            CouleurList = DB.Couleur.ToList();
+            listCouleur.ItemsSource = CouleurList;
+
+
         }
 
-        private ObservableCollection<Module> moduleList;
-        public ObservableCollection<Module> ModuleList
+
+
+
+
+        private void listTypeModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            get { return moduleList; }
-            set
-            {
-                if (value != moduleList)
-                {
-                    moduleList = value;
-                }
-            }
+            DBEntities DB = new DBEntities();
+            List<Module> ModuleList = new List<Module>();
+            ModuleList = DB.Module.Where(i => i.TypeModule.idType == listTypeModule.SelectedIndex+1).ToList();
+            listModule.ItemsSource = ModuleList;
         }
+
+      
+
+
+        //private ObservableCollection<Module> moduleList;
+        //public ObservableCollection<Module> ModuleList
+        //{
+        //    get { return moduleList; }
+        //    set
+        //    {
+        //        if (value != moduleList)
+        //        {
+        //            moduleList = value;
+        //        }
+        //    }
+        //}
     }
     
 }
