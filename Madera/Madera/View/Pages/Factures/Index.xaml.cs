@@ -15,22 +15,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Madera.View.Pages.Devis
+namespace Madera.View.Pages.Factures
 {
     /// <summary>
-    /// Logique d'interaction pour Edit.xaml
+    /// Logique d'interaction pour Index.xaml
     /// </summary>
-    public partial class Edit : Page
+    public partial class Index : Page
     {
-        public Edit()
-        {
+        public Index() {
             InitializeComponent();
         }
 
-        private void Click_btn_retour(object sender, RoutedEventArgs e)
-        {
+        private void Click_btn_retour(object sender, RoutedEventArgs e) {
             Tableau_de_bord tdb = new Tableau_de_bord();
             ((MetroWindow)this.Parent).Content = tdb;
+        }
+
+        private void Click_btn_view_facture(object sender, RoutedEventArgs e) {
+            ModelPDF modele_facture = new ModelPDF();
+            ((MetroWindow)this.Parent).Content = modele_facture;
         }
     }
 }

@@ -72,6 +72,9 @@
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.1.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.1\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -193,6 +196,9 @@
     <Compile Include="View\Pages\Clients\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\Devis\ChoixEmpreinte.xaml.cs">
+      <DependentUpon>ChoixEmpreinte.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\Devis\Create.xaml.cs">
       <DependentUpon>Create.xaml</DependentUpon>
     </Compile>
@@ -201,6 +207,18 @@
     </Compile>
     <Compile Include="View\Pages\Devis\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\Factures\Index.xaml.cs">
+      <DependentUpon>Index.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\Factures\ModelPDF.xaml.cs">
+      <DependentUpon>ModelPDF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\PlanVues\Vue2D.xaml.cs">
+      <DependentUpon>Vue2D.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\PlanVues\Vue3D.xaml.cs">
+      <DependentUpon>Vue3D.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\Tdb\Tableau_de_bord.xaml.cs">
       <DependentUpon>Tableau_de_bord.xaml</DependentUpon>
@@ -238,6 +256,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Pages\Devis\ChoixEmpreinte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Pages\Devis\Create.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -247,6 +269,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\Devis\Index.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\Factures\Index.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\Factures\ModelPDF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\PlanVues\Vue2D.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\PlanVues\Vue3D.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -296,10 +334,7 @@
   <ItemGroup>
     <Resource Include="Pictures\CESI-SMALL1000.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\Pages\Factures\" />
-    <Folder Include="View\Pages\PlanVues\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
@@ -323,6 +358,14 @@
       <DependentUpon>ModelMadera.edmx</DependentUpon>
       <LastGenOutput>ModelMadera.cs</LastGenOutput>
     </Content>
+    <Resource Include="Pictures\imgMurExt.jpg" />
+    <Resource Include="Pictures\bigCarre.png" />
+    <Resource Include="Pictures\bigRect.png" />
+    <Resource Include="Pictures\midCarre.png" />
+    <Resource Include="Pictures\midRect.png" />
+    <Resource Include="Pictures\smCarre.png" />
+    <Resource Include="Pictures\smL.png" />
+    <Resource Include="Pictures\smRect.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

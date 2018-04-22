@@ -38,7 +38,7 @@
         <Button Style="{DynamicResource MetroCircleButtonStyle}" Margin="1199,0,41,643" Height="40" VerticalAlignment="Bottom" Width="40">
             <iconPacks:PackIconModern Kind="TilesPlus" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="14" Height="14"  />
         </Button>
-        <Button HorizontalAlignment="Left" Margin="1000,160,0,0" VerticalAlignment="Top" Width="240" Style="{DynamicResource SquareButtonStyle}" Height="160" Click="Click_btn_clients">
+        <Button HorizontalAlignment="Left" Margin="1000,160,0,0" VerticalAlignment="Top" Width="240" Style="{DynamicResource SquareButtonStyle}" Height="160" Click="Click_btn_factures">
             <iconPacks:PackIconModern Width="145" Height="145" Kind="PageFilePdf" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
         </Button>
     </Grid>
