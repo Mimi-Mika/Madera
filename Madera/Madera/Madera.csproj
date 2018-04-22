@@ -208,6 +208,9 @@
     <Compile Include="View\Pages\PlanVues\Vue2D.xaml.cs">
       <DependentUpon>Vue2D.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\PlanVues\Vue3D.xaml.cs">
+      <DependentUpon>Vue3D.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\Tdb\Tableau_de_bord.xaml.cs">
       <DependentUpon>Tableau_de_bord.xaml</DependentUpon>
     </Compile>
@@ -261,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\PlanVues\Vue2D.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\PlanVues\Vue3D.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

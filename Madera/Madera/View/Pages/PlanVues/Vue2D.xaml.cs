@@ -134,7 +134,7 @@ namespace Madera.View.Pages.PlanVues
                             //TODO faire des templates de button
                             Button MyControl1 = new Button();
                             MyControl1.Content = ("x" + (x + 1).ToString() + " y" + (y + 1).ToString());
-                            MyControl1.Name = "Button" + count.ToString();
+                            
                             Grid.SetColumn(MyControl1, x);
                             Grid.SetRow(MyControl1, y);
 
@@ -165,14 +165,17 @@ namespace Madera.View.Pages.PlanVues
                                  y == zoneMorteCoordY + zoneMorteTailleY - 2 && !(x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2) ||
                                  x == zoneMorteCoordX + zoneMorteTailleX - 2 && !(y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2))
                             {
+                                MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
                                 var brush = new ImageBrush();
                                 brush.ImageSource = new BitmapImage(new Uri("../../Pictures/imgMurExt.jpg", UriKind.Relative));
                                 MyControl1.Background = brush;
                                 //Ajouter evenement pour mur exterieur
                                 MyControl1.Click += new RoutedEventHandler(btnClickMurExt);
                             }
+                            //Murs interieurs
                             else
                             {
+                                MyControl1.Name = "IntButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
                                 //Ajouter evenement pour mur interieur
                                 MyControl1.Click += new RoutedEventHandler(btnClickMurInt);
                             }
