@@ -15,7 +15,6 @@ namespace Madera.View.Pages.Clients
     {
         public Index()
         {
-            this.client = new Client();
             InitializeComponent();
             loadClient();
         }
@@ -34,7 +33,8 @@ namespace Madera.View.Pages.Clients
 
         private void btn_edit_client(object sender, RoutedEventArgs e)
         {
-            Edit edit_client = new Edit(client, projet, commercial, projet_EtatCommande);
+            Client client = (Client)ListeClient.SelectedItem;
+            Edit edit_client = new Edit(client);
             ((MetroWindow)this.Parent).Content = edit_client;
         }
 

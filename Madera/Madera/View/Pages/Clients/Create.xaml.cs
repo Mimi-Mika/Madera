@@ -32,65 +32,23 @@ namespace Madera.View.Pages.Clients
 
         private void Click_btn_valid(object sender, System.Windows.RoutedEventArgs e)
         {
-            DBEntities DB = new DBEntities();
-            Client client = new Client();
-            client.nom = nom.Text;
-            client.mail = mail.Text;
-            client.prenom = prenom.Text;
-            client.tel = telephone.Text;
-            client.adresse = adresse.Text;
-            Client.ItemsSource = DB.Client.Add(client);
-
-            // budget
-            // surface
-            //date remise des clefs souhaité
-        }
-
-        private void DatePicker_DateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var datePicker = sender as DatePicker;
-            if (datePicker.SelectedDate == null)
+            if (ControleFormEmpty())
             {
+                DBEntities DB = new DBEntities();
+                Client client = new Client();
+                client.nom = nom.Text;
+                client.mail = mail.Text;
+                client.prenom = prenom.Text;
+                client.tel = telephone.Text;
+                client.adresse = adresse.Text;
+                Client.ItemsSource = DB.Client.Add(client);
+                DB.SaveChanges();
+                Index listing_users = new Index();
+                ((MetroWindow)this.Parent).Content = listing_users;
             }
             else
             {
-            }
-        }
-
-        private void Combobox_SelectChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var combobox = sender as ComboBox;
-            if (combobox.SelectedItem == null)
-            {
-            }
-            else
-            {
-                MessageBox.Show("Tous les champs en rouge sont obligatoire !");
-            }
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            try
-            {
-                // Get control that raised this event.
-                // Change Window Title.
-                //this.Title = textBox.Text + "[Length = " + textBox.Text.Length.ToString() + "]";
-
-                if (textBox.Text == null)
-                {
-                    // textBox.ForeColor = Color.Red;
-                }
-                else
-                {
-                    // textBox.ForeColor = Color.White;
-                }
-            }
-            catch
-            {
-                // If there is an error, display the text using the system colors.
-                //textBox.ForeColor = SystemColors.ControlTextColor;
+                MessageBox.Show("Vous devez remplir tous les champs et respecter les formats attendus");
             }
         }
 
@@ -118,19 +76,11 @@ namespace Madera.View.Pages.Clients
             {
                 valid = false;
             }
-            else if (!(new Regex((@"^[0-9]+$")).IsMatch(budget.Text)) && budget.Text == null)
-            {
-                valid = false;
-            }
             else
             {
                 valid = true;
             }
             return valid;
-        }
-
-        private void DisplayMsgError()
-        {
         }
     }
 }
