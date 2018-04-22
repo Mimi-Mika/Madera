@@ -31,7 +31,10 @@ namespace Madera.View.Pages.PlanVues
 
             TailleDesButtons();
         }
-
+        /// <summary>
+        /// Creation de la Gris avec les boutons
+        /// </summary>
+        /// <param name="idEmpreinte"></param>
         private void CreateEmptyFloorPlan(int idEmpreinte)
         {
             int idZoneMorte = 0;
@@ -73,11 +76,11 @@ namespace Madera.View.Pages.PlanVues
             }
 
             CreeLaGridVide(col, lig);
-            AjouterLesButtons(col, lig, zoneMorteCoordX, zoneMorteTailleX, zoneMorteCoordY, zoneMorteTailleY);
+            AjouterLesBoutons(col, lig, zoneMorteCoordX, zoneMorteTailleX, zoneMorteCoordY, zoneMorteTailleY);
 
         }
         /// <summary>
-        /// 
+        /// Crée la Grid
         /// </summary>
         /// <param name="col"></param>
         /// <param name="lig"></param>
@@ -101,7 +104,7 @@ namespace Madera.View.Pages.PlanVues
         }
 
         /// <summary>
-        /// 
+        /// Ajouter les boutons sur la grille
         /// </summary>
         /// <param name="col"></param>
         /// <param name="lig"></param>
@@ -109,7 +112,7 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="zoneMorteTailleX"></param>
         /// <param name="zoneMorteCoordY"></param>
         /// <param name="zoneMorteTailleY"></param>
-        private void AjouterLesButtons(int col, int lig, int zoneMorteCoordX, int zoneMorteTailleX, int zoneMorteCoordY, int zoneMorteTailleY)
+        private void AjouterLesBoutons(int col, int lig, int zoneMorteCoordX, int zoneMorteTailleX, int zoneMorteCoordY, int zoneMorteTailleY)
         {
             int count = 1;
             for (int y = 0; y < grid2D.RowDefinitions.Count; y++)
@@ -135,7 +138,6 @@ namespace Madera.View.Pages.PlanVues
                             Grid.SetColumn(MyControl1, x);
                             Grid.SetRow(MyControl1, y);
 
-                            //TODO chercher les murs ext
                             // tracer mur si zone morte coller en haut a droite
                             // tracer mur si zone morte coller en haut a droite
                             // tracer mur ext de haut avec meme y que la zone morte si zone morte pas coller a haut
@@ -149,6 +151,7 @@ namespace Madera.View.Pages.PlanVues
                             // tracer bas zone morte
                             // tracer droite zone morte
 
+                            //Chercher les murs exterieurs
                             if ((y == 0 && (x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2)) ||
                                 (x == 0 && (y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2)) ||
                                 (y == 0 && zoneMorteCoordY != 0) ||
@@ -165,10 +168,12 @@ namespace Madera.View.Pages.PlanVues
                                 var brush = new ImageBrush();
                                 brush.ImageSource = new BitmapImage(new Uri("../../Pictures/imgMurExt.jpg", UriKind.Relative));
                                 MyControl1.Background = brush;
+                                //Ajouter evenement pour mur exterieur
                                 MyControl1.Click += new RoutedEventHandler(btnClickMurExt);
                             }
                             else
                             {
+                                //Ajouter evenement pour mur interieur
                                 MyControl1.Click += new RoutedEventHandler(btnClickMurInt);
                             }
                             grid2D.Children.Add(MyControl1);
@@ -180,7 +185,7 @@ namespace Madera.View.Pages.PlanVues
         }
 
         /// <summary>
-        /// Set la taille des bouton sur la grid
+        /// Set la taille des boutons sur la grid
         /// </summary>
         private void TailleDesButtons()
         {
@@ -198,11 +203,16 @@ namespace Madera.View.Pages.PlanVues
             }
         }
 
+        /// <summary>
+        /// appuis sur un mur exterieur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClickMurExt(object sender, RoutedEventArgs e)
         {
             //TODO savoir si mur dans un angle?
             Button btn = ((Button)sender);
-            Grid grid = (Grid)btn.Parent;
+            //Grid grid = (Grid)btn.Parent;
 
             int row = 0;
             int col = 0;
@@ -210,6 +220,7 @@ namespace Madera.View.Pages.PlanVues
             col = Grid.GetColumn(btn);
 
             Button buttonHautGauche = new Button();
+            buttonHautGauche = null;
             try
             {
                 buttonHautGauche = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1);
@@ -217,6 +228,7 @@ namespace Madera.View.Pages.PlanVues
             catch (Exception) { }
 
             Button buttonHautDroite = new Button();
+            buttonHautDroite = null;
             try
             {
                 buttonHautDroite = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1);
@@ -224,6 +236,7 @@ namespace Madera.View.Pages.PlanVues
             catch (Exception) { }
 
             Button buttonBasGauche = new Button();
+            buttonBasGauche = null;
             try
             {
                 buttonBasGauche = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1);
@@ -231,21 +244,61 @@ namespace Madera.View.Pages.PlanVues
             catch (Exception) { }
 
             Button buttonBasDroite = new Button();
+            buttonBasDroite = null;
             try
             {
                 buttonBasDroite = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1);
             }
             catch (Exception) { }
 
+
+            List<Button> listButton = new List<Button>();
+
+            string test458 = "";
             if (buttonHautGauche != null)
             {
-                MessageBox.Show("haut G " + buttonHautGauche.Content.ToString()
-                    + "haut D " + buttonHautDroite.Content.ToString()
-                    + "bas G " + buttonBasGauche.Content.ToString()
-                    + "bas D " + buttonBasDroite.Content.ToString());
+                test458 = test458 + buttonHautGauche.Content.ToString();
+                listButton.Add(buttonHautGauche);
             }
-        }
+            if (buttonHautDroite != null)
+            {
+                test458 = test458 + buttonHautDroite.Content.ToString();
+                listButton.Add(buttonHautDroite);
+            }
+            if (buttonBasGauche != null)
+            {
+                test458 = test458 + buttonBasGauche.Content.ToString();
+                listButton.Add(buttonBasGauche);
+            }
+            if (buttonBasDroite != null)
+            {
+                test458 = test458 + buttonBasDroite.Content.ToString();
+                listButton.Add(buttonBasDroite);
+            }
+            var brush = new ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/imgMurExt.jpg", UriKind.Relative));
 
+            foreach (Button item in listButton)
+            {
+                if (item.Background == btn.Background)
+                {
+                    MessageBox.Show("khhjhjghgghghjg");
+                }
+            }
+            //MessageBox.Show(test458);
+            //if (buttonHautGauche != null && buttonHautDroite != null && buttonBasGauche !=null && buttonBasDroite !=null)
+            //{
+            //    MessageBox.Show("haut G " + buttonHautGauche.Content.ToString()
+            //        + "haut D " + buttonHautDroite.Content.ToString()
+            //        + "bas G " + buttonBasGauche.Content.ToString()
+            //        + "bas D " + buttonBasDroite.Content.ToString());
+            //}
+        }
+        /// <summary>
+        /// Appuis sur un mur interieur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClickMurInt(object sender, RoutedEventArgs e)
         {
             //if (rbMurInt.IsChecked == true)
@@ -316,12 +369,22 @@ namespace Madera.View.Pages.PlanVues
             }
         }
 
+        /// <summary>
+        /// Appuis sur le bouton Vue3D
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn3D_Click(object sender, RoutedEventArgs e)
         {
             //Apercu3D windows3D = new Apercu3D();
             // ((MetroWindow)this.Parent).Content = windows3D;
         }
 
+        /// <summary>
+        /// Appuis du bouton retour
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRet_Click(object sender, RoutedEventArgs e)
         {
             ChoixEmpreinte emp = new ChoixEmpreinte();
