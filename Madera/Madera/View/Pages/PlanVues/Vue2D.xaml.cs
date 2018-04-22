@@ -379,8 +379,8 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void btn3D_Click(object sender, RoutedEventArgs e)
         {
-            //Apercu3D windows3D = new Apercu3D();
-            // ((MetroWindow)this.Parent).Content = windows3D;
+            Vue3D windows3D = new Vue3D();
+            ((MetroWindow)this.Parent).Content = windows3D;
         }
 
         /// <summary>
