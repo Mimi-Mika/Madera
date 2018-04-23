@@ -33,6 +33,11 @@ namespace Madera.View.Pages.Tdb
             ((MetroWindow)this.Parent).Content = add_devis;
         }
 
+        private void Click_btn_devis(object sender, RoutedEventArgs e) {
+            Devis.Index listing_devis = new Devis.Index();
+            ((MetroWindow)this.Parent).Content = listing_devis;
+        }
+
         private void Click_btn_factures(object sender, RoutedEventArgs e)
         {
             Factures.Index listing_factures = new Factures.Index();

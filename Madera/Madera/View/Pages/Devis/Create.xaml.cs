@@ -38,15 +38,17 @@ namespace Madera.View.Pages.Devis
 
         private void btn_add(object sender, RoutedEventArgs e)
         {
-            ChoixEmpreinte tdb = new ChoixEmpreinte();
+            int id_client = Convert.ToInt32(ListeClient.SelectedValue.ToString());
+            ChoixEmpreinte tdb = new ChoixEmpreinte(id_client);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
         private void RemplirListeClient()
         {
             DBEntities DB = new DBEntities();
-            ListeClient.ItemsSource = DB.Client.Select(i => i).ToList();
+            ListeClient.ItemsSource   = DB.Client.ToList();
             ListeClient.DisplayMemberPath = "nom";
+            ListeClient.SelectedValuePath = "idClient";
         }
     }
 }

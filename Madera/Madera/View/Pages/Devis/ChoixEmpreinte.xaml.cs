@@ -24,16 +24,23 @@ namespace Madera.View.Pages.Devis
     /// </summary>
     public partial class ChoixEmpreinte : Page
     {
-        public ChoixEmpreinte()
+        public ChoixEmpreinte(Nullable<int> id_client)
         {
             InitializeComponent();
             ChargerEmpreinte();
+            if (null != id_client) {
+                var client = GetInfosClient(Convert.ToInt32(id_client));
+                lblNumClient.Content = "#"+client.idClient;
+                lblNomClient.Content = client.nom;
+                lblPrenomClient.Content = client.prenom;
+                lblMail.Content = client.mail;
+            }
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
-            ((MetroWindow)this.Parent).Content = tdb;
+            Devis.Create choix_client = new Devis.Create();
+            ((MetroWindow)this.Parent).Content = choix_client;
         }
 
         private void ChargerEmpreinte()
@@ -50,8 +57,6 @@ namespace Madera.View.Pages.Devis
                 this.lstV.Items.Add(new Image() { Source = new BitmapImage(new Uri("../../../Pictures/" + item.nom + ".png", UriKind.Relative)) });
 
             }
-
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -60,6 +65,12 @@ namespace Madera.View.Pages.Devis
 
             Vue2D vue2D = new Vue2D(idEmpreinte);
             ((MetroWindow)this.Parent).Content = vue2D;
+        }
+
+        private Client GetInfosClient(int id_client) {
+            DBEntities db = new DBEntities();
+            Client client = db.Client.Where(i => i.idClient == id_client).FirstOrDefault();
+            return client;
         }
     }
 }
