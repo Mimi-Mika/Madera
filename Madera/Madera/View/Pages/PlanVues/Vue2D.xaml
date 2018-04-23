@@ -16,7 +16,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListBox x:Name="listTypeModule" ItemsSource="{Binding TypeModuleList}" MaxWidth="200"
+        <ListBox x:Name="listTypeModule" ItemsSource="{Binding TypeModuleList}" MaxWidth="200" BorderThickness="2" BorderBrush="Black"
             ScrollViewer.CanContentScroll="False" Margin="20,10,251,284.4" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" >
             <ListBox.ItemTemplate >
                 <DataTemplate>
@@ -43,12 +43,12 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="listCouleur" ItemsSource="{Binding CouleurList}"
-            ScrollViewer.CanContentScroll="False" Margin="67,87,204,240.4" IsSynchronizedWithCurrentItem="False" Grid.Column="1">
+        <ListBox x:Name="listCouleur" ItemsSource="{Binding CouleurList}" Height="100" Width="140"
+            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" Grid.Column="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding imgUrl}" Height="200" Width="150"/>
+                        <Image Source="{Binding imgUrl}" Height="30" Width="30"/>
                         <StackPanel Margin="10,0">
                             <TextBlock Text="{Binding nom}" FontWeight="Bold" />
                             <TextBlock Text="{Binding surCout}"/>
@@ -57,16 +57,14 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="listModule_Copy1" ItemsSource="{Binding ModuleList}"
-            ScrollViewer.CanContentScroll="False" Margin="271,43,0,284.4" IsSynchronizedWithCurrentItem="False">
+        <ListBox x:Name="listGamme"  ItemsSource="{Binding GammeList}" Height="160" Width="200"
+            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" Grid.ColumnSpan="2" Margin="292,105,308,175" SelectionChanged="listGamme_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding imgUrl}" Height="200" Width="150"/>
+                        <Image Source="{Binding imgUrl}" Height="80" Width="80"/>
                         <StackPanel Margin="10,0">
                             <TextBlock Text="{Binding nom}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding hauteur}"/>
-                            <TextBlock Text="{Binding largeur}" FontStyle="Italic"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>

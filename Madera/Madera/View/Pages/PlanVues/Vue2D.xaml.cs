@@ -45,6 +45,31 @@ namespace Madera.View.Pages.PlanVues
             CouleurList = DB.Couleur.ToList();
             listCouleur.ItemsSource = CouleurList;
 
+            List<Gamme> GammeList = new List<Gamme>();
+            GammeList = DB.Gamme.ToList();
+            listGamme.ItemsSource = GammeList;
+
+            listGamme.SelectedValuePath = "nom";
+
+
+
+
+
+
+            //DBEntities DB = new DBEntities();
+            int idM = 0;
+            Maison m3daffiche = new Maison();
+            m3daffiche=DB.Maison.Where(i => i.idMaison == idM).FirstOrDefault();
+
+            List<Module_Maison> listModules_Maison = new List<Module_Maison>();
+
+            listModules_Maison = DB.Module_Maison.Where(i => i.idMaison == idM).ToList();
+
+            foreach (var item in listModules_Maison)
+            {
+               
+            }
+
 
         }
 
@@ -58,9 +83,15 @@ namespace Madera.View.Pages.PlanVues
             List<Module> ModuleList = new List<Module>();
             ModuleList = DB.Module.Where(i => i.TypeModule.idType == listTypeModule.SelectedIndex+1).ToList();
             listModule.ItemsSource = ModuleList;
+
         }
 
-      
+        private void listGamme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MessageBox.Show(listGamme.SelectedValue.ToString());
+        }
+
+
 
 
         //private ObservableCollection<Module> moduleList;
