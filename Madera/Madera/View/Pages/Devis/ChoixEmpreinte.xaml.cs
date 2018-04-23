@@ -30,16 +30,17 @@ namespace Madera.View.Pages.Devis
             ChargerEmpreinte();
             if (null != id_client) {
                 var client = GetInfosClient(Convert.ToInt32(id_client));
-                lblNumClient.Content = client.idClient;
+                lblNumClient.Content = "#"+client.idClient;
                 lblNomClient.Content = client.nom;
+                lblPrenomClient.Content = client.prenom;
                 lblMail.Content = client.mail;
             }
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
-            ((MetroWindow)this.Parent).Content = tdb;
+            Devis.Create choix_client = new Devis.Create();
+            ((MetroWindow)this.Parent).Content = choix_client;
         }
 
         private void ChargerEmpreinte()

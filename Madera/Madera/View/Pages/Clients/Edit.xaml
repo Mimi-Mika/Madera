@@ -43,7 +43,7 @@
         <Label Content="Surface (m²)" HorizontalAlignment="Left" Margin="1043,360,0,0" VerticalAlignment="Top" Width="150"/>
         <DatePicker HorizontalAlignment="Left" Margin="781,560,0,0" VerticalAlignment="Top" Width="200"/>
         <Label Content="Date  de remise des cléf souhaiter *" HorizontalAlignment="Left" Margin="780,530,0,0" VerticalAlignment="Top" Width="200"/>
-        <Button x:Name="btn_save" Style="{StaticResource AccentedSquareButtonStyle}" Content="Ajouter" HorizontalAlignment="Left" Margin="683,726,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal"/>
+        <Button x:Name="btn_save" Style="{StaticResource AccentedSquareButtonStyle}" Content="Modifier" HorizontalAlignment="Left" Margin="683,726,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal"/>
         <Button x:Name="btn_delete" Style="{StaticResource AccentedSquareButtonStyle}" Content="Supprimer" HorizontalAlignment="Left" Margin="45,56,0,0" VerticalAlignment="Top" Width="75" Background="#CCDA1F11" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Click="Click_btn_delete"/>
         <Label Content="N° de dossier :" HorizontalAlignment="Left" Margin="881,93,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Ajouter par :" HorizontalAlignment="Left" Margin="881,65,0,0" VerticalAlignment="Top" Width="100"/>
