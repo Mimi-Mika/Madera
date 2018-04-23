@@ -16,112 +16,121 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Height="105" Width="90" Margin="228,10,82,325" >
-            <TextBlock Text="Type module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-            <ListBox x:Name="listTypeModule" BorderThickness="1" BorderBrush="Black"
-                ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" Grid.ColumnSpan="2" >
-                <ListBox.ItemTemplate >
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding nomType}" Height="30" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Border BorderThickness="1" BorderBrush="Black" Height="105" Width="90" >
+                    <StackPanel>
+                        <TextBlock Text="Gamme" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
+                        <ListBox x:Name="listGamme"  BorderThickness="1" BorderBrush="Black"
+                            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" SelectionChanged="listGamme_SelectionChanged" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border BorderThickness="1" BorderBrush="Black">
+                                            <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
+                                        </Border>
+                                        <StackPanel  Margin="1">
+                                            <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
 
+                <Border BorderThickness="1" BorderBrush="Black" Height="105" Width="90" >
+                    <StackPanel>
+                        <TextBlock Text="Type module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
+                        <ListBox x:Name="listTypeModule" BorderThickness="1" BorderBrush="Black"
+                            ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" Grid.ColumnSpan="2" >
+                            <ListBox.ItemTemplate >
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding nomType}" Height="30" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
 
-        <StackPanel Width="150" Height="200" Margin="73,110,177,130" >
-            <TextBlock Text="Module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-            <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black"
-             ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding imgUrl}" Height="90" Width="90" Margin="1"/>
-                            <StackPanel Margin="1">
-                                <TextBlock Text="{Binding nom}" FontWeight="Bold" />
-                                <TextBlock Text="{Binding hauteur}"/>
-                                <TextBlock Text="{Binding largeur}" FontStyle="Italic"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-
-
-        <StackPanel Height="125" Width="90" Grid.Column="1">
-            <TextBlock Text="Couleur" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-            <ListBox x:Name="listCouleur"  BorderThickness="1" BorderBrush="Black"
-                ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" >
-                            <Border BorderThickness="1" BorderBrush="Black">
-                                <Image Source="{Binding imgUrl}" Height="30" Width="30" Margin="1"/>
-                            </Border>
-                            <StackPanel Margin="1">
-                                <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                    <Border BorderThickness="1" BorderBrush="Black"  Width="180" Height="210" HorizontalAlignment="Left">
+                <StackPanel>
+                    <TextBlock Text="Module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
+                    <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black"
+                     ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="+"/>
-                                    <TextBlock Text="{Binding surCout}"/>
-                                    <TextBlock Text="%"/>
+                                    <Image Source="{Binding imgUrl}" Height="90" Width="90" Margin="1"/>
+                                    <StackPanel Margin="1">
+                                        <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding hauteur}"/>
+                                        <TextBlock Text="{Binding largeur}" FontStyle="Italic"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal">
+                <Border BorderThickness="1" BorderBrush="Black" Height="125" Width="90">
+                    <StackPanel>
+                        <TextBlock Text="Finition" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
+                        <ListBox x:Name="listFinition" BorderThickness="1" BorderBrush="Black"
+                            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" >
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border BorderThickness="1" BorderBrush="Black">
+                                            <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
+                                        </Border>
+                                        <StackPanel  Margin="1">
+                                            <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="+"/>
+                                                <TextBlock Text="{Binding surCout}"/>
+                                                <TextBlock Text="%"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                
+                <Border BorderThickness="1" BorderBrush="Black" Height="125" Width="90">
+                    <StackPanel>
+                        <TextBlock Text="Couleur" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
+                        <ListBox x:Name="listCouleur"  BorderThickness="1" BorderBrush="Black"
+                            ScrollViewer.CanContentScroll="true"  IsSynchronizedWithCurrentItem="False">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Border BorderThickness="0,1,1,1" BorderBrush="Black">
+                                            <Image Source="{Binding imgUrl}" Height="30" Width="30" Margin="1"/>
+                                        </Border>
+                                        <StackPanel Margin="0,1,0,0">
+                                            <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="+"/>
+                                                <TextBlock Text="{Binding surCout}"/>
+                                                <TextBlock Text="%"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
         </StackPanel>
-
-
-
-        <StackPanel Margin="0,0,310,335" Height="105" Width="90" >
-            <TextBlock Text="Gamme" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-            <ListBox x:Name="listGamme"  BorderThickness="1" BorderBrush="Black"
-                ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" SelectionChanged="listGamme_SelectionChanged" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Border BorderThickness="1" BorderBrush="Black">
-                                <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
-                            </Border>
-                            <StackPanel  Margin="1">
-                                <TextBlock Text="{Binding nom}" FontWeight="Bold" />
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-
-
-        <StackPanel  Height="105" Width="90" Margin="44,325,266,10" >
-            <TextBlock Text="Finition" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-            <ListBox x:Name="listFinition" BorderThickness="1" BorderBrush="Black"
-                ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Border BorderThickness="1" BorderBrush="Black">
-                                <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
-                            </Border>
-                            <StackPanel  Margin="1">
-                                <TextBlock Text="{Binding nom}" FontWeight="Bold" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="+"/>
-                                    <TextBlock Text="{Binding surCout}"/>
-                                    <TextBlock Text="%"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-
-
-
     </Grid>
 </Page>

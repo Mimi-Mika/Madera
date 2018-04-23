@@ -66,39 +66,26 @@ namespace Madera.View.Pages.PlanVues
 
         }
 
-
-
-
-
         private void listTypeModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DBEntities DB = new DBEntities();
             List<Module> ModuleList = new List<Module>();
-            ModuleList = DB.Module.Where(i => i.TypeModule.idType == listTypeModule.SelectedIndex+1).ToList();
+            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
+             && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
             listModule.ItemsSource = ModuleList;
-
         }
 
         private void listGamme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           // MessageBox.Show(listGamme.SelectedValue.ToString());
+            if (listTypeModule.SelectedValue!=null && listGamme.SelectedValue != null)
+            {
+                DBEntities DB = new DBEntities();
+                List<Module> ModuleList = new List<Module>();
+                ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
+                 && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
+                listModule.ItemsSource = ModuleList;
+            }
         }
-
-
-
-
-        //private ObservableCollection<Module> moduleList;
-        //public ObservableCollection<Module> ModuleList
-        //{
-        //    get { return moduleList; }
-        //    set
-        //    {
-        //        if (value != moduleList)
-        //        {
-        //            moduleList = value;
-        //        }
-        //    }
-        //}
     }
     
 }
