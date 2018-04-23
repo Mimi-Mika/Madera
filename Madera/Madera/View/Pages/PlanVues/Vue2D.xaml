@@ -19,7 +19,7 @@
         <StackPanel Height="105" Width="90" Margin="228,10,82,325" >
             <TextBlock Text="Type module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
             <ListBox x:Name="listTypeModule" BorderThickness="1" BorderBrush="Black"
-                ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" Margin="362,90,348,245" Grid.ColumnSpan="2" >
+                ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" Grid.ColumnSpan="2" >
                 <ListBox.ItemTemplate >
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -34,7 +34,7 @@
         <StackPanel Width="150" Height="200" Margin="73,110,177,130" >
             <TextBlock Text="Module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
             <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black"
-             ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" Margin="10,120,240,120"  >
+             ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -51,10 +51,10 @@
         </StackPanel>
 
 
-        <StackPanel Height="105" Width="90" Margin="228,325,82,10" >
+        <StackPanel Height="125" Width="90" Grid.Column="1">
             <TextBlock Text="Couleur" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
             <ListBox x:Name="listCouleur"  BorderThickness="1" BorderBrush="Black"
-                ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" Margin="105,325,205,10">
+                ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" >
@@ -100,7 +100,7 @@
         <StackPanel  Height="105" Width="90" Margin="44,325,266,10" >
             <TextBlock Text="Finition" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
             <ListBox x:Name="listFinition" BorderThickness="1" BorderBrush="Black"
-                ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" Margin="10,325,300,10"  >
+                ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
