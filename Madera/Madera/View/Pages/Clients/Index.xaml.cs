@@ -36,7 +36,7 @@ namespace Madera.View.Pages.Clients
         private void loadClient()
         {
             DBEntities DB = new DBEntities();
-            ListeClient.ItemsSource = DB.Client.Select(i=>i).ToList();
+            ListeClient.ItemsSource = DB.Client.ToList();
         }
     }
 }
