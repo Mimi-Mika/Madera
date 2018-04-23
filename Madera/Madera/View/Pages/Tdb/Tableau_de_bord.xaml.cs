@@ -43,5 +43,11 @@ namespace Madera.View.Pages.Tdb
             Factures.Index listing_factures = new Factures.Index();
             ((MetroWindow)this.Parent).Content = listing_factures;
         }
+
+        private void Click_btn_devis(object sender, RoutedEventArgs e)
+        {
+            Devis.Index listing_devis = new Devis.Index();
+            ((MetroWindow)this.Parent).Content = listing_devis;
+        }
     }
 }

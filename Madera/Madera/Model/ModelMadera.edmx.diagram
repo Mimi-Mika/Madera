@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2c8264bc7b8642168328855e65dc5da6" Name="Diagram1" ZoomLevel="62">
+      <Diagram DiagramId="2c8264bc7b8642168328855e65dc5da6" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="DBModel.Client" Width="1.5" PointX="10.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Commercial" Width="1.5" PointX="10.75" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Couleur" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Empreinte" Width="1.5" PointX="6" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.EtatCommande" Width="1.5" PointX="13" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Favori" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Finition" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Finition" Width="1.5" PointX="0.5" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Gamme" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Maison" Width="1.5" PointX="8.25" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Maison_TypeDalle" Width="1.5" PointX="16" PointY="7.125" IsExpanded="true" />
