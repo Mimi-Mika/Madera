@@ -21,16 +21,16 @@
                 <Border BorderThickness="1" BorderBrush="Black" Height="105" Width="90" >
                     <StackPanel>
                         <TextBlock Text="Gamme" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                        <ListBox x:Name="listGamme"  BorderThickness="1" BorderBrush="Black"
+                        <ListBox x:Name="listGamme"  BorderThickness="1" BorderBrush="Black" Height="105"
                             ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" SelectionChanged="listGamme_SelectionChanged" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Border BorderThickness="1" BorderBrush="Black">
-                                            <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
+                                            <Image Source="{Binding imgUrl}" Height="23 " Width="30"/>
                                         </Border>
-                                        <StackPanel  Margin="1">
-                                            <TextBlock Text="{Binding nom}" FontWeight="Bold" />
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Text="{Binding nom}" FontWeight="Bold"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
@@ -42,12 +42,12 @@
                 <Border BorderThickness="1" BorderBrush="Black" Height="105" Width="90" >
                     <StackPanel>
                         <TextBlock Text="Type module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                        <ListBox x:Name="listTypeModule" BorderThickness="1" BorderBrush="Black"
+                        <ListBox x:Name="listTypeModule" BorderThickness="1" BorderBrush="Black" Height="105"
                             ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" Grid.ColumnSpan="2" >
                             <ListBox.ItemTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding nomType}" Height="30" />
+                                        <TextBlock Text="{Binding nomType}" Height="24" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -59,7 +59,7 @@
                     <Border BorderThickness="1" BorderBrush="Black"  Width="180" Height="210" HorizontalAlignment="Left">
                 <StackPanel>
                     <TextBlock Text="Module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                    <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black"
+                    <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black" Height="160"
                      ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -81,7 +81,7 @@
                 <Border BorderThickness="1" BorderBrush="Black" Height="125" Width="90">
                     <StackPanel>
                         <TextBlock Text="Finition" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                        <ListBox x:Name="listFinition" BorderThickness="1" BorderBrush="Black"
+                        <ListBox x:Name="listFinition" BorderThickness="1" BorderBrush="Black" Height="105"
                             ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -90,8 +90,8 @@
                                             <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
                                         </Border>
                                         <StackPanel  Margin="1">
-                                            <TextBlock Text="{Binding nom}" FontWeight="Bold" />
-                                            <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding nom}" FontWeight="Bold" HorizontalAlignment="Center" />
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                                                 <TextBlock Text="+"/>
                                                 <TextBlock Text="{Binding surCout}"/>
                                                 <TextBlock Text="%"/>
@@ -107,8 +107,8 @@
                 <Border BorderThickness="1" BorderBrush="Black" Height="125" Width="90">
                     <StackPanel>
                         <TextBlock Text="Couleur" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                        <ListBox x:Name="listCouleur"  BorderThickness="1" BorderBrush="Black"
-                            ScrollViewer.CanContentScroll="true"  IsSynchronizedWithCurrentItem="False">
+                        <ListBox x:Name="listCouleur"  BorderThickness="1" BorderBrush="Black" Height="105"
+                           IsSynchronizedWithCurrentItem="False" Width="90">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" >
