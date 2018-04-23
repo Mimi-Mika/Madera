@@ -59,13 +59,15 @@ namespace Madera
 
             DB.Maison_TypeDalle.Add(testajout);
             //DB.SaveChanges();
-            
+
+            Vue2D vue2d = new Vue2D();
+            this.Content = new Vue2D();
+
 
             if (testLogin !=null) {
                 //Home home = new Home();
                 //home.Show();
-                Vue2D vue2d= new Vue2D();
-                this.Content = new Vue2D();
+                
                // Close();
             }
             else {

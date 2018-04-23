@@ -28,8 +28,16 @@ namespace Madera.View.Pages.PlanVues
         {
             InitializeComponent();
             DBEntities DB = new DBEntities();
-
             this.DataContext = this;
+
+            // Gamme premiere Liste
+            List<Gamme> GammeList = new List<Gamme>();
+            GammeList = DB.Gamme.ToList();
+            listGamme.ItemsSource = GammeList;
+            listGamme.SelectedValuePath = "idGamme";
+            listGamme.SelectedIndex = 0; // Selection premier champ de la liste
+
+            //
 
             List<TypeModule> TypeModuleList = new List<TypeModule>();
             TypeModuleList = DB.TypeModule.ToList();
@@ -41,36 +49,19 @@ namespace Madera.View.Pages.PlanVues
             ModuleList = DB.Module.Where(i=>i.TypeModule.idType == listTypeModule.SelectedIndex+1).ToList();
             listModule.ItemsSource = ModuleList;
 
+
+            // Couleur liste indépendante
             List<Couleur> CouleurList = new List<Couleur>();
             CouleurList = DB.Couleur.ToList();
             listCouleur.ItemsSource = CouleurList;
 
-            List<Gamme> GammeList = new List<Gamme>();
-            GammeList = DB.Gamme.ToList();
-            listGamme.ItemsSource = GammeList;
 
-            listGamme.SelectedValuePath = "nom";
+            
 
 
-
-
-
-
-            //DBEntities DB = new DBEntities();
-            int idM = 0;
-            Maison m3daffiche = new Maison();
-            m3daffiche=DB.Maison.Where(i => i.idMaison == idM).FirstOrDefault();
-
-            List<Module_Maison> listModules_Maison = new List<Module_Maison>();
-
-            listModules_Maison = DB.Module_Maison.Where(i => i.idMaison == idM).ToList();
-
-            foreach (var item in listModules_Maison)
-            {
-               
-            }
-
-
+            List<Finition> FinitionList = new List<Finition>();
+            FinitionList = DB.Finition.ToList();
+            listFinition.ItemsSource = FinitionList;
         }
 
 
@@ -88,7 +79,7 @@ namespace Madera.View.Pages.PlanVues
 
         private void listGamme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MessageBox.Show(listGamme.SelectedValue.ToString());
+           // MessageBox.Show(listGamme.SelectedValue.ToString());
         }
 
 
