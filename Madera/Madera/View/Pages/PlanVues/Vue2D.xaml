@@ -59,7 +59,7 @@
                     <Border BorderThickness="1" BorderBrush="Black"  Width="180" Height="210" HorizontalAlignment="Left">
                 <StackPanel>
                     <TextBlock Text="Module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                    <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black" Height="160"
+                    <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black" Height="190"
                      ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -90,8 +90,8 @@
                                             <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
                                         </Border>
                                         <StackPanel  Margin="1">
-                                            <TextBlock Text="{Binding nom}" FontWeight="Bold" HorizontalAlignment="Center" />
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                            <TextBlock Text="{Binding nom}" FontWeight="Bold"  />
+                                            <StackPanel Orientation="Horizontal"  >
                                                 <TextBlock Text="+"/>
                                                 <TextBlock Text="{Binding surCout}"/>
                                                 <TextBlock Text="%"/>
