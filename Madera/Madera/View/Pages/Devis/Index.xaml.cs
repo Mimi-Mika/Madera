@@ -1,4 +1,5 @@
-﻿using Madera.View.Pages.Tdb;
+﻿using Madera.Model;
+using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,15 @@ namespace Madera.View.Pages.Devis
         public Index()
         {
             InitializeComponent();
+            loadClient();
+        }
+
+        private void loadClient()
+        {
+            DBEntities DB = new DBEntities();
+            cmbClient.ItemsSource = DB.Client.ToList();
+            cmbClient.DisplayMemberPath = "nom";
+            cmbClient.SelectedValuePath = "idClient";
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
@@ -37,6 +47,11 @@ namespace Madera.View.Pages.Devis
         {
             Devis.Create tdb = new Devis.Create();
             ((MetroWindow)this.Parent).Content = tdb;
+        }
+
+        private void btnChoisirDevis_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
