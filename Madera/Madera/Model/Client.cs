@@ -19,8 +19,7 @@ namespace Madera.Model
         {
             this.Projet = new HashSet<Projet>();
         }
-
-        public static object ItemsSource { get; internal set; }
+    
         public long idClient { get; set; }
         public string nom { get; set; }
         public string prenom { get; set; }

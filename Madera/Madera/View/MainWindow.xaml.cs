@@ -1,5 +1,6 @@
 ﻿using Madera.Model;
 using Madera.View;
+using Madera.View.Pages.PlanVues;
 using MahApps.Metro.Controls;
 using System;
 using System.Linq;
@@ -40,10 +41,13 @@ namespace Madera
             });
 
             DB.SaveChanges();
+            Vue3D vue3d = new Vue3D();
+            this.Content = new Vue3D();
             if (testLogin !=null) {
-                Home home = new Home();
-                home.Show();
-                Close();
+                //Home home = new Home();
+                //home.Show();
+                
+                // Close();
             }
             else {
                 error_message.Content = "Login ou mot de passe incorrect !";

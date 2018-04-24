@@ -11,8 +11,7 @@ namespace Madera.Model
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows.Controls;
-
+    
     public partial class Commercial
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -31,10 +30,5 @@ namespace Madera.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Projet> Projet { get; set; }
-
-        public static implicit operator ComboBox(Commercial v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
