@@ -358,6 +358,17 @@
       <DependentUpon>ModelMadera.edmx</DependentUpon>
       <LastGenOutput>ModelMadera.cs</LastGenOutput>
     </Content>
+    <Resource Include="Pictures\Couleurs\1.jpg" />
+    <Resource Include="Pictures\Couleurs\2.jpg" />
+    <Resource Include="Pictures\Couleurs\3.jpg" />
+    <Resource Include="Pictures\Couleurs\4.jpg" />
+    <Resource Include="Pictures\Finitions\1.jpg" />
+    <Resource Include="Pictures\Finitions\2.jpg" />
+    <Resource Include="Pictures\Gammes\1.jpg" />
+    <Resource Include="Pictures\Gammes\2.jpg" />
+    <Resource Include="Pictures\Modules\1.jpg" />
+    <Resource Include="Pictures\Modules\2.jpg" />
+    <Resource Include="Pictures\Modules\3.jpg" />
     <Resource Include="Pictures\imgMurInt.jpg" />
     <Resource Include="Pictures\imgMurExt.jpg" />
     <Resource Include="Pictures\bigCarre.png" />
