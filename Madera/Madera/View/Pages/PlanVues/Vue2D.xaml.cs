@@ -452,7 +452,7 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void btnRet_Click(object sender, RoutedEventArgs e)
         {
-            ChoixEmpreinte emp = new ChoixEmpreinte();
+            ChoixEmpreinte emp = new ChoixEmpreinte(null);
             ((MetroWindow)this.Parent).Content = emp;
         }
     }
