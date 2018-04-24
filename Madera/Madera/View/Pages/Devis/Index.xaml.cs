@@ -51,7 +51,9 @@ namespace Madera.View.Pages.Devis
 
         private void btnChoisirDevis_Click(object sender, RoutedEventArgs e)
         {
-
+            int id_client = Convert.ToInt32(cmbClient.SelectedValue.ToString());
+            ChoixEmpreinte tdb = new ChoixEmpreinte(id_client);
+            ((MetroWindow)this.Parent).Content = tdb;
         }
     }
 }
