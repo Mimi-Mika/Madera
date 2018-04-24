@@ -77,6 +77,9 @@ namespace Madera.View.Pages.PlanVues
             listCouleur.ItemsSource = CouleurList;
             listCouleur.SelectedValuePath = "idCouleur";
 
+            // Selection radio bouton "Ajouter" par défaut
+            rbAjout.IsChecked = true;
+
 
 
             Empreinte empreinteSelection = new Empreinte();
@@ -123,9 +126,11 @@ namespace Madera.View.Pages.PlanVues
         private void listTypeModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DBEntities DB = new DBEntities();
+            var b = listGamme.SelectedValue;
+            var bc = listTypeModule.SelectedValue;
             List<Module> ModuleList = new List<Module>();
-            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
-             && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
+            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (int)listTypeModule.SelectedValue
+             && i.Gamme.idGamme == (int)listGamme.SelectedValue).ToList();
             listModule.ItemsSource = ModuleList;
         }
 
@@ -136,7 +141,7 @@ namespace Madera.View.Pages.PlanVues
                 DBEntities DB = new DBEntities();
                 List<Module> ModuleList = new List<Module>();
                 ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
-                 && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
+                 && (long)i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
                 listModule.ItemsSource = ModuleList;
             }
         }
@@ -454,6 +459,11 @@ namespace Madera.View.Pages.PlanVues
         {
             ChoixEmpreinte emp = new ChoixEmpreinte(null);
             ((MetroWindow)this.Parent).Content = emp;
+        }
+
+        private void btnSav_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
