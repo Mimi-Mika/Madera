@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using MahApps.Metro.Controls;
+using Madera.Model;
+using System.Linq;
 
 namespace Madera.View.Pages.PlanVues
 {
@@ -58,8 +60,17 @@ namespace Madera.View.Pages.PlanVues
             // Define lights.
             DefineLights();
 
+            DBEntities DB = new DBEntities();
+            int idM = 1;
+            Maison m3daffiche = new Maison();
+            m3daffiche = DB.Maison.Where(i => i.idMaison == idM).FirstOrDefault();
+
+            List<Module_Maison> listModulesMaison = new List<Module_Maison>();
+
+            listModulesMaison = DB.Module_Maison.Where(i => i.idMaison == idM).ToList();
+
             // Create the model.
-            DefineModel(MainModel3Dgroup);
+            DefineModel(MainModel3Dgroup, listModulesMaison);
 
             // Add the group of models to a ModelVisual3D.
             ModelVisual3D model_visual = new ModelVisual3D();
@@ -80,36 +91,35 @@ namespace Madera.View.Pages.PlanVues
         }
 
         // Add the model to the Model3DGroup.
-        private void DefineModel(Model3DGroup model_group)
+        private void DefineModel(Model3DGroup model_group, List<Module_Maison> _listModulesMaison)
         {
+            
+            
 
+            foreach (var item in _listModulesMaison)
+            {
+
+                printPanneau(model_group, (int)item.Module.TypeModule.idType, (int)item.posXDebut, (int)item.posYDebut, (int)item.posXFin, (int)item.posYFin);
+
+            }
+            
+
+
+        }
+
+        private void printPanneau(Model3DGroup model_group, int _type, int _xD, int _yD, int _xF, int _yF)
+        {
 
             // Make a mesh to hold the surface.
             MeshGeometry3D meshWall = new MeshGeometry3D();
             MeshGeometry3D meshGround = new MeshGeometry3D();
             MeshGeometry3D meshInt = new MeshGeometry3D();
 
-            dessiner(meshGround, 0, 0, 100, 70, -0.2, -0.0001);
-            dessiner(meshWall, 0, 0, 3, 70, 0, 25);    // gauche
-            dessiner(meshWall, 0, 0, 100, 3, 0, 25);    // haut
-            dessiner(meshWall, 99, 0, 100, 70, 0, 25);  // droite
-            dessiner(meshWall, 0, 69, 100, 70, 0, 25);  // bas
-            dessiner(meshInt, 0, 29, 20, 30, 0, 25);    // 1er bout cloison
-            dessiner(meshInt, 30, 29, 45, 30, 0, 25);   // 2eme bout cloison
-            dessiner(meshInt, 20, 29, 30, 30, 20, 25);   // haut porte
-            dessiner(meshInt, 44, 29, 45, 70, 0, 25);   // retour cloison
 
             // Make the surface's material using a solid green brush.
             DiffuseMaterial surface_material = new DiffuseMaterial(Brushes.LightGreen);
             DiffuseMaterial surface_materialGround = new DiffuseMaterial(Brushes.LightGray);
             DiffuseMaterial surface_materialInt = new DiffuseMaterial(Brushes.LightBlue);
-
-            //test image ??? ne marche pas...
-            //ImageBrush imgBrush = new ImageBrush(new BitmapImage(new Uri(@"test.jpg", UriKind.Relative)));
-            //imgBrush.Stretch = Stretch.Fill;
-            //imgBrush.Opacity = 1;
-            //DiffuseMaterial surface_materialInt = new DiffuseMaterial(imgBrush);
-            //DiffuseMaterial surface_materialGround = new DiffuseMaterial(imgBrush);
 
             // Make the mesh's model.
             GeometryModel3D surface_model = new GeometryModel3D(meshWall, surface_material);
@@ -126,6 +136,60 @@ namespace Madera.View.Pages.PlanVues
             model_group.Children.Add(surface_modelGround);
             model_group.Children.Add(surface_modelInt);
 
+            //dessiner(meshInt, 0, 29, 20, 30, 0, 25);    // 1er bout cloison
+            int xD = _xD*10;
+            int xF = _xF*10;
+            int yD = _yD*10;
+            int yF = _yF*10;
+
+            if (_xD == _xF)
+            {
+                xF = xF + 1;
+            }
+            if (_yD == _yF)
+            {
+                yF = yF + 1;
+            }
+
+            switch (_type)
+            {
+                case 1:     //Porte ext
+                    if (xF - xD == 1) // porte en Y
+                    {
+                        dessiner(meshWall, xD, xF, yD, yF-8, 0, 20);
+                        dessiner(meshWall, xD, xF, yD+2, yF-2, 18, 20);
+                        dessiner(meshWall, xD, xF, yD+8, yF, 0, 20);
+                    }
+                    else
+                    {
+                        dessiner(meshWall, xD, xF-8, yD, yF, 0, 20);
+                        dessiner(meshWall, xD+2, xF-2, yD, yF, 18, 20);
+                        dessiner(meshWall, xD+8, xF, yD, yF, 0, 20);
+                    }
+                    break;
+
+                case 3:     //Mur ext                    
+                    dessiner(meshWall, xD, xF, yD, yF, 0, 20);
+                    break;
+
+                case 5:     //Fenetre ext
+                    if (xF - xD == 1) // porte en Y
+                    {
+                        dessiner(meshWall, xD, xF, yD, yF - 8, 0, 20);
+                        dessiner(meshWall, xD, xF, yD + 2, yF - 2, 16, 20);
+                        dessiner(meshWall, xD, xF, yD + 2, yF - 2, 0, 6);
+                        dessiner(meshWall, xD, xF, yD + 8, yF, 0, 20);
+                    }
+                    else
+                    {
+                        dessiner(meshWall, xD, xF - 8, yD, yF, 0, 20);
+                        dessiner(meshWall, xD + 2, xF - 2, yD, yF, 16, 20);
+                        dessiner(meshWall, xD + 2, xF - 2, yD, yF, 0, 6);
+                        dessiner(meshWall, xD + 8, xF, yD, yF, 0, 20);
+                    }
+                    break;
+
+            }
         }
 
         //private void defin(Model3DGroup model_group, string type, double xdeb, double zdeb, double xfin, double zfin, double hdeb, double hfin) 
@@ -178,7 +242,7 @@ namespace Madera.View.Pages.PlanVues
         //}
 
 
-        private void dessiner(MeshGeometry3D mesh, double xdeb, double zdeb, double xfin, double zfin, double hdeb, double hfin)
+        private void dessiner(MeshGeometry3D mesh, double xdeb, double xfin, double zdeb,  double zfin, double hdeb, double hfin)
         {
 
             double xDeb = xdeb / 10;
