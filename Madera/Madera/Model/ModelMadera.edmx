@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=/bdd_madera.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=C:\bdd_madera.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Client">
           <Key>
             <PropertyRef Name="idClient" />
@@ -119,14 +119,14 @@
         </EntityType>
         <EntityType Name="Module_Maison">
           <Key>
-            <PropertyRef Name="idModule" />
-            <PropertyRef Name="idMaison" />
+            <PropertyRef Name="idModule_maison" />
           </Key>
+          <Property Name="idModule_maison" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="posXDebut" Type="integer" />
           <Property Name="posYDebut" Type="integer" />
           <Property Name="posXFin" Type="integer" />
           <Property Name="posYFin" Type="integer" />
-          <Property Name="distanceSol" Type="real" />
+          <Property Name="distanceSol" Type="decimal" Precision="53" Scale="0" />
           <Property Name="historiquePrixModule" Type="real" />
           <Property Name="historiquePrixCouleur" Type="real" />
           <Property Name="historiquePrixFinition" Type="real" />
@@ -523,8 +523,7 @@
             <End Role="ZoneMorte" EntitySet="ZoneMorte" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -561,6 +560,7 @@
           <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="surCout" Type="Double" />
           <NavigationProperty Name="Module" Relationship="Self.FK_Module_1_0" FromRole="Couleur" ToRole="Module" />
+          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Empreinte">
           <Key>
@@ -600,6 +600,7 @@
           <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="surCout" Type="Double" />
           <NavigationProperty Name="Gamme" Relationship="Self.FK_Gamme_0_0" FromRole="Finition" ToRole="Gamme" />
+          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Gamme">
           <Key>
@@ -610,6 +611,7 @@
           <Property Name="idFinition" Type="Int64" />
           <NavigationProperty Name="Finition" Relationship="Self.FK_Gamme_0_0" FromRole="Gamme" ToRole="Finition" />
           <NavigationProperty Name="Module" Relationship="Self.FK_Module_2_0" FromRole="Gamme" ToRole="Module" />
+          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Maison">
           <Key>
@@ -651,6 +653,7 @@
           <NavigationProperty Name="TypeModule" Relationship="Self.FK_Module_0_0" FromRole="Module" ToRole="TypeModule" />
           <NavigationProperty Name="Module_Favori" Relationship="Self.FK_Module_Favori_1_0" FromRole="Module" ToRole="Module_Favori" />
           <NavigationProperty Name="Module_Maison" Relationship="Self.FK_Module_Maison_1_0" FromRole="Module" ToRole="Module_Maison" />
+          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Module_Favori">
           <Key>
@@ -668,6 +671,7 @@
           <Key>
             <PropertyRef Name="idModule" />
             <PropertyRef Name="idMaison" />
+            <PropertyRef Name="idModule_maison" />
           </Key>
           <Property Name="posXDebut" Type="Int64" />
           <Property Name="posYDebut" Type="Int64" />
@@ -681,6 +685,7 @@
           <Property Name="idMaison" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Maison" Relationship="Self.FK_Module_Maison_0_0" FromRole="Module_Maison" ToRole="Maison" />
           <NavigationProperty Name="Module" Relationship="Self.FK_Module_Maison_1_0" FromRole="Module_Maison" ToRole="Module" />
+          <Property Name="idModule_maison" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Projet">
           <Key>
@@ -1180,6 +1185,7 @@
           <EntitySetMapping Name="Module_Maison">
             <EntityTypeMapping TypeName="DBModel.Module_Maison">
               <MappingFragment StoreEntitySet="Module_Maison">
+                <ScalarProperty Name="idModule_maison" ColumnName="idModule_maison" />
                 <ScalarProperty Name="posXDebut" ColumnName="posXDebut" />
                 <ScalarProperty Name="posYDebut" ColumnName="posYDebut" />
                 <ScalarProperty Name="posXFin" ColumnName="posXFin" />
