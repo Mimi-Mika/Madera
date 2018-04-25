@@ -1,5 +1,6 @@
 ﻿using Madera.Model;
 using Madera.View;
+using Madera.View.Pages.PlanVues;
 using MahApps.Metro.Controls;
 using System;
 using System.Linq;
@@ -38,6 +39,9 @@ namespace Madera
                 tel="0561856235",
                 mail="astiJ@gogo.com"
             });
+
+            Vue3D vue3d = new Vue3D();
+            this.Content = new Vue3D();
 
             DB.SaveChanges();
             if (testLogin !=null) {
