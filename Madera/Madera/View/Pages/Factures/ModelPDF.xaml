@@ -10,9 +10,9 @@
       Title="ModelPDF">
 
     <Grid x:Name="vue_pdf_facture">
-        <Rectangle Fill="#FFA1CCDC" Height="232" Stroke="Black" VerticalAlignment="Bottom" Margin="0,0,0,565"/>
-        <Image Height="170" Margin="0,0,0,585" VerticalAlignment="Center" Source="/Madera;component/Pictures/logoMadera2000.jpg" HorizontalAlignment="Center" Width="338"/>
-        <Label Content="Facture n° 2018032601" HorizontalAlignment="Left" VerticalAlignment="Top" Height="41" Width="321" FontSize="24" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" Margin="30,10,0,0">
+        <Rectangle Fill="#FFA1CCDC" Height="207" Stroke="Black" VerticalAlignment="Bottom" Margin="0,0,0,590"/>
+        <Image Height="170" Margin="0,0,470,611" VerticalAlignment="Bottom" Source="/Madera;component/Pictures/logoMadera2000.jpg" HorizontalAlignment="Right" Width="338"/>
+        <Label Content="Facture n° 2018032601" HorizontalAlignment="Left" VerticalAlignment="Top" Height="41" Width="321" FontSize="24" RenderTransformOrigin="0.5,0.5" FontWeight="Bold">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -22,12 +22,12 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label Content="Madera Innovation" HorizontalAlignment="Left" Margin="30,77,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
-        <Label Content="16 Rue Magellan " HorizontalAlignment="Left" Margin="30,115,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
-        <Label Content="3100 TOULOUSE" HorizontalAlignment="Left" Margin="30,154,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
-        <Label Content="Mr BRAZZALOTTO CAZES Tom" HorizontalAlignment="Right" Margin="0,75,30,0" Width="316" FontSize="20" VerticalAlignment="Top"/>
-        <Label Content="31 Rue de GIRONIS App B43" HorizontalAlignment="Right" Margin="0,113,30,0" Width="316" FontSize="20" VerticalAlignment="Top"/>
-        <Label Content="31100 TOULOUSE" HorizontalAlignment="Right" Margin="0,152,30,0" Width="317" FontSize="20" VerticalAlignment="Top"/>
+        <Label Content="Madera Innovation" HorizontalAlignment="Left" Margin="0,63,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
+        <Label Content="16 Rue Magellan " HorizontalAlignment="Left" Margin="0,101,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
+        <Label Content="3100 TOULOUSE" HorizontalAlignment="Left" Margin="0,140,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
+        <Label Content="Mr BRAZZALOTTO CAZES Tom" HorizontalAlignment="Left" Margin="962,63,0,0" VerticalAlignment="Top" Width="316" FontSize="20"/>
+        <Label Content="31 Rue de GIRONIS App B43" HorizontalAlignment="Left" Margin="962,101,0,0" VerticalAlignment="Top" Width="316" FontSize="20"/>
+        <Label Content="31100 TOULOUSE" HorizontalAlignment="Left" Margin="961,140,0,0" VerticalAlignment="Top" Width="317" FontSize="20"/>
         <ListView HorizontalAlignment="Left" Height="369" Margin="40,331,0,0" VerticalAlignment="Top" Width="1204">
             <ListView.View>
                 <GridView>
@@ -36,12 +36,13 @@
             </ListView.View>
         </ListView>
         <Label Content="Matériaux" HorizontalAlignment="Left" Margin="40,299,0,0" VerticalAlignment="Top" Width="154"/>
-        <Label Content="Qte" HorizontalAlignment="Left" Margin="964,299,0,0" VerticalAlignment="Top" Width="46"/>
-        <Label Content="Prix" HorizontalAlignment="Left" Margin="1179,299,0,0" VerticalAlignment="Top" Width="65"/>
+        <Label Content="Qte" HorizontalAlignment="Left" Margin="890,299,0,0" VerticalAlignment="Top" Width="46"/>
+        <Label Content="Prix HT" HorizontalAlignment="Left" Margin="1025,299,0,0" VerticalAlignment="Top" Width="65"/>
+        <Label Content="Prix TTC" HorizontalAlignment="Left" Margin="1179,299,0,0" VerticalAlignment="Top" Width="65"/>
 
-        <Button Content="retour" Margin="0,10,40,0" Background="#FFA3A3A3" mah:ControlsHelper.ContentCharacterCasing="Lower" Click="Click_btn_retour" Width="75.2" HorizontalAlignment="Right" VerticalAlignment="Top" Height="27.2"/>
+        <Button Content="retour" Margin="0,9,10,0" VerticalAlignment="Top" Width="75" Background="#FFA3A3A3" mah:ControlsHelper.ContentCharacterCasing="Lower" Click="Click_btn_retour" HorizontalAlignment="Right"/>
         <Button x:Name="btn_print" Style="{StaticResource AccentedSquareButtonStyle}" Content="Imprimer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Margin="45,240,0,0" Click="btn_print_Click"/>
-        <Label Content="Prix total :" HorizontalAlignment="Left" Margin="921,739,0,0" VerticalAlignment="Top" Width="319"/>
+        <Label Content="Peix total :" HorizontalAlignment="Left" Margin="921,739,0,0" VerticalAlignment="Top" Width="319"/>
 
     </Grid>
 </Page>
