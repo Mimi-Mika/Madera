@@ -16,13 +16,8 @@
         <Button Content="retour" Margin="0,10,40,0" VerticalAlignment="Top" Background="#FFA3A3A3" mah:ControlsHelper.ContentCharacterCasing="Lower" Click="Click_btn_retour" Width="75.2" HorizontalAlignment="Right"/>
         <Custom:PackIconModern Width="Auto" Height="75" Kind="PageFilePdf" VerticalContentAlignment="Stretch" Margin="0,50,40,0" HorizontalAlignment="Right" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
         <Button Content="Voir la facture" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="152" Click="Click_btn_view_facture"/>
-        <TextBlock HorizontalAlignment="Left" Margin="115,174,0,0" TextWrapping="Wrap" Text="Choisir une facture dans la liste." VerticalAlignment="Top" Height="22" Width="292"/>
-        <DataGrid x:Name="liste_factures" SelectedValuePath="id_maison" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="501" Margin="21,262,0,0" VerticalAlignment="Top" Width="1225">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="id_maison" Binding="{Binding id_maison}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Nom de la maison" Binding="{Binding nom_maison}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Nom du client" Binding="{Binding nom_client}" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListBox Height="513" Margin="0,252,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="1050"/>
+        <TextBlock HorizontalAlignment="Left" Margin="115,243,0,0" TextWrapping="Wrap" Text="Choisir une facture dans la liste." VerticalAlignment="Top" Height="22" Width="292"/>
+
     </Grid>
 </Page>
