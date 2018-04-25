@@ -20,7 +20,7 @@
         <EntityTypeShape EntityType="DBModel.Module_Maison" Width="1.5" PointX="10.5" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Projet" Width="1.5" PointX="13" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.Projet_EtatCommande" Width="1.5" PointX="15.25" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.TypeDalle" Width="1.5" PointX="12.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.TypeDalle" Width="1.5" PointX="13.625" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.TypeModule" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DBModel.ZoneMorte" Width="1.5" PointX="3.75" PointY="11.375" IsExpanded="true" />
         <AssociationConnector Association="DBModel.FK_Projet_0_0" ManuallyRouted="false" />

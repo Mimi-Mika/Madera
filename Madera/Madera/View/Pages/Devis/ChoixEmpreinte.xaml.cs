@@ -24,17 +24,17 @@ namespace Madera.View.Pages.Devis
     /// </summary>
     public partial class ChoixEmpreinte : Page
     {
-        public ChoixEmpreinte(Nullable<int> id_client)
+        int IdClient;
+        public ChoixEmpreinte(int id_client)
         {
             InitializeComponent();
             ChargerEmpreinte();
-            if (null != id_client) {
-                var client = GetInfosClient(Convert.ToInt32(id_client));
-                lblNumClient.Content = "#"+client.idClient;
-                lblNomClient.Content = client.nom;
-                lblPrenomClient.Content = client.prenom;
-                lblMail.Content = client.mail;
-            }
+            var client = GetInfosClient(Convert.ToInt32(id_client));
+            IdClient = id_client;
+            lblNumClient.Content = "#"+client.idClient;
+            lblNomClient.Content = client.nom;
+            lblPrenomClient.Content = client.prenom;
+            lblMail.Content = client.mail;
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
@@ -63,7 +63,7 @@ namespace Madera.View.Pages.Devis
         {
             int idEmpreinte = lstV.SelectedIndex + 1;
 
-            Vue2D vue2D = new Vue2D(idEmpreinte);
+            Vue2D vue2D = new Vue2D(idEmpreinte , IdClient);
             ((MetroWindow)this.Parent).Content = vue2D;
         }
 

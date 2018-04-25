@@ -30,7 +30,7 @@ namespace Madera.View.Pages.PlanVues
 
         // The camera.
         private PerspectiveCamera TheCamera;
-
+        
         // The camera's current location.
         private double CameraPhi = Math.PI / 6.0;       // 30 degrees
         private double CameraTheta = Math.PI / 6.0;     // 30 degrees

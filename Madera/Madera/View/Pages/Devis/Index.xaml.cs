@@ -1,4 +1,5 @@
 ﻿using Madera.Model;
+using Madera.View.Pages.PlanVues;
 using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
 using System;
@@ -18,11 +19,14 @@ using System.Windows.Shapes;
 
 namespace Madera.View.Pages.Devis
 {
+    
     /// <summary>
     /// Logique d'interaction pour Index.xaml
     /// </summary>
     public partial class Index : Page
     {
+        int IdClient;
+        int IdEmpreinte;
         public Index()
         {
             InitializeComponent();
@@ -52,15 +56,37 @@ namespace Madera.View.Pages.Devis
 
         private void btnChoisirDevis_Click(object sender, RoutedEventArgs e)
         {
-            int id_client = Convert.ToInt32(cmbClient.SelectedValue.ToString());
-            ChoixEmpreinte tdb = new ChoixEmpreinte(id_client);
-            ((MetroWindow)this.Parent).Content = tdb;
+            if (ListeDevis.SelectedItems != null)
+            {
+                DBEntities DB = new DBEntities();
+
+                Projet projet = new Projet();
+                projet = (Projet)ListeDevis.SelectedItem;
+
+                IdClient = (int)projet.idClient.Value;
+
+                var truc = DB.Maison.Where(i => i.idMaison == (int)projet.idMaison).FirstOrDefault();
+                IdEmpreinte = (int)truc.idEmpreinte;
+
+                Vue2D vue2d = new Vue2D(IdEmpreinte, IdClient);
+                ((MetroWindow)this.Parent).Content = vue2d;
+            }
+            
         }
 
         private void loadDevis()
         {
             DBEntities DB = new DBEntities();
             ListeDevis.ItemsSource = DB.Projet.Select(i => i).ToList();
+            ListeDevis.SelectedValuePath = "idClient";
+        }
+
+        private void cmbClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int id_client = Convert.ToInt32(cmbClient.SelectedValue.ToString());
+            DBEntities DB = new DBEntities();
+            ListeDevis.ItemsSource = DB.Projet.Where(i => i.idClient == id_client).ToList();
+            ListeDevis.SelectedValuePath = "idClient";
         }
     }
 }

@@ -23,14 +23,27 @@ namespace Madera.View.Pages.PlanVues
     /// </summary>
     public partial class Vue2D : Page
     {
-        public Vue2D(int idEmpreinte)
+        int IdClient;
+        public Vue2D(int idEmpreinte, int idClient)
         {
+            IdClient = idClient;
+
             InitializeComponent();
+
+            remplirLabel(idClient);
             //test maj github
             CreateEmptyFloorPlan(idEmpreinte);
 
             TailleDesButtons();
         }
+
+        private void remplirLabel(int idClient)
+        {
+            lblNom.Content = "";
+            lblNumClient.Content = "";
+        }
+
+
         /// <summary>
         /// Creation de la Gris avec les boutons
         /// </summary>
@@ -457,7 +470,7 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void btnRet_Click(object sender, RoutedEventArgs e)
         {
-            ChoixEmpreinte emp = new ChoixEmpreinte(null);
+            Index emp = new Index();
             ((MetroWindow)this.Parent).Content = emp;
         }
 
