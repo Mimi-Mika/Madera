@@ -36,8 +36,7 @@ namespace Madera.View.Pages.Clients
         {
             Index listing_users = new Index();
             DBEntities DB = new DBEntities();
-            Client clientSelect = DB.Client.Find(this.client.idClient);
-            DB.Client.Remove(clientSelect);
+            Client.ItemsSource = DB.Client.Remove(this.client);
             DB.SaveChanges();
             ((MetroWindow)this.Parent).Content = listing_users;
         }
@@ -47,14 +46,12 @@ namespace Madera.View.Pages.Clients
             if (ControleFormEmpty())
             {
                 DBEntities DB = new DBEntities();
-                Client clientSelect = DB.Client.Find(this.client.idClient);
                 this.client.nom = nom.Text;
                 this.client.mail = mail.Text;
                 this.client.prenom = prenom.Text;
                 this.client.tel = telephone.Text;
                 this.client.adresse = adresse.Text;
-                var attachedEntry = DB.Entry(clientSelect);
-                attachedEntry.CurrentValues.SetValues(this.client);
+                DB.Entry(this.client).CurrentValues.SetValues(this.client);
                 DB.SaveChanges();
                 Index listing_users = new Index();
                 ((MetroWindow)this.Parent).Content = listing_users;

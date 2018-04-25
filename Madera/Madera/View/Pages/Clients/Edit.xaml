@@ -25,11 +25,11 @@
         <TextBox x:Name="mail" HorizontalAlignment="Left" Height="23" Margin="20,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" />
         <Label Content="Téléphone *" HorizontalAlignment="Left" Margin="380,280,0,0" VerticalAlignment="Top" Width="300" />
         <TextBox x:Name="telephone" HorizontalAlignment="Left" Height="23" Margin="380,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" />
-        <TextBox x:Name="adresse" HorizontalAlignment="Left" Height="224" Margin="20,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1204" />
+        <TextBox x:Name="adresse" HorizontalAlignment="Left" Height="283" Margin="20,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="1204" />
         <Label Content="Adresse *" HorizontalAlignment="Left" Margin="20,380,0,0" VerticalAlignment="Top" Width="300" />
-        <Button x:Name="btn_save" Style="{StaticResource AccentedSquareButtonStyle}" Content="Modifier" HorizontalAlignment="Left" Margin="685,663,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal"  Click="Click_btn_edit" />
+        <Button x:Name="btn_save" Style="{StaticResource AccentedSquareButtonStyle}" Content="Ajouter" HorizontalAlignment="Left" Margin="683,726,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal"  Click="Click_btn_edit" />
         <Button x:Name="btn_delete" Style="{StaticResource AccentedSquareButtonStyle}" Content="Supprimer" HorizontalAlignment="Left" Margin="45,56,0,0" VerticalAlignment="Top" Width="75" Background="#CCDA1F11" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Click="Click_btn_delete" />
-        <Button x:Name="btn_annuler" Style="{StaticResource AccentedSquareButtonStyle}" Content="Annuler" HorizontalAlignment="Left" Margin="460,663,0,0" VerticalAlignment="Top" Width="75" Background="#CCDA1F11" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Click="Click_btn_annuler" />
+        <Button x:Name="btn_annuler" Style="{StaticResource AccentedSquareButtonStyle}" Content="Annuler" HorizontalAlignment="Left" Margin="458,726,0,0" VerticalAlignment="Top" Width="75" Background="#CCDA1F11" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Click="Click_btn_annuler" />
         <Label Content="Numéro client" HorizontalAlignment="Left" Margin="761,190,0,0" VerticalAlignment="Top" Width="300" />
         <Label x:Name="num_client" HorizontalAlignment="Left" Margin="766,220,0,0" VerticalAlignment="Top" Width="300" />
     </Grid>
