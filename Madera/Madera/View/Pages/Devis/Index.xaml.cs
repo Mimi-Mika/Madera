@@ -27,6 +27,7 @@ namespace Madera.View.Pages.Devis
         {
             InitializeComponent();
             loadClient();
+            loadDevis();
         }
 
         private void loadClient()
@@ -54,6 +55,12 @@ namespace Madera.View.Pages.Devis
             int id_client = Convert.ToInt32(cmbClient.SelectedValue.ToString());
             ChoixEmpreinte tdb = new ChoixEmpreinte(id_client);
             ((MetroWindow)this.Parent).Content = tdb;
+        }
+
+        private void loadDevis()
+        {
+            DBEntities DB = new DBEntities();
+            ListeDevis.ItemsSource = DB.Projet.Select(i => i).ToList();
         }
     }
 }
