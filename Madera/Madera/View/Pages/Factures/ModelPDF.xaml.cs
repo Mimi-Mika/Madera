@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Madera.View.Pages.Factures
-{
+{ 
     /// <summary>
     /// Logique d'interaction pour ModelPDF.xaml
     /// </summary>
