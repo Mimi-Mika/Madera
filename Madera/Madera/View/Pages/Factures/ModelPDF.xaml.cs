@@ -21,8 +21,8 @@ namespace Madera.View.Pages.Factures
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e) {
-            Tableau_de_bord tdb = new Tableau_de_bord();
-            ((MetroWindow)this.Parent).Content = tdb;
+            Factures.Index listing_facture = new Factures.Index();
+            ((MetroWindow)this.Parent).Content = listing_facture;
         }
 
 #region pdf

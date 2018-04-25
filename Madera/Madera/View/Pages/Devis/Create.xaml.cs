@@ -39,8 +39,13 @@ namespace Madera.View.Pages.Devis
         private void btn_add(object sender, RoutedEventArgs e)
         {
             int id_client = Convert.ToInt32(ListeClient.SelectedValue.ToString());
-            ChoixEmpreinte tdb = new ChoixEmpreinte(id_client);
-            ((MetroWindow)this.Parent).Content = tdb;
+            if(id_client == 0) {
+                MessageBox.Show("Merci de sélectionner un client dans la liste.");
+            }
+            else {
+                ChoixEmpreinte tdb = new ChoixEmpreinte(id_client);
+                ((MetroWindow)this.Parent).Content = tdb;
+            }
         }
 
         private void RemplirListeClient()

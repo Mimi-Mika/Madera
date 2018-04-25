@@ -13,6 +13,7 @@ namespace Madera.View.Pages.Clients
     /// </summary>
     public partial class Index : Page
     {
+
         public Index()
         {
             InitializeComponent();
@@ -34,8 +35,13 @@ namespace Madera.View.Pages.Clients
         private void btn_edit_client(object sender, RoutedEventArgs e)
         {
             Client client = (Client)ListeClient.SelectedItem;
-            Edit edit_client = new Edit(client);
-            ((MetroWindow)this.Parent).Content = edit_client;
+            if (null == client) {
+                MessageBox.Show("Merci de sélectionner un client dans la liste !");
+            }
+            else {
+                Edit edit_client = new Edit(client);
+                ((MetroWindow)this.Parent).Content = edit_client;
+            }
         }
 
         private void loadClient()
@@ -43,5 +49,6 @@ namespace Madera.View.Pages.Clients
             DBEntities DB = new DBEntities();
             ListeClient.ItemsSource = DB.Client.Select(i => i).ToList();
         }
+
     }
 }
