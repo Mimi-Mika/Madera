@@ -24,7 +24,6 @@ namespace Madera.Model
         public Nullable<double> historiquePrixFinition { get; set; }
         public long idModule { get; set; }
         public long idMaison { get; set; }
-        public long idModule_maison { get; set; }
     
         public virtual Maison Maison { get; set; }
         public virtual Module Module { get; set; }

@@ -36,7 +36,7 @@ namespace Madera.View.Pages.Clients
         {
             Index listing_users = new Index();
             DBEntities DB = new DBEntities();
-            DB.Client.Remove(this.client);
+            Client.ItemsSource = DB.Client.Remove(this.client);
             DB.SaveChanges();
             ((MetroWindow)this.Parent).Content = listing_users;
         }
