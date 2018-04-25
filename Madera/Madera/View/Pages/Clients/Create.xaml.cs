@@ -41,7 +41,7 @@ namespace Madera.View.Pages.Clients
                 client.prenom = prenom.Text;
                 client.tel = telephone.Text;
                 client.adresse = adresse.Text;
-                Client.ItemsSource = DB.Client.Add(client);
+                DB.Client.Add(client);
                 DB.SaveChanges();
                 Index listing_users = new Index();
                 ((MetroWindow)this.Parent).Content = listing_users;

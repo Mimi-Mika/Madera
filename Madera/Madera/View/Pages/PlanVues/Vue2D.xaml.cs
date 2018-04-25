@@ -52,6 +52,49 @@ namespace Madera.View.Pages.PlanVues
         {
             int idZoneMorte = 0;
             DBEntities DB = new DBEntities();
+
+
+            this.DataContext = this;
+
+            // Gamme premiere Liste
+            List<Gamme> GammeList = new List<Gamme>();
+            GammeList = DB.Gamme.ToList();
+            listGamme.ItemsSource = GammeList;
+            listGamme.SelectedValuePath = "idGamme";
+            listGamme.SelectedIndex = 0; // Selection premier champ de la liste
+
+            //Type Module, liste avec critère de gamme
+            List<TypeModule> TypeModuleList = new List<TypeModule>();
+            TypeModuleList = DB.TypeModule.ToList();
+            listTypeModule.ItemsSource = TypeModuleList;
+            listTypeModule.SelectedValuePath = "idType";
+            listTypeModule.SelectedIndex = 0;
+
+            //Finition, liste avec critère de gamme
+            List<Finition> FinitionList = new List<Finition>();
+            FinitionList = DB.Finition.ToList();
+            listFinition.ItemsSource = FinitionList;
+            listFinition.SelectedValuePath = "idFinition";
+            listFinition.SelectedIndex = 0;
+
+            //Liste des modules ayant la gammme, le type module et la finition selectionnée
+            List<Module> ModuleList = new List<Module>();
+            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
+            && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
+            listModule.ItemsSource = ModuleList;
+            listFinition.SelectedValuePath = "idModule";
+
+            // Couleur liste indépendante
+            List<Couleur> CouleurList = new List<Couleur>();
+            CouleurList = DB.Couleur.ToList();
+            listCouleur.ItemsSource = CouleurList;
+            listCouleur.SelectedValuePath = "idCouleur";
+
+            // Selection radio bouton "Ajouter" par défaut
+            rbAjout.IsChecked = true;
+
+
+
             Empreinte empreinteSelection = new Empreinte();
             empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
 
@@ -92,6 +135,30 @@ namespace Madera.View.Pages.PlanVues
             AjouterLesBoutons(col, lig, zoneMorteCoordX, zoneMorteTailleX, zoneMorteCoordY, zoneMorteTailleY);
 
         }
+
+        private void listTypeModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DBEntities DB = new DBEntities();
+            var b = listGamme.SelectedValue;
+            var bc = listTypeModule.SelectedValue;
+            List<Module> ModuleList = new List<Module>();
+            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
+             && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
+            listModule.ItemsSource = ModuleList;
+        }
+
+        private void listGamme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listTypeModule.SelectedValue != null && listGamme.SelectedValue != null)
+            {
+                DBEntities DB = new DBEntities();
+                List<Module> ModuleList = new List<Module>();
+                ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
+                 && (long)i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
+                listModule.ItemsSource = ModuleList;
+            }
+        }
+
         /// <summary>
         /// Crée la Grid
         /// </summary>
@@ -405,6 +472,11 @@ namespace Madera.View.Pages.PlanVues
         {
             Index emp = new Index();
             ((MetroWindow)this.Parent).Content = emp;
+        }
+
+        private void btnSav_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
