@@ -25,23 +25,23 @@
         <Label Content="Madera Innovation" HorizontalAlignment="Left" Margin="30,77,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
         <Label Content="16 Rue Magellan " HorizontalAlignment="Left" Margin="30,115,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
         <Label Content="3100 TOULOUSE" HorizontalAlignment="Left" Margin="30,154,0,0" VerticalAlignment="Top" Width="208" FontSize="20"/>
-        <Label Content="Mr BRAZZALOTTO CAZES Tom" HorizontalAlignment="Right" Margin="0,75,30,0" Width="316" FontSize="20" VerticalAlignment="Top"/>
-        <Label Content="31 Rue de GIRONIS App B43" HorizontalAlignment="Right" Margin="0,113,30,0" Width="316" FontSize="20" VerticalAlignment="Top"/>
-        <Label Content="31100 TOULOUSE" HorizontalAlignment="Right" Margin="0,152,30,0" Width="317" FontSize="20" VerticalAlignment="Top"/>
-        <ListView HorizontalAlignment="Left" Height="369" Margin="40,331,0,0" VerticalAlignment="Top" Width="1204">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Label x:Name="nom_client" Content="" HorizontalAlignment="Right" Margin="0,75,30,0" Width="316" FontSize="20" VerticalAlignment="Top"/>
+        <TextBlock x:Name="adresse_client" HorizontalAlignment="Right" Margin="0,113,30,0" Width="316" FontSize="20" VerticalAlignment="Top" Height="78"/>
+        <DataGrid Name="listing_modules" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="369" Margin="40,331,0,0" VerticalAlignment="Top" Width="1204">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type de module" Binding="{Binding nom_module}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Élément" Binding="{Binding type_module}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Gamme" Binding="{Binding nom_gamme}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Prix" Binding="{Binding prix_module}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Label Content="Matériaux" HorizontalAlignment="Left" Margin="40,299,0,0" VerticalAlignment="Top" Width="154"/>
         <Label Content="Qte" HorizontalAlignment="Left" Margin="964,299,0,0" VerticalAlignment="Top" Width="46"/>
         <Label Content="Prix" HorizontalAlignment="Left" Margin="1179,299,0,0" VerticalAlignment="Top" Width="65"/>
 
         <Button Content="retour" Margin="0,10,40,0" Background="#FFA3A3A3" mah:ControlsHelper.ContentCharacterCasing="Lower" Click="Click_btn_retour" Width="75.2" HorizontalAlignment="Right" VerticalAlignment="Top" Height="27.2"/>
         <Button x:Name="btn_print" Style="{StaticResource AccentedSquareButtonStyle}" Content="Imprimer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Background="#CC11DA22" IsDefault="True" mah:ControlsHelper.ContentCharacterCasing="Normal" Margin="45,240,0,0" Click="btn_print_Click"/>
-        <Label Content="Prix total :" HorizontalAlignment="Left" Margin="921,739,0,0" VerticalAlignment="Top" Width="319"/>
+        <Label Content="" Name="prix_total" HorizontalAlignment="Left" Margin="921,739,0,0" VerticalAlignment="Top" Width="319"/>
 
     </Grid>
 </Page>

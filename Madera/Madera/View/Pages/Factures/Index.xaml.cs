@@ -1,19 +1,10 @@
-﻿using Madera.View.Pages.Tdb;
+﻿using Madera.Model;
+using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Madera.View.Pages.Factures
 {
@@ -24,6 +15,7 @@ namespace Madera.View.Pages.Factures
     {
         public Index() {
             InitializeComponent();
+            GetAllFactures();
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e) {
@@ -32,8 +24,28 @@ namespace Madera.View.Pages.Factures
         }
 
         private void Click_btn_view_facture(object sender, RoutedEventArgs e) {
-            ModelPDF modele_facture = new ModelPDF();
-            ((MetroWindow)this.Parent).Content = modele_facture;
+            int id_maison = Convert.ToInt32(liste_factures.SelectedValue);
+            if(id_maison == 0) {
+                MessageBox.Show("Merci de sélectionner un client.");
+            }
+            else {
+                ModelPDF modele_facture = new ModelPDF(id_maison);
+                ((MetroWindow)this.Parent).Content = modele_facture;
+            }
+        }
+
+        private void GetAllFactures() {
+            DBEntities db = new DBEntities();
+
+            var listing_facture = from maison in db.Maison
+                                  join projet in db.Projet on maison.idMaison equals projet.idMaison
+                                  join client in db.Client on projet.idClient equals client.idClient
+                                  select new {
+                                      id_maison = maison.idMaison,
+                                      nom_maison = maison.nomMaison,
+                                      nom_client = client.nom +" "+ client.prenom
+                                  };
+            liste_factures.ItemsSource = listing_facture.ToList();
         }
     }
 }

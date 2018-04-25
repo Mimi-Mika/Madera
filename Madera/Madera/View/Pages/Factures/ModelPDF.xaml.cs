@@ -1,9 +1,11 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Madera.Model;
 using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,13 +18,58 @@ namespace Madera.View.Pages.Factures
     /// </summary>
     public partial class ModelPDF : Page
     {
-        public ModelPDF() {
+        public ModelPDF(int id_maison) {
             InitializeComponent();
+            GetInfosClient(id_maison);
+            getAllModuleMaison(id_maison);
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e) {
             Factures.Index listing_facture = new Factures.Index();
             ((MetroWindow)this.Parent).Content = listing_facture;
+        }
+
+        // Récupère les infos du client
+        private void GetInfosClient(int id_maison) {
+            DBEntities db = new DBEntities();
+
+            Projet ProjMaison = new Projet();
+            Client clientMaison = new Client();
+            ProjMaison = db.Projet.Where(i => i.idMaison == id_maison).FirstOrDefault();
+            clientMaison = db.Client.Where(i => i.idClient == ProjMaison.idClient).FirstOrDefault();
+            
+            nom_client.Content = clientMaison.nom +" "+ clientMaison.prenom;
+            adresse_client.Text = clientMaison.adresse;
+        }
+
+        private void getAllModuleMaison(int id_maison) {
+            DBEntities db = new DBEntities();
+
+            //var liste_module = from module_maison in db.Module_Maison
+            //                   join module in db.Module on module_maison.idModule equals module.idModule
+            //                   join type_module in db.TypeModule on module.idType equals type_module.idType
+            //                   join gamme in db.Gamme on module.idGamme equals gamme.idGamme
+            //                   where module_maison.idMaison == id_maison
+            //                   select new {
+            //                          nom_module = module.nom,
+            //                          prix_module = module.prix,
+            //                          image_module = module.imgUrl,
+            //                          type_module = type_module.nomType,
+            //                          nom_gamme = gamme.nom,
+            //                   };
+
+            Module module = new Module();
+            db.Configuration.LazyLoadingEnabled = true;
+            var liste_module = db.Module_Maison.Where(i => i.idMaison == id_maison).ToList();
+
+            var test = db.Module.Where(i => i.Module_Maison.Any(a => a.idMaison == id_maison)).ToList();
+
+            foreach(var item in test) {
+                
+            }
+
+            listing_modules.ItemsSource = liste_module.ToList();
+            prix_total.Content = "Prix total :";
         }
 
 #region pdf
