@@ -427,7 +427,10 @@ namespace Madera.View.Pages.PlanVues
                     }
                     else
                     {
-                        ((Button)sender).Background = null;
+                        if (((Button)sender).Background != null)
+                        {
+                            ((Button)sender).Background = null;
+                        }
                     }
                 }
                 else
@@ -478,7 +481,10 @@ namespace Madera.View.Pages.PlanVues
                     }
                     else
                     {
-                        ((Button)sender).Background = null;
+                        if (((Button)sender).Background != null)
+                        {
+                            ((Button)sender).Background = null;
+                        }
                     }
                 }
                 else
