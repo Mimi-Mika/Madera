@@ -1,4 +1,5 @@
 ﻿using Madera.Model;
+using Madera.Synchro;
 using Madera.View;
 using MahApps.Metro.Controls;
 using System;
@@ -30,16 +31,24 @@ namespace Madera
             var testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text
                      && u.mdp == password.Password);
 
+            //Synchronisation.ReinitDB("1");
 
-            DB.Client.Add(new Client {
-                nom = "Asticot",
-                prenom ="Joe",
-                adresse ="20 rue des Pommiers",
-                tel="0561856235",
-                mail="astiJ@gogo.com"
-            });
 
-            DB.SaveChanges();
+            //DB.Client.Add(new Client
+            //{
+            //    nom = "Asticot",
+            //    prenom = "Joe",
+            //    adresse = "20 rue des Pommiers",
+            //    tel = "0561856235",
+            //    mail = "astiJ@gogo.com"
+            //});
+
+            //DB.SaveChanges();
+
+
+            Synchronisation.SendAndReceiveDB("1");
+
+
             if (testLogin !=null) {
                 Home home = new Home();
                 home.Show();

@@ -78,8 +78,8 @@
     <Reference Include="MahApps.Metro, Version=1.6.1.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.1\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks, Version=2.1.0.15, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.2.1.0\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks, Version=2.2.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.2.2.0\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -187,6 +187,7 @@
     <Compile Include="Model\ZoneMorte.cs">
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
+    <Compile Include="Synchro\Synchronisation.cs" />
     <Compile Include="View\Pages\Clients\Create.xaml.cs">
       <DependentUpon>Create.xaml</DependentUpon>
     </Compile>
@@ -334,7 +335,12 @@
   <ItemGroup>
     <Resource Include="Pictures\CESI-SMALL1000.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SQLiteSyncCOMDotNetClient\SQLiteSyncCOMDotNetClient.csproj">
+      <Project>{D92670BA-DE03-4C7C-835B-110F88643FF5}</Project>
+      <Name>SQLiteSyncCOMDotNetClient</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
