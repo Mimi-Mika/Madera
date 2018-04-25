@@ -109,7 +109,7 @@
           <Property Name="idGamme" Type="integer" />
           <Property Name="idCouleur" Type="integer" />
           <Property Name="idType" Type="integer" />
-          <Property Name="imgUrl" Type="integer" />
+          <Property Name="imgUrl" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <EntityType Name="Module_Favori">
           <Key>
@@ -265,14 +265,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Module_0_0">
-          <End Role="Couleur" Type="Self.Couleur" Multiplicity="0..1" />
+          <End Role="TypeModule" Type="Self.TypeModule" Multiplicity="0..1" />
           <End Role="Module" Type="Self.Module" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Couleur">
-              <PropertyRef Name="idCouleur" />
+            <Principal Role="TypeModule">
+              <PropertyRef Name="idType" />
             </Principal>
             <Dependent Role="Module">
-              <PropertyRef Name="idCouleur" />
+              <PropertyRef Name="idType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -289,14 +289,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Module_2_0">
-          <End Role="TypeModule" Type="Self.TypeModule" Multiplicity="0..1" />
+          <End Role="Couleur" Type="Self.Couleur" Multiplicity="0..1" />
           <End Role="Module" Type="Self.Module" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TypeModule">
-              <PropertyRef Name="idType" />
+            <Principal Role="Couleur">
+              <PropertyRef Name="idCouleur" />
             </Principal>
             <Dependent Role="Module">
-              <PropertyRef Name="idType" />
+              <PropertyRef Name="idCouleur" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -473,7 +473,7 @@
             <End Role="Maison_TypeDalle" EntitySet="Maison_TypeDalle" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_0_0" Association="Self.FK_Module_0_0">
-            <End Role="Couleur" EntitySet="Couleur" />
+            <End Role="TypeModule" EntitySet="TypeModule" />
             <End Role="Module" EntitySet="Module" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_1_0" Association="Self.FK_Module_1_0">
@@ -481,7 +481,7 @@
             <End Role="Module" EntitySet="Module" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_2_0" Association="Self.FK_Module_2_0">
-            <End Role="TypeModule" EntitySet="TypeModule" />
+            <End Role="Couleur" EntitySet="Couleur" />
             <End Role="Module" EntitySet="Module" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_Favori_0_0" Association="Self.FK_Module_Favori_0_0">
@@ -659,7 +659,7 @@
           <NavigationProperty Name="TypeModule" Relationship="Self.FK_Module_0_0" FromRole="Module" ToRole="TypeModule" />
           <NavigationProperty Name="Module_Favori" Relationship="Self.FK_Module_Favori_1_0" FromRole="Module" ToRole="Module_Favori" />
           <NavigationProperty Name="Module_Maison" Relationship="Self.FK_Module_Maison_1_0" FromRole="Module" ToRole="Module_Maison" />
-          <Property Name="imgUrl" Type="Int64" />
+          <Property Name="imgUrl" Type="String" />
         </EntityType>
         <EntityType Name="Module_Favori">
           <Key>

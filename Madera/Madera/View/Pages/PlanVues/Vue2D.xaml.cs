@@ -129,8 +129,8 @@ namespace Madera.View.Pages.PlanVues
             var b = listGamme.SelectedValue;
             var bc = listTypeModule.SelectedValue;
             List<Module> ModuleList = new List<Module>();
-            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (int)listTypeModule.SelectedValue
-             && i.Gamme.idGamme == (int)listGamme.SelectedValue).ToList();
+            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
+             && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
             listModule.ItemsSource = ModuleList;
         }
 
