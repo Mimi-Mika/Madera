@@ -20,12 +20,15 @@ namespace Madera.View.Pages.PlanVues
     /// </summary>
     public partial class Vue3D : Page
     {
-        public Vue3D()
+        public static Maison m3daffiche;
+        public Vue3D(Maison _m3daffiche = null)
         {
+            m3daffiche = _m3daffiche;
             InitializeComponent();
-        }
 
-        // The main object model group.
+        }
+        
+         // The main object model group.
         private Model3DGroup MainModel3Dgroup = new Model3DGroup();
 
         // The camera.
@@ -46,6 +49,9 @@ namespace Madera.View.Pages.PlanVues
         // The change in CameraR when you press + or -.
         private const double CameraDR = 0.1;
 
+        private int CameraXCentre = 0;
+        private int CameraYCentre = 0;
+        
         // Create the scene.
         // MainViewport is the Viewport3D defined
         // in the XAML code that displays everything.
@@ -53,7 +59,7 @@ namespace Madera.View.Pages.PlanVues
         {
             // Give the camera its initial position.
             TheCamera = new PerspectiveCamera();
-            TheCamera.FieldOfView = 60;
+            TheCamera.FieldOfView = 70;
             MainViewport.Camera = TheCamera;
             PositionCamera();
 
@@ -61,13 +67,15 @@ namespace Madera.View.Pages.PlanVues
             DefineLights();
 
             DBEntities DB = new DBEntities();
-            int idM = 1;
-            Maison m3daffiche = new Maison();
-            m3daffiche = DB.Maison.Where(i => i.idMaison == idM).FirstOrDefault();
-
+            if (m3daffiche == null)
+            {
+                int idM = 1;
+                m3daffiche = DB.Maison.Where(i => i.idMaison == idM).FirstOrDefault();
+            }
+            
             List<Module_Maison> listModulesMaison = new List<Module_Maison>();
 
-            listModulesMaison = DB.Module_Maison.Where(i => i.idMaison == idM).ToList();
+            listModulesMaison = DB.Module_Maison.Where(i => i.idMaison == m3daffiche.idMaison).ToList();
 
             // Create the model.
             DefineModel(MainModel3Dgroup, listModulesMaison);
@@ -98,7 +106,11 @@ namespace Madera.View.Pages.PlanVues
             GeometryModel3D surface_modelGround = new GeometryModel3D(meshGround, surface_materialGround);
             surface_modelGround.BackMaterial = surface_materialGround;
             model_group.Children.Add(surface_modelGround);
-            dessiner(meshGround, 0, 31, 0, 41, -2, 0);    // 1er bout cloison
+
+            CameraXCentre = 15;
+            CameraYCentre = 20;
+
+            dessiner(meshGround, 0- CameraXCentre, 31- CameraXCentre, 0- CameraYCentre, 41 - CameraYCentre, -2, -0.01);    // Plancher
 
             foreach (var item in _listModulesMaison)
             {
@@ -136,10 +148,10 @@ namespace Madera.View.Pages.PlanVues
             model_group.Children.Add(surface_modelInt);
 
             //dessiner(meshInt, 0, 29, 20, 30, 0, 25);    // 1er bout cloison
-            int xD = _xD * 10;
-            int xF = _xF * 10;
-            int yD = _yD * 10;
-            int yF = _yF * 10;
+            int xD = (_xD * 10)-CameraXCentre;
+            int xF = (_xF * 10)-CameraXCentre;
+            int yD = (_yD * 10)-CameraYCentre;
+            int yF = (_yF * 10) - CameraYCentre;
 
             if (_xD == _xF)
             {
@@ -460,7 +472,7 @@ namespace Madera.View.Pages.PlanVues
             double hyp = CameraR * Math.Cos(CameraPhi);
             double x = hyp * Math.Cos(CameraTheta);
             double z = hyp * Math.Sin(CameraTheta);
-            TheCamera.Position = new Point3D(x, y, z);
+            TheCamera.Position = new Point3D(x, y , z);
 
             // Look toward the origin.
             TheCamera.LookDirection = new Vector3D(-x, -y, -z);
@@ -490,6 +502,7 @@ namespace Madera.View.Pages.PlanVues
                 return null;
 
             RenderTargetBitmap result = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+            //RenderTargetBitmap result = new RenderTargetBitmap((int)size.Width, (int)size.Height, 200, 200, PixelFormats.Pbgra32);
 
             DrawingVisual drawingvisual = new DrawingVisual();
             using (DrawingContext context = drawingvisual.RenderOpen())
@@ -534,5 +547,11 @@ namespace Madera.View.Pages.PlanVues
         }
 
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Vue2D vue2d = new Vue2D(1);
+            ((MetroWindow)this.Parent).Content = vue2d;
+        }
     }
 }
