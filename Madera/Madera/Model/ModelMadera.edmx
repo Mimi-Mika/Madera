@@ -185,6 +185,7 @@
           <Property Name="idTypeDalle" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="prixM2" Type="real" />
+          <Property Name="imgUrl" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <EntityType Name="TypeModule">
           <Key>
@@ -739,6 +740,7 @@
           <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="prixM2" Type="Double" />
           <NavigationProperty Name="Maison_TypeDalle" Relationship="Self.FK_Maison_TypeDalle_0_0" FromRole="TypeDalle" ToRole="Maison_TypeDalle" />
+          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TypeModule">
           <Key>
@@ -1246,6 +1248,7 @@
           <EntitySetMapping Name="TypeDalle">
             <EntityTypeMapping TypeName="DBModel.TypeDalle">
               <MappingFragment StoreEntitySet="TypeDalle">
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
                 <ScalarProperty Name="idTypeDalle" ColumnName="idTypeDalle" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
                 <ScalarProperty Name="prixM2" ColumnName="prixM2" />
