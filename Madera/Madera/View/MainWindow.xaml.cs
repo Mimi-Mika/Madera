@@ -30,16 +30,6 @@ namespace Madera
             var testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text
                      && u.mdp == password.Password);
 
-
-            DB.Client.Add(new Client {
-                nom = "Asticot",
-                prenom ="Joe",
-                adresse ="20 rue des Pommiers",
-                tel="0561856235",
-                mail="astiJ@gogo.com"
-            });
-
-            DB.SaveChanges();
             if (testLogin !=null) {
                 Home home = new Home();
                 home.Show();

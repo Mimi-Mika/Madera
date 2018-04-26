@@ -56,7 +56,7 @@ namespace Madera.View.Pages.Devis
 
         private void btnChoisirDevis_Click(object sender, RoutedEventArgs e)
         {
-            if (ListeDevis.SelectedItems != null)
+            if (ListeDevis.SelectedItem != null)
             {
                 DBEntities DB = new DBEntities();
 
@@ -70,6 +70,11 @@ namespace Madera.View.Pages.Devis
 
                 Vue2D vue2d = new Vue2D(IdEmpreinte, IdClient);
                 ((MetroWindow)this.Parent).Content = vue2d;
+                
+            }
+            else
+            {
+                MessageBox.Show("Merci de selectionner un Devis");
             }
             
         }

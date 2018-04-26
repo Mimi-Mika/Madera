@@ -39,7 +39,7 @@ namespace Madera.View.Pages.PlanVues
         private double CameraTheta = Math.PI / 6.0;     // 30 degrees
 
         //taille de l'image au debut
-        private double CameraR = 20.0;
+        private double CameraR = 10.0;
         // The change in CameraPhi when you press the up and down arrows.
         private const double CameraDPhi = 0.1;
 
@@ -550,7 +550,7 @@ namespace Madera.View.Pages.PlanVues
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Vue2D vue2d = new Vue2D(1);
+            Vue2D vue2d = new Vue2D(1 , 1);
             ((MetroWindow)this.Parent).Content = vue2d;
         }
     }
