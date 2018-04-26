@@ -29,7 +29,7 @@ namespace Madera.View.Pages.PlanVues
             IdClient = idClient;
 
             InitializeComponent();
-            remplirLabel(idClient);
+            RemplirLabel(idClient);
 
             CreateEmptyFloorPlan(idEmpreinte);
             TailleDesButtons();
@@ -85,7 +85,7 @@ namespace Madera.View.Pages.PlanVues
             rbAjout.IsChecked = true;
         }
 
-        private void remplirLabel(int idClient)
+        private void RemplirLabel(int idClient)
         {
             DBEntities DB = new DBEntities();
             lblNom.Content = DB.Client.Where(i => i.idClient == IdClient).FirstOrDefault();
@@ -145,7 +145,7 @@ namespace Madera.View.Pages.PlanVues
 
         }
 
-        private void listTypeModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListTypeModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DBEntities DB = new DBEntities();
             var b = listGamme.SelectedValue;
@@ -156,7 +156,7 @@ namespace Madera.View.Pages.PlanVues
             listModule.ItemsSource = ModuleList;
         }
 
-        private void listGamme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListGamme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listTypeModule.SelectedValue != null && listGamme.SelectedValue != null)
             {
@@ -179,15 +179,21 @@ namespace Madera.View.Pages.PlanVues
             // Fois 2 + 1 pour mur (ext et interieur)
             for (int i = 0; i < lig; i++)
             {
-                RowDefinition myRow = new RowDefinition();
-                myRow.Height = new GridLength(1, GridUnitType.Star);
+                RowDefinition myRow = new RowDefinition()
+                {
+                    Height = new GridLength(1, GridUnitType.Star)};
                 grid2D.RowDefinitions.Add(myRow);
             }
 
+            //After: HttpClient client = new HttpClient(); client.BaseAddress = new Uri(url);
+
+            //Before: HttpClient client = new HttpClient() { BaseAddress = new Uri(url) };
+
             for (int i = 0; i < col; i++)
             {
-                ColumnDefinition myCol = new ColumnDefinition();
-                myCol.Width = new GridLength(1, GridUnitType.Star);
+                ColumnDefinition myCol = new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Star)};
                 grid2D.ColumnDefinitions.Add(myCol);
             }
         }
@@ -221,8 +227,7 @@ namespace Madera.View.Pages.PlanVues
                         {
 
                             //TODO faire des templates de button
-                            Button MyControl1 = new Button();
-                            MyControl1.Content = ""; // ("x" + (x + 1).ToString() + " y" + (y + 1).ToString());
+                            Button MyControl1 = new Button() { Content = "" }; // ("x" + (x + 1).ToString() + " y" + (y + 1).ToString());
                             
                             Grid.SetColumn(MyControl1, x);
                             Grid.SetRow(MyControl1, y);
@@ -255,18 +260,17 @@ namespace Madera.View.Pages.PlanVues
                                  x == zoneMorteCoordX + zoneMorteTailleX - 2 && !(y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2))
                             {
                                 MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
-                                var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
+                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative))  };
                                 MyControl1.Background = brush;
                                 //Ajouter evenement pour mur exterieur
-                                MyControl1.Click += new RoutedEventHandler(btnClickMurExt);
+                                MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
                             }
                             //Murs interieurs
                             else
                             {
                                 MyControl1.Name = "IntButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
                                 //Ajouter evenement pour mur interieur
-                                MyControl1.Click += new RoutedEventHandler(btnClickMurInt);
+                                MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
                             }
                             grid2D.Children.Add(MyControl1);
                             count++;
@@ -300,7 +304,7 @@ namespace Madera.View.Pages.PlanVues
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnClickMurExt(object sender, RoutedEventArgs e)
+        private void BtnClickMurExt(object sender, RoutedEventArgs e)
         {
             Button btn = ((Button)sender);
             Grid grid = (Grid)btn.Parent;
@@ -379,7 +383,7 @@ namespace Madera.View.Pages.PlanVues
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnClickMurInt(object sender, RoutedEventArgs e)
+        private void BtnClickMurInt(object sender, RoutedEventArgs e)
         {
             Button btn = ((Button)sender);
             Grid grid = (Grid)btn.Parent;
@@ -411,22 +415,19 @@ namespace Madera.View.Pages.PlanVues
                         {
                             if (test.Contains("Porte"))
                             {
-                                var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
+                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative)) };
                                 ((Button)sender).Background = brush;
                             }
 
                             if (test.Contains("Fenetre"))
                             {
-                                var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
+                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative))  };
                                 ((Button)sender).Background = brush;
                             }
 
                             if (test.Contains("Mur"))
                             {
-                                var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
+                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative)) };
                                 ((Button)sender).Background = brush;
                             }
                         }
@@ -465,22 +466,19 @@ namespace Madera.View.Pages.PlanVues
                         {
                             if (test.Contains("Porte"))
                             {
-                                var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteVertical.png", UriKind.Relative));
+                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteVertical.png", UriKind.Relative)) };
                                 ((Button)sender).Background = brush;
                             }
 
                             if (test.Contains("Fenetre"))
                             {
-                                var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreVertical.png", UriKind.Relative));
+                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreVertical.png", UriKind.Relative)) };
                                 ((Button)sender).Background = brush;
                             }
 
                             if (test.Contains("Mur"))
                             {
-                                var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
+                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative)) };
                                 ((Button)sender).Background = brush;
                             }
                         }
@@ -505,7 +503,7 @@ namespace Madera.View.Pages.PlanVues
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn3D_Click(object sender, RoutedEventArgs e)
+        private void Btn3D_Click(object sender, RoutedEventArgs e)
         {
             Vue3D windows3D = new Vue3D();
             ((MetroWindow)this.Parent).Content = windows3D;
@@ -516,13 +514,13 @@ namespace Madera.View.Pages.PlanVues
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnRet_Click(object sender, RoutedEventArgs e)
+        private void BtnRet_Click(object sender, RoutedEventArgs e)
         {
             Index emp = new Index();
             ((MetroWindow)this.Parent).Content = emp;
         }
 
-        private void btnSav_Click(object sender, RoutedEventArgs e)
+        private void BtnSav_Click(object sender, RoutedEventArgs e)
         {
 
         }
