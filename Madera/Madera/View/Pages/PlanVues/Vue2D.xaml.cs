@@ -30,11 +30,17 @@ namespace Madera.View.Pages.PlanVues
 
             InitializeComponent();
             remplirLabel(idClient);
-            //test maj github
+
             CreateEmptyFloorPlan(idEmpreinte);
             TailleDesButtons();
 
             RemplirLesListe();
+        }
+
+        public Vue2D(Projet projet)
+        {
+
+
         }
 
         private void RemplirLesListe()

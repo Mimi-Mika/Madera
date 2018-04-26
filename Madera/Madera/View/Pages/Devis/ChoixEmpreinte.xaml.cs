@@ -76,10 +76,19 @@ namespace Madera.View.Pages.Devis
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int idEmpreinte = lstV.SelectedIndex + 1;
+            DBEntities db = new DBEntities();
+            Projet projet = new Projet();
 
-            Vue2D vue2D = new Vue2D(idEmpreinte , IdClient);
-            ((MetroWindow)this.Parent).Content = vue2D;
+            projet.
+
+            if (lstV.SelectedItem != null)
+            {
+                int idEmpreinte = lstV.SelectedIndex + 1;
+
+                Vue2D vue2D = new Vue2D(idEmpreinte, IdClient);
+                ((MetroWindow)this.Parent).Content = vue2D;
+            }
+            
         }
 
         private Client GetInfosClient(int id_client) {
