@@ -28,10 +28,9 @@ namespace Madera
 
             DBEntities DB = new DBEntities();
 
-            var testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text
-                     && u.mdp == password.Password);
 
-            //Synchronisation.ReinitDB("1");
+
+  
 
             //DB.Client.Add(new Client
             //{
@@ -46,6 +45,12 @@ namespace Madera
 
 
             Synchronisation.SendAndReceiveDB("1");
+
+
+
+
+            var testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text
+                            && u.mdp == password.Password);
 
 
             if (testLogin !=null) {
