@@ -24,7 +24,7 @@
         <Label x:Name="lblMail" Content="Label" HorizontalAlignment="Left" Margin="952,43,0,0" VerticalAlignment="Top" Width="198"/>
         <Label x:Name="lblNumClient" Content="Label" HorizontalAlignment="Left" Margin="951,75,0,0" VerticalAlignment="Top" Width="199"/>
         <Label Content="Choisir la forme de la maison :" Margin="0,165,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-        <ListView x:Name="lstV" Margin="31,207,26,91">
+        <ListView x:Name="lstV" Margin="31,207,375,91">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel 
@@ -36,8 +36,34 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
-        <Button Content="Annuler" HorizontalAlignment="Left" Margin="480,736,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Ajouter" HorizontalAlignment="Left" Margin="681,736,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Annuler" HorizontalAlignment="Left" Margin="229,736,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Ajouter" HorizontalAlignment="Left" Margin="1051,736,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Label x:Name="lblPrenomClient" Content="Label" HorizontalAlignment="Left" Margin="1105,11,0,0" VerticalAlignment="Top" Width="71"/>
+        <StackPanel Orientation="Horizontal" Margin="930,207,30,91">
+            <Border BorderThickness="1" BorderBrush="Black" Width="318" >
+                <StackPanel Margin="0,0,-1,0" >
+                    <TextBlock Text="Type de dalle" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
+                    <ListBox x:Name="listTypeDalle"  BorderThickness="1" BorderBrush="Black" Height="481"
+                            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border BorderThickness="1" BorderBrush="Black">
+                                        <Image Source="{Binding imgUrl}" Height="23 " Width="30"/>
+                                    </Border>
+                                    <StackPanel  Margin="1">
+                                        <TextBlock Text="{Binding nom}" FontWeight="Bold"  />
+                                        <StackPanel Orientation="Horizontal"  >
+                                            <TextBlock Text="{Binding prixM2}"/>
+                                            <TextBlock Text=" € / m²"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </Grid>
 </Page>

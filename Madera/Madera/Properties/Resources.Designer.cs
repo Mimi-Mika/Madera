@@ -59,15 +59,5 @@ namespace Madera.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        internal static byte[] bdd_madera {
-            get {
-                object obj = ResourceManager.GetObject("bdd_madera", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

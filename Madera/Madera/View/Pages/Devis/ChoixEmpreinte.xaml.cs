@@ -29,12 +29,27 @@ namespace Madera.View.Pages.Devis
         {
             InitializeComponent();
             ChargerEmpreinte();
+            ChargerTypeDalle();
+
             var client = GetInfosClient(Convert.ToInt32(id_client));
             IdClient = id_client;
             lblNumClient.Content = "#"+client.idClient;
             lblNomClient.Content = client.nom;
             lblPrenomClient.Content = client.prenom;
             lblMail.Content = client.mail;
+        }
+
+        private void ChargerTypeDalle()
+        {
+            DBEntities DB = new DBEntities();
+
+            // Gamme premiere Liste
+            List<TypeDalle> typeDalle = new List<TypeDalle>();
+            typeDalle = DB.TypeDalle.ToList();
+            listTypeDalle.ItemsSource = typeDalle;
+            listTypeDalle.SelectedValuePath = "idTypeDalle";
+            listTypeDalle.SelectedIndex = 0; // Selection premier champ de la liste
+
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)

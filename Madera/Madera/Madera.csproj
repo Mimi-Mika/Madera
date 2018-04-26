@@ -362,6 +362,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Pictures\TypeDalle\Dalle.jpg" />
+    <Resource Include="Pictures\TypeDalle\Mixte.jpg" />
+    <Resource Include="Pictures\TypeDalle\Poutrelle.jpg" />
+    <Resource Include="Pictures\TypeDalle\Precontraint.jpg" />
     <Resource Include="favicon.ico" />
     <Content Include="Model\ModelMadera.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
