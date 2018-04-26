@@ -79,7 +79,7 @@ namespace Madera.View.Pages.Devis
             string addNomMaison = string.Empty;
             string nomProjet = string.Empty;
             int monte = 0;
-            long idEmpreinte = 0;
+            long idEmpreinte = lstV.SelectedIndex + 1;
             long idTypeDalle = 0;
             long idClient = 0;
 
@@ -103,8 +103,8 @@ namespace Madera.View.Pages.Devis
                 // Manque idMaison
             };
 
-            List<Maison_TypeDalle> lstMaiTypDal = new List<Maison_TypeDalle>();
-            lstMaiTypDal.Add(addMaisonTypeDalle);
+            List<Maison_TypeDalle> lstMaiTypDal = new List<Maison_TypeDalle>() { addMaisonTypeDalle };
+            //lstMaiTypDal.Add(addMaisonTypeDalle);
 
             //Client
             Client addClient = new Client();
@@ -112,10 +112,10 @@ namespace Madera.View.Pages.Devis
 
             //Création projet
             Projet addProjet = new Projet();
-            List<Projet> lstPrj = new List<Projet>();
-            lstPrj.Add(addProjet);
+            List<Projet> lstPrj = new List<Projet>() { addProjet };
+            //lstPrj.Add(addProjet);
 
-
+            
             Maison addMaison = new Maison()
             {
                 nomMaison = addNomMaison,
@@ -144,8 +144,6 @@ namespace Madera.View.Pages.Devis
 
             if (lstV.SelectedItem != null)
             {
-                int idEmpreinte = lstV.SelectedIndex + 1;
-
                 Vue2D vue2D = new Vue2D(idEmpreinte, IdClient);
                 ((MetroWindow)this.Parent).Content = vue2D;
             }

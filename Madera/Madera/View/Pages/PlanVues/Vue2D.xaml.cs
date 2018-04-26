@@ -24,7 +24,7 @@ namespace Madera.View.Pages.PlanVues
     public partial class Vue2D : Page
     {
         int IdClient;
-        public Vue2D(int idEmpreinte, int idClient)
+        public Vue2D(long idEmpreinte, int idClient)
         {
             IdClient = idClient;
 
@@ -97,7 +97,7 @@ namespace Madera.View.Pages.PlanVues
         /// Creation de la Gris avec les boutons
         /// </summary>
         /// <param name="idEmpreinte"></param>
-        private void CreateEmptyFloorPlan(int idEmpreinte)
+        private void CreateEmptyFloorPlan(long idEmpreinte)
         {
             int idZoneMorte = 0;
             DBEntities DB = new DBEntities();
