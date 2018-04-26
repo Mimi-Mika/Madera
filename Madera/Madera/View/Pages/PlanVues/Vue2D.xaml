@@ -10,7 +10,8 @@
     <Grid x:Name="GridMother" Margin="1,1,1,1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="302*"/>
+            <ColumnDefinition Width="26*"/>
+            <ColumnDefinition Width="973*"/>
         </Grid.ColumnDefinitions>
 
 
@@ -137,7 +138,7 @@
                 <RadioButton x:Name="rbVider" Content="Vider" Margin="20,10,0,0"/>
             </StackPanel>
         </StackPanel>
-        <Grid Grid.Column="1" Margin="0,0,3,0">
+        <Grid Grid.Column="2" Margin="0,0,3,0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="44*"/>
                 <RowDefinition Height="339*"/>

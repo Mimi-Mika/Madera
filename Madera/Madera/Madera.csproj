@@ -358,6 +358,10 @@
       <DependentUpon>ModelMadera.edmx</DependentUpon>
       <LastGenOutput>ModelMadera.cs</LastGenOutput>
     </Content>
+    <Resource Include="Pictures\Vue2D\FenetreHorizontal.png" />
+    <Resource Include="Pictures\Vue2D\FenetreVertical.png" />
+    <Resource Include="Pictures\Vue2D\PorteHorizontal.png" />
+    <Resource Include="Pictures\Vue2D\PorteVertical.png" />
     <Resource Include="Pictures\Modules\1.jpg" />
     <Resource Include="Pictures\Modules\2.jpg" />
     <Resource Include="Pictures\Modules\3.jpg" />
@@ -370,8 +374,8 @@
     <Resource Include="Pictures\Finitions\2.jpg" />
     <Resource Include="Pictures\Gammes\1.jpg" />
     <Resource Include="Pictures\Gammes\2.jpg" />
-    <Resource Include="Pictures\imgMurInt.jpg" />
-    <Resource Include="Pictures\imgMurExt.jpg" />
+    <Resource Include="Pictures\Vue2D\imgMurInt.jpg" />
+    <Resource Include="Pictures\Vue2D\imgMurExt.jpg" />
     <Resource Include="Pictures\bigCarre.png" />
     <Resource Include="Pictures\bigRect.png" />
     <Resource Include="Pictures\midCarre.png" />

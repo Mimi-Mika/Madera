@@ -29,32 +29,17 @@ namespace Madera.View.Pages.PlanVues
             IdClient = idClient;
 
             InitializeComponent();
-
             remplirLabel(idClient);
             //test maj github
             CreateEmptyFloorPlan(idEmpreinte);
-
             TailleDesButtons();
+
+            RemplirLesListe();
         }
 
-        private void remplirLabel(int idClient)
+        private void RemplirLesListe()
         {
-            lblNom.Content = "";
-            lblNumClient.Content = "";
-        }
-
-
-        /// <summary>
-        /// Creation de la Gris avec les boutons
-        /// </summary>
-        /// <param name="idEmpreinte"></param>
-        private void CreateEmptyFloorPlan(int idEmpreinte)
-        {
-            int idZoneMorte = 0;
             DBEntities DB = new DBEntities();
-
-
-            this.DataContext = this;
 
             // Gamme premiere Liste
             List<Gamme> GammeList = new List<Gamme>();
@@ -92,8 +77,26 @@ namespace Madera.View.Pages.PlanVues
 
             // Selection radio bouton "Ajouter" par défaut
             rbAjout.IsChecked = true;
+        }
+
+        private void remplirLabel(int idClient)
+        {
+            DBEntities DB = new DBEntities();
+            lblNom.Content = DB.Client.Where(i => i.idClient == IdClient).FirstOrDefault();
+            lblNumClient.Content = idClient;
+        }
 
 
+        /// <summary>
+        /// Creation de la Gris avec les boutons
+        /// </summary>
+        /// <param name="idEmpreinte"></param>
+        private void CreateEmptyFloorPlan(int idEmpreinte)
+        {
+            int idZoneMorte = 0;
+            DBEntities DB = new DBEntities();
+
+            this.DataContext = this;
 
             Empreinte empreinteSelection = new Empreinte();
             empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
@@ -213,7 +216,7 @@ namespace Madera.View.Pages.PlanVues
 
                             //TODO faire des templates de button
                             Button MyControl1 = new Button();
-                            MyControl1.Content = ("x" + (x + 1).ToString() + " y" + (y + 1).ToString());
+                            MyControl1.Content = ""; // ("x" + (x + 1).ToString() + " y" + (y + 1).ToString());
                             
                             Grid.SetColumn(MyControl1, x);
                             Grid.SetRow(MyControl1, y);
@@ -247,7 +250,7 @@ namespace Madera.View.Pages.PlanVues
                             {
                                 MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
                                 var brush = new ImageBrush();
-                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/imgMurExt.jpg", UriKind.Relative));
+                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
                                 MyControl1.Background = brush;
                                 //Ajouter evenement pour mur exterieur
                                 MyControl1.Click += new RoutedEventHandler(btnClickMurExt);
@@ -293,89 +296,77 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void btnClickMurExt(object sender, RoutedEventArgs e)
         {
-            //TODO savoir si mur dans un angle?
             Button btn = ((Button)sender);
-            //Grid grid = (Grid)btn.Parent;
-
+            Grid grid = (Grid)btn.Parent;
             int row = 0;
             int col = 0;
             row = Grid.GetRow(btn);
             col = Grid.GetColumn(btn);
 
-            Button buttonHautGauche = new Button();
-            buttonHautGauche = null;
-            try
-            {
-                buttonHautGauche = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1);
-            }
-            catch (Exception) { }
+            //MessageBox.Show(((Button)sender).Background.GetType().ToString());
+            DBEntities DB = new DBEntities();
+            string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
 
-            Button buttonHautDroite = new Button();
-            buttonHautDroite = null;
-            try
-            {
-                buttonHautDroite = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1);
-            }
-            catch (Exception) { }
-
-            Button buttonBasGauche = new Button();
-            buttonBasGauche = null;
-            try
-            {
-                buttonBasGauche = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1);
-            }
-            catch (Exception) { }
-
-            Button buttonBasDroite = new Button();
-            buttonBasDroite = null;
-            try
-            {
-                buttonBasDroite = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1);
-            }
-            catch (Exception) { }
-
-
-            List<Button> listButton = new List<Button>();
-
-            string test458 = "";
-            if (buttonHautGauche != null)
-            {
-                test458 = test458 + buttonHautGauche.Content.ToString();
-                listButton.Add(buttonHautGauche);
-            }
-            if (buttonHautDroite != null)
-            {
-                test458 = test458 + buttonHautDroite.Content.ToString();
-                listButton.Add(buttonHautDroite);
-            }
-            if (buttonBasGauche != null)
-            {
-                test458 = test458 + buttonBasGauche.Content.ToString();
-                listButton.Add(buttonBasGauche);
-            }
-            if (buttonBasDroite != null)
-            {
-                test458 = test458 + buttonBasDroite.Content.ToString();
-                listButton.Add(buttonBasDroite);
-            }
             var brush = new ImageBrush();
-            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/imgMurExt.jpg", UriKind.Relative));
 
-            foreach (Button item in listButton)
+            if (grid2D.ColumnDefinitions[col].ActualWidth < grid2D.RowDefinitions[row].ActualHeight)
             {
-                if (item.Background == btn.Background)
+                //button en ligne
+                if (rbAjout.IsChecked == true)
                 {
-                    MessageBox.Show("khhjhjghgghghjg");
+                    if (test.Contains("Exterieur"))
+                    {
+                        if (test.Contains("Porte"))
+                        {
+                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
+                            ((Button)sender).Background = brush;
+                        }
+
+                        if (test.Contains("Fenetre"))
+                        {
+                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
+                            ((Button)sender).Background = brush;
+                        }
+                    }
+                }
+                else
+                {
+                    brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
+                    ((Button)sender).Background = brush;
                 }
             }
-            //MessageBox.Show(test458);
-            //if (buttonHautGauche != null && buttonHautDroite != null && buttonBasGauche !=null && buttonBasDroite !=null)
-            //{
-            //    MessageBox.Show("haut G " + buttonHautGauche.Content.ToString()
-            //        + "haut D " + buttonHautDroite.Content.ToString()
-            //        + "bas G " + buttonBasGauche.Content.ToString()
-            //        + "bas D " + buttonBasDroite.Content.ToString());
-            //}
+            else
+            {
+                //bouton en colone
+                if (rbAjout.IsChecked == true)
+                {
+                    if (test.Contains("Exterieur"))
+                    {
+                        if (test.Contains("Porte"))
+                        {
+                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteVertical.png", UriKind.Relative));
+                            ((Button)sender).Background = brush;
+                        }
+
+                        if (test.Contains("Fenetre"))
+                        {
+                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreVertical.png", UriKind.Relative));
+                            ((Button)sender).Background = brush;
+                        }
+
+                        if (test.Contains("Mur"))
+                        {
+                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
+                            ((Button)sender).Background = brush;
+                        }
+                    }
+                }
+                else
+                {
+                    brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
+                    ((Button)sender).Background = brush;
+                }
+            }
         }
         /// <summary>
         /// Appuis sur un mur interieur
@@ -384,71 +375,122 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void btnClickMurInt(object sender, RoutedEventArgs e)
         {
-            //if (rbMurInt.IsChecked == true)
-            //{
-            //    ((Button)sender).Background = btnMurInt.Background;
-            //}
-            //else if (rbPorte.IsChecked == true)
-            //{
-            //    ((Button)sender).Background = btnPorte.Background;
-            //}
-            //else if (rbFenetre.IsChecked == true)
-            //{
-            //    ((Button)sender).Background = btnFenetre.Background;
-            //}
-            //else if (rbLibre.IsChecked == true)
-            //{
-            //    ((Button)sender).Background = btnLibre.Background;
-            //}
-
-            //TODO savoir si mur dans un angle?
             Button btn = ((Button)sender);
             Grid grid = (Grid)btn.Parent;
-
             int row = 0;
             int col = 0;
             row = Grid.GetRow(btn);
             col = Grid.GetColumn(btn);
 
-            Button buttonHautGauche = new Button();
-            try
+            //MessageBox.Show(((Button)sender).Background.GetType().ToString());
+
+            if (grid2D.ColumnDefinitions[col].ActualWidth < grid2D.RowDefinitions[row].ActualHeight)
             {
-                buttonHautGauche = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1);
+                //button en ligne
+                if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                {
+                    if (rbAjout.IsChecked == true)
+                    {
+
+
+                        DBEntities DB = new DBEntities();
+                        string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
+
+                        if (test.Contains("Interieur"))
+                        {
+                            if (test.Contains("Porte"))
+                            {
+                                var brush = new ImageBrush();
+                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
+                                ((Button)sender).Background = brush;
+                            }
+
+                            if (test.Contains("Fenetre"))
+                            {
+                                var brush = new ImageBrush();
+                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
+                                ((Button)sender).Background = brush;
+                            }
+
+                            if (test.Contains("Mur"))
+                            {
+                                var brush = new ImageBrush();
+                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
+                                ((Button)sender).Background = brush;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (((Button)sender).Background != null)
+                        {
+                            ((Button)sender).Background = null;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch (Exception) { }
-
-            Button buttonHautDroite = new Button();
-            try
+            else
             {
-                buttonHautDroite = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1);
-            }
-            catch (Exception) { }
-
-            Button buttonBasGauche = new Button();
-            try
-            {
-                buttonBasGauche = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1);
-            }
-            catch (Exception) { }
-
-            Button buttonBasDroite = new Button();
-            try
-            {
-                buttonBasDroite = (Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1);
-            }
-            catch (Exception) { }
+                //bouton en colone
+                if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 0 && Grid.GetColumn(i) == col + 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                    ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 0 && Grid.GetColumn(i) == col - 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                {
+                    if (rbAjout.IsChecked == true)
+                    {
 
 
+                        DBEntities DB = new DBEntities();
+                        string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
 
+                        if (test.Contains("Interieur"))
+                        {
+                            if (test.Contains("Porte"))
+                            {
+                                var brush = new ImageBrush();
+                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteVertical.png", UriKind.Relative));
+                                ((Button)sender).Background = brush;
+                            }
 
+                            if (test.Contains("Fenetre"))
+                            {
+                                var brush = new ImageBrush();
+                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreVertical.png", UriKind.Relative));
+                                ((Button)sender).Background = brush;
+                            }
 
-
-            if (buttonHautGauche != null)
-            {
-                MessageBox.Show("haut G " + buttonHautGauche.Content.ToString()
-                    + " haut D " + buttonHautDroite.Content.ToString()
-                    + " bas G " + buttonBasGauche.Content.ToString()
-                    + " bas D " + buttonBasDroite.Content.ToString());
+                            if (test.Contains("Mur"))
+                            {
+                                var brush = new ImageBrush();
+                                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
+                                ((Button)sender).Background = brush;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (((Button)sender).Background != null)
+                        {
+                            ((Button)sender).Background = null;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Un item interieur doit etre accrocher a un autre","Erreur",MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
