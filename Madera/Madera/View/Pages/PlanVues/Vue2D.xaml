@@ -23,7 +23,7 @@
                     <StackPanel >
                         <TextBlock Text="Gamme" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
                         <ListBox x:Name="listGamme"  BorderThickness="1" BorderBrush="Black" Height="125"
-                            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" SelectionChanged="listGamme_SelectionChanged" >
+                            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" SelectionChanged="ListGamme_SelectionChanged" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -44,7 +44,7 @@
                     <StackPanel>
                         <TextBlock Text="Type module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
                         <ListBox x:Name="listTypeModule" BorderThickness="1" BorderBrush="Black" Height="125"
-                            ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="listTypeModule_SelectionChanged" Grid.ColumnSpan="2" >
+                            ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="ListTypeModule_SelectionChanged" Grid.ColumnSpan="2" >
                             <ListBox.ItemTemplate >
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -145,9 +145,9 @@
                 <RowDefinition Height="65*"/>
             </Grid.RowDefinitions>
             <Grid x:Name="grid2D" Grid.Column="0" Grid.Row="1"/>
-            <Button x:Name="btnRet" Content="Retour" HorizontalAlignment="Left" Margin="34,16,0,0" VerticalAlignment="Top" Width="75" Click="btnRet_Click" Height="27" Grid.Row="2"/>
-            <Button x:Name="btn3D" Content="Vue3D" HorizontalAlignment="Left" Height="27" Margin="148,16,0,0" VerticalAlignment="Top" Width="87" Click="btn3D_Click" Grid.Row="2"/>
-            <Button x:Name="btnSav" Content="Enregistrer" Margin="276,16,631,0" Grid.Row="2" VerticalAlignment="Top" Width="87" Click="btnSav_Click"/>
+            <Button x:Name="btnRet" Content="Retour" HorizontalAlignment="Left" Margin="34,16,0,0" VerticalAlignment="Top" Width="75" Click="BtnRet_Click" Height="27" Grid.Row="2"/>
+            <Button x:Name="btn3D" Content="Vue3D" HorizontalAlignment="Left" Height="27" Margin="148,16,0,0" VerticalAlignment="Top" Width="87" Click="Btn3D_Click" Grid.Row="2"/>
+            <Button x:Name="btnSav" Content="Enregistrer" Margin="276,16,587,0" Grid.Row="2" VerticalAlignment="Top" Click="BtnSav_Click"/>
             <Label Content="Nom Client :" HorizontalAlignment="Left" Height="29" Margin="64,24,0,0" VerticalAlignment="Top" Width="80"/>
             <Label x:Name="lblNom" Content="Label" HorizontalAlignment="Left" Margin="182,24,0,0" VerticalAlignment="Top" Width="138" Height="29"/>
             <Label Content="Numéro Client :" HorizontalAlignment="Left" Margin="726,24,0,0" VerticalAlignment="Top" Width="108" Height="29"/>
