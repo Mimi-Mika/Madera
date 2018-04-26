@@ -33,7 +33,6 @@ namespace Madera
 
             //Synchronisation.ReinitDB("1");
 
-
             //DB.Client.Add(new Client
             //{
             //    nom = "Asticot",
@@ -57,9 +56,6 @@ namespace Madera
             else {
                 error_message.Content = "Login ou mot de passe incorrect !";
             }
-
-
-
         }
     }
 }
