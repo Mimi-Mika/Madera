@@ -79,7 +79,6 @@ namespace Madera.View.Pages.Devis
             DBEntities db = new DBEntities();
             Projet projet = new Projet();
 
-            projet.
 
             if (lstV.SelectedItem != null)
             {
