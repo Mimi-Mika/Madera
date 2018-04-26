@@ -40,7 +40,8 @@ namespace Madera.View.Pages.Devis
         private void btn_add(object sender, RoutedEventArgs e)
         {
             DBEntities DB = new DBEntities();
-            Master.NewClient = DB.Client.Where(i => i.idClient == Convert.ToInt32(ListeClient.SelectedValue.ToString())).FirstOrDefault();
+            long test = Convert.ToInt64(ListeClient.SelectedValue.ToString());
+            Master.NewClient = DB.Client.Where(i => i.idClient == test).FirstOrDefault();
             ChoixEmpreinte tdb = new ChoixEmpreinte(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
