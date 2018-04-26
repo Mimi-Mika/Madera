@@ -23,6 +23,7 @@ namespace Madera.Model
         public long idTypeDalle { get; set; }
         public string nom { get; set; }
         public Nullable<double> prixM2 { get; set; }
+        public string imgUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Maison_TypeDalle> Maison_TypeDalle { get; set; }
