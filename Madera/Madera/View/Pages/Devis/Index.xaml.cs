@@ -25,8 +25,10 @@ namespace Madera.View.Pages.Devis
     /// </summary>
     public partial class Index : Page
     {
+        MasterClasse Master = new MasterClasse();
         int IdClient;
         int IdEmpreinte;
+
         public Index()
         {
             InitializeComponent();
@@ -44,13 +46,13 @@ namespace Madera.View.Pages.Devis
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
+            Tableau_de_bord tdb = new Tableau_de_bord(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
         private void btn_ajout(object sender, RoutedEventArgs e)
         {
-            Devis.Create tdb = new Devis.Create();
+            Devis.Create tdb = new Devis.Create(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
@@ -68,7 +70,7 @@ namespace Madera.View.Pages.Devis
                 var truc = DB.Maison.Where(i => i.idMaison == (int)projet.idMaison).FirstOrDefault();
                 IdEmpreinte = (int)truc.idEmpreinte;
 
-                Vue2D vue2d = new Vue2D(IdEmpreinte, IdClient);
+                Vue2D vue2d = new Vue2D(Master);
                 ((MetroWindow)this.Parent).Content = vue2d;
                 
             }

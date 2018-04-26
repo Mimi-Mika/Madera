@@ -13,28 +13,32 @@ namespace Madera.View.Pages.Clients
     /// </summary>
     public partial class Index : Page
     {
-        public Index()
+        MasterClasse Master = new MasterClasse();
+        public Index(MasterClasse _Master)
         {
+            Master = _Master;
             InitializeComponent();
             loadClient();
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
+            Tableau_de_bord tdb = new Tableau_de_bord(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
         private void btn_add_client(object sender, RoutedEventArgs e)
         {
-            Create add_client = new Create();
+            
+            Create add_client = new Create(Master);
             ((MetroWindow)this.Parent).Content = add_client;
         }
 
         private void btn_edit_client(object sender, RoutedEventArgs e)
         {
             Client client = (Client)ListeClient.SelectedItem;
-            Edit edit_client = new Edit(client);
+            Master.NewClient = client;
+            Edit edit_client = new Edit(Master);
             ((MetroWindow)this.Parent).Content = edit_client;
         }
 

@@ -13,23 +13,27 @@ namespace Madera.View.Pages.Factures
     /// </summary>
     public partial class Index : Page
     {
-        public Index() {
+        MasterClasse Master = new MasterClasse();
+        public Index(MasterClasse _Master) {
+            Master = _Master;
             InitializeComponent();
             GetAllFactures();
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e) {
-            Tableau_de_bord tdb = new Tableau_de_bord();
+            Tableau_de_bord tdb = new Tableau_de_bord(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
         private void Click_btn_view_facture(object sender, RoutedEventArgs e) {
             int id_maison = Convert.ToInt32(liste_factures.SelectedValue);
-            if(id_maison == 0) {
+            if (id_maison == 0) {
                 MessageBox.Show("Merci de sélectionner un client.");
             }
             else {
-                ModelPDF modele_facture = new ModelPDF(id_maison);
+                DBEntities DB = new DBEntities();
+                Master.NewMaison = DB.Maison.Where(i => i.idMaison == id_maison).FirstOrDefault();
+                ModelPDF modele_facture = new ModelPDF(Master);
                 ((MetroWindow)this.Parent).Content = modele_facture;
             }
         }

@@ -24,15 +24,17 @@ namespace Madera.View.Pages.Devis
     /// </summary>
     public partial class ChoixEmpreinte : Page
     {
-        int IdClient;
-        public ChoixEmpreinte(int id_client)
+        MasterClasse Master = new MasterClasse();
+        long IdClient;
+        public ChoixEmpreinte(MasterClasse _Master)
         {
+            Master = _Master;
             InitializeComponent();
             ChargerEmpreinte();
             ChargerTypeDalle();
 
-            var client = GetInfosClient(Convert.ToInt32(id_client));
-            IdClient = id_client;
+            Client client = Master.NewClient;
+            IdClient = Master.NewClient.idClient;
             lblNumClient.Content = "#"+client.idClient;
             lblNomClient.Content = client.nom;
             lblPrenomClient.Content = client.prenom;
@@ -54,7 +56,7 @@ namespace Madera.View.Pages.Devis
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Devis.Create choix_client = new Devis.Create();
+            Devis.Create choix_client = new Devis.Create(Master);
             ((MetroWindow)this.Parent).Content = choix_client;
         }
 
@@ -76,12 +78,18 @@ namespace Madera.View.Pages.Devis
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string addNomMaison = string.Empty;
-            string nomProjet = string.Empty;
+            string addNomMaison = TxtNomMaison.Text;
+            string nomProjet = TxtNomMaison.Text + "";
             int monte = 0;
+            if (RbMontee.IsChecked == true)
+            {
+                monte = 1;
+            }
+            Maison addMaison = new Maison();
+
             long idEmpreinte = lstV.SelectedIndex + 1;
-            long idTypeDalle = 0;
-            long idClient = 0;
+            long idTypeDalle = Convert.ToInt64(listTypeDalle.SelectedValue.ToString());
+            long idClient = IdClient;
 
 
             DBEntities db = new DBEntities();
@@ -92,15 +100,13 @@ namespace Madera.View.Pages.Devis
             addEmpreinte = db.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
             addTypeDalle = db.TypeDalle.Where(i => i.idTypeDalle == idTypeDalle).FirstOrDefault();
 
-            
+
             //Création maison type dalle
             Maison_TypeDalle addMaisonTypeDalle = new Maison_TypeDalle()
             {
                 historiquePrixM2 = addTypeDalle.prixM2,
-                idTypeDalle= idTypeDalle,
-                TypeDalle =addTypeDalle
-                // Manque liaison Maison
-                // Manque idMaison
+                idTypeDalle = idTypeDalle,
+                idMaison = 1,
             };
 
             List<Maison_TypeDalle> lstMaiTypDal = new List<Maison_TypeDalle>() { addMaisonTypeDalle };
@@ -115,36 +121,49 @@ namespace Madera.View.Pages.Devis
             List<Projet> lstPrj = new List<Projet>() { addProjet };
             //lstPrj.Add(addProjet);
 
-            
-            Maison addMaison = new Maison()
-            {
-                nomMaison = addNomMaison,
-                idEmpreinte = idEmpreinte,
-                Empreinte = addEmpreinte,
-                Maison_TypeDalle = lstMaiTypDal,
-                Projet= lstPrj
-            };
 
-            addProjet.idMaison = addMaison.idMaison;
+            addMaison.nomMaison = addNomMaison;
+            addMaison.idEmpreinte = idEmpreinte;
+
+            
+
+            
             addProjet.nom = nomProjet;
             addProjet.kitMonte = monte;
-            addProjet.Maison = addMaison;
-            addProjet.Client = addClient;
             addProjet.idClient = idClient;
+            addProjet.numDevis = "";
+            addProjet.numFacture = "";
+            addProjet.numOF = "";
+            addProjet.numOM = "";
 
             //Enregistrer
-            //db.Maison_TypeDalle.Add(addMaisonTypeDalle);
+
             //db.Maison.Add(addMaison);
+            //db.SaveChanges();
+
+            //addMaisonTypeDalle.idMaison = addMaison.idMaison;
+            //db.Maison_TypeDalle.Add(addMaisonTypeDalle);
+            //db.SaveChanges();
+
+            //addProjet.idMaison = addMaison.idMaison;
             //db.Projet.Add(addProjet);
             //db.SaveChanges();
 
+
+            Master.NewClient = addClient;
+            Master.NewMaison = addMaison;
+            Master.NewProjet = addProjet;
+            Master.NewEmpreinte = addEmpreinte;
+            Master.NewTypeDalle = addTypeDalle;
+
+            
 
 
 
 
             if (lstV.SelectedItem != null)
             {
-                Vue2D vue2D = new Vue2D(idEmpreinte, IdClient);
+                Vue2D vue2D = new Vue2D(Master);
                 ((MetroWindow)this.Parent).Content = vue2D;
             }
             

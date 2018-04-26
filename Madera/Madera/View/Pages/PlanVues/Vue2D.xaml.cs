@@ -23,24 +23,18 @@ namespace Madera.View.Pages.PlanVues
     /// </summary>
     public partial class Vue2D : Page
     {
-        int IdClient;
-        public Vue2D(long idEmpreinte, int idClient)
+        MasterClasse _Master = new MasterClasse();
+        public Vue2D(MasterClasse Master)
         {
-            IdClient = idClient;
+            _Master = Master;
 
             InitializeComponent();
-            RemplirLabel(idClient);
+            RemplirLabel();
 
-            CreateEmptyFloorPlan(idEmpreinte);
+            CreateEmptyFloorPlan();
             TailleDesButtons();
 
             RemplirLesListe();
-        }
-
-        public Vue2D(Projet projet)
-        {
-
-
         }
 
         private void RemplirLesListe()
@@ -85,11 +79,12 @@ namespace Madera.View.Pages.PlanVues
             rbAjout.IsChecked = true;
         }
 
-        private void RemplirLabel(int idClient)
+        private void RemplirLabel()
         {
+            long IdClient = _Master.NewClient.idClient;
             DBEntities DB = new DBEntities();
             lblNom.Content = DB.Client.Where(i => i.idClient == IdClient).FirstOrDefault();
-            lblNumClient.Content = idClient;
+            lblNumClient.Content = IdClient;
         }
 
 
@@ -97,8 +92,9 @@ namespace Madera.View.Pages.PlanVues
         /// Creation de la Gris avec les boutons
         /// </summary>
         /// <param name="idEmpreinte"></param>
-        private void CreateEmptyFloorPlan(long idEmpreinte)
+        private void CreateEmptyFloorPlan()
         {
+            long idEmpreinte = _Master.NewEmpreinte.idEmpreinte;
             int idZoneMorte = 0;
             DBEntities DB = new DBEntities();
 

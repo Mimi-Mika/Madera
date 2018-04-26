@@ -24,7 +24,8 @@ namespace Madera.View.Pages.Devis
     /// </summary>
     public partial class Create : Page
     {
-        public Create()
+        MasterClasse Master = new MasterClasse();
+        public Create(MasterClasse _Master)
         {
             InitializeComponent();
             RemplirListeClient();
@@ -32,14 +33,15 @@ namespace Madera.View.Pages.Devis
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
+            Tableau_de_bord tdb = new Tableau_de_bord(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
         private void btn_add(object sender, RoutedEventArgs e)
         {
-            int id_client = Convert.ToInt32(ListeClient.SelectedValue.ToString());
-            ChoixEmpreinte tdb = new ChoixEmpreinte(id_client);
+            DBEntities DB = new DBEntities();
+            Master.NewClient = DB.Client.Where(i => i.idClient == Convert.ToInt32(ListeClient.SelectedValue.ToString())).FirstOrDefault();
+            ChoixEmpreinte tdb = new ChoixEmpreinte(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 

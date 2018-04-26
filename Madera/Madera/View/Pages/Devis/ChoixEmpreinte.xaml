@@ -24,7 +24,7 @@
         <Label x:Name="lblMail" Content="Label" HorizontalAlignment="Left" Margin="952,43,0,0" VerticalAlignment="Top" Width="198"/>
         <Label x:Name="lblNumClient" Content="Label" HorizontalAlignment="Left" Margin="951,75,0,0" VerticalAlignment="Top" Width="199"/>
         <Label Content="Choisir la forme de la maison :" Margin="0,165,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-        <ListView x:Name="lstV" Margin="31,207,375,91">
+        <ListView x:Name="lstV" Margin="31,231,375,91">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel 
@@ -37,9 +37,9 @@
             </ListView.ItemsPanel>
         </ListView>
         <Button Content="Annuler" HorizontalAlignment="Left" Margin="229,736,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Ajouter" HorizontalAlignment="Left" Margin="1051,736,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Ajouter" HorizontalAlignment="Left" Margin="1053,736,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Label x:Name="lblPrenomClient" Content="Label" HorizontalAlignment="Left" Margin="1105,11,0,0" VerticalAlignment="Top" Width="71"/>
-        <StackPanel Orientation="Horizontal" Margin="930,207,30,91">
+        <StackPanel Orientation="Horizontal" Margin="930,207,30,179">
             <Border BorderThickness="1" BorderBrush="Black" Width="318" >
                 <StackPanel Margin="0,0,-1,0" >
                     <TextBlock Text="Type de dalle" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
@@ -65,5 +65,11 @@
                 </StackPanel>
             </Border>
         </StackPanel>
+        <Label Content="Nom de la maison :" HorizontalAlignment="Left" Margin="967,631,0,0" VerticalAlignment="Top" Width="112"/>
+        <TextBox x:Name="TxtNomMaison" HorizontalAlignment="Left" Height="23" Margin="1105,631,0,0" TextWrapping="Wrap" Text="Maison" VerticalAlignment="Top" Width="120"/>
+        <RadioButton x:Name="RbMontee" Content="" HorizontalAlignment="Left" Margin="1105,668,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Rb" Content="" HorizontalAlignment="Left" Margin="1105,695,0,0" VerticalAlignment="Top"/>
+        <Label Content="Maison montée" HorizontalAlignment="Left" Margin="967,662,0,0" VerticalAlignment="Top" Width="112"/>
+        <Label Content="Maison à montée" HorizontalAlignment="Left" Margin="967,691,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

@@ -55,10 +55,10 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>120A3A1E434EDAFCBF4A7E11B32C9BC7D6596B13</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>6AC0BC4A56430F95A2039F7316444521219F9AC9</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Madera_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Madera_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -164,6 +164,7 @@
     <Compile Include="Model\Maison_TypeDalle.cs">
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\MasterClasse.cs" />
     <Compile Include="Model\ModelMadera.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -335,6 +336,7 @@
       <LastGenOutput>ModelMadera.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Madera_1_TemporaryKey.pfx" />
+    <None Include="Madera_2_TemporaryKey.pfx" />
     <None Include="Madera_TemporaryKey.pfx" />
     <None Include="Model\ModelMadera.edmx.diagram">
       <DependentUpon>ModelMadera.edmx</DependentUpon>

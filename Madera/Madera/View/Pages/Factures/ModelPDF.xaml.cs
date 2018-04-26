@@ -19,19 +19,22 @@ namespace Madera.View.Pages.Factures
     /// </summary>
     public partial class ModelPDF : Page
     {
-        public ModelPDF(int id_maison) {
+        MasterClasse Master = new MasterClasse();
+        public ModelPDF(MasterClasse _Master) {
+            Master = _Master;
+            long id_maison = Master.NewMaison.idMaison;
             InitializeComponent();
             GetInfosClient(id_maison);
             getAllModuleMaison(id_maison);
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e) {
-            Factures.Index listing_facture = new Factures.Index();
+            Factures.Index listing_facture = new Factures.Index(Master);
             ((MetroWindow)this.Parent).Content = listing_facture;
         }
 
         // Récupère les infos du client
-        private void GetInfosClient(int id_maison) {
+        private void GetInfosClient(long id_maison) {
             DBEntities db = new DBEntities();
 
             Projet ProjMaison = new Projet();
@@ -43,7 +46,7 @@ namespace Madera.View.Pages.Factures
             adresse_client.Text = clientMaison.adresse;
         }
 
-        private void getAllModuleMaison(int id_maison) {
+        private void getAllModuleMaison(long id_maison) {
             DBEntities db = new DBEntities();
 
             var liste_module = from module_maison in db.Module_Maison

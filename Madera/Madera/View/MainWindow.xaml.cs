@@ -13,6 +13,7 @@ namespace Madera
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        MasterClasse Master = new MasterClasse();
         public MainWindow() {
             InitializeComponent();
 
@@ -27,13 +28,14 @@ namespace Madera
 
             DBEntities DB = new DBEntities();
 
-            var testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text
-                     && u.mdp == password.Password);
+            Commercial testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text && u.mdp == password.Password);
 
             if (testLogin !=null) {
-                Home home = new Home();
+                Master.NewCommercial = testLogin;
+                Home home = new Home(Master);
                 home.Show();
                 Close();
+                
             }
             else {
                 error_message.Content = "Login ou mot de passe incorrect !";

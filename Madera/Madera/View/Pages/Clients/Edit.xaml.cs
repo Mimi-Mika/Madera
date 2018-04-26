@@ -12,10 +12,14 @@ namespace Madera.View.Pages.Clients
     /// </summary>
     public partial class Edit : Page
     {
+        MasterClasse Master = new MasterClasse();
         private Client client { get; set; }
 
-        public Edit(Client cli)
+        public Edit(MasterClasse _Master)
         {
+            Master = _Master;
+            Client cli = new Client();
+            cli = Master.NewClient;
             InitializeComponent();
             this.client = cli;
             num_client.Content = this.client.idClient.ToString();
@@ -28,13 +32,13 @@ namespace Madera.View.Pages.Clients
 
         private void Click_btn_annuler(object sender, RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
+            Tableau_de_bord tdb = new Tableau_de_bord(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
         private void Click_btn_delete(object sender, RoutedEventArgs e)
         {
-            Index listing_users = new Index();
+            Index listing_users = new Index(Master);
             DBEntities DB = new DBEntities();
             Client clientSelect = DB.Client.Find(this.client.idClient);
             DB.Client.Remove(clientSelect);
@@ -56,7 +60,7 @@ namespace Madera.View.Pages.Clients
                 var attachedEntry = DB.Entry(clientSelect);
                 attachedEntry.CurrentValues.SetValues(this.client);
                 DB.SaveChanges();
-                Index listing_users = new Index();
+                Index listing_users = new Index(Master);
                 ((MetroWindow)this.Parent).Content = listing_users;
             }
             else
@@ -67,7 +71,7 @@ namespace Madera.View.Pages.Clients
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Index listing_users = new Index();
+            Index listing_users = new Index(Master);
             ((MetroWindow)this.Parent).Content = listing_users;
         }
 

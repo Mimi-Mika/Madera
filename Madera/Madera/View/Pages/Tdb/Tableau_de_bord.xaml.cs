@@ -1,4 +1,5 @@
-﻿using Madera.View.Pages.Clients;
+﻿using Madera.Model;
+using Madera.View.Pages.Clients;
 using Madera.View.Pages.Devis;
 using MahApps.Metro.Controls;
 using System;
@@ -12,24 +13,26 @@ namespace Madera.View.Pages.Tdb
     /// </summary>
     public partial class Tableau_de_bord : Page
     {
-        public Tableau_de_bord() {
+        MasterClasse Master = new MasterClasse();
+        public Tableau_de_bord(MasterClasse _Master) {
+            Master = _Master;
             InitializeComponent();
         }
 
         private void Click_btn_clients(object sender, RoutedEventArgs e) {
 
-            Clients.Index listing_clients = new Clients.Index();
+            Clients.Index listing_clients = new Clients.Index(Master);
             ((MetroWindow)this.Parent).Content = listing_clients;
         }
 
         private void btn_add_client(object sender, RoutedEventArgs e) {
-            Clients.Create add_client = new Clients.Create();
+            Clients.Create add_client = new Clients.Create(Master);
             ((MetroWindow)this.Parent).Content = add_client;
         }
 
         private void btn_add_devis(object sender, RoutedEventArgs e)
         {
-            Devis.Create add_devis = new Devis.Create();
+            Devis.Create add_devis = new Devis.Create(Master);
             ((MetroWindow)this.Parent).Content = add_devis;
         }
 
@@ -40,7 +43,7 @@ namespace Madera.View.Pages.Tdb
 
         private void Click_btn_factures(object sender, RoutedEventArgs e)
         {
-            Factures.Index listing_factures = new Factures.Index();
+            Factures.Index listing_factures = new Factures.Index(Master);
             ((MetroWindow)this.Parent).Content = listing_factures;
         }
     }

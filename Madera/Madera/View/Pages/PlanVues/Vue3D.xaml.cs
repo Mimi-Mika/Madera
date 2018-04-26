@@ -20,6 +20,7 @@ namespace Madera.View.Pages.PlanVues
     /// </summary>
     public partial class Vue3D : Page
     {
+        MasterClasse Master = new MasterClasse();
         public static Maison m3daffiche;
         public Vue3D(Maison _m3daffiche = null)
         {
@@ -550,7 +551,7 @@ namespace Madera.View.Pages.PlanVues
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Vue2D vue2d = new Vue2D(1 , 1);
+            Vue2D vue2d = new Vue2D(Master);
             ((MetroWindow)this.Parent).Content = vue2d;
         }
     }

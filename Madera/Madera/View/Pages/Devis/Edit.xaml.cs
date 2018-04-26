@@ -1,4 +1,5 @@
-﻿using Madera.View.Pages.Tdb;
+﻿using Madera.Model;
+using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,17 @@ namespace Madera.View.Pages.Devis
     /// </summary>
     public partial class Edit : Page
     {
-        public Edit()
+        MasterClasse Master = new MasterClasse();
+        public Edit(MasterClasse _Master)
         {
+            Master = _Master;
             InitializeComponent();
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
+
+            Tableau_de_bord tdb = new Tableau_de_bord(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
     }

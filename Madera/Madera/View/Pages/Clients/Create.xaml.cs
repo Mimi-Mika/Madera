@@ -13,20 +13,22 @@ namespace Madera.View.Pages.Clients
     /// </summary>
     public partial class Create : Page
     {
-        public Create()
+        MasterClasse Master = new MasterClasse();
+        public Create(MasterClasse _Master)
         {
+            Master = _Master;
             InitializeComponent();
         }
 
         private void Click_btn_annuler(object sender, System.Windows.RoutedEventArgs e)
         {
-            Tableau_de_bord tdb = new Tableau_de_bord();
+            Tableau_de_bord tdb = new Tableau_de_bord(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
         private void Click_btn_retour(object sender, System.Windows.RoutedEventArgs e)
         {
-            Index index = new Index();
+            Index index = new Index(Master);
             ((MetroWindow)this.Parent).Content = index;
         }
 
@@ -43,7 +45,7 @@ namespace Madera.View.Pages.Clients
                 client.adresse = adresse.Text;
                 DB.Client.Add(client);
                 DB.SaveChanges();
-                Index listing_users = new Index();
+                Index listing_users = new Index(Master);
                 ((MetroWindow)this.Parent).Content = listing_users;
             }
             else
