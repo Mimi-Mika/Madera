@@ -55,10 +55,10 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B8DFDD59F4155431EA48BA3CC3F6133A007B9AEE</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>120A3A1E434EDAFCBF4A7E11B32C9BC7D6596B13</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Madera_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Madera_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -334,6 +334,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelMadera.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Madera_1_TemporaryKey.pfx" />
     <None Include="Madera_TemporaryKey.pfx" />
     <None Include="Model\ModelMadera.edmx.diagram">
       <DependentUpon>ModelMadera.edmx</DependentUpon>

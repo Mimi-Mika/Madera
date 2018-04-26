@@ -76,10 +76,71 @@ namespace Madera.View.Pages.Devis
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DBEntities db = new DBEntities();
-            Projet projet = new Projet();
+            string addNomMaison = string.Empty;
+            string nomProjet = string.Empty;
+            int monte = 0;
+            long idEmpreinte = 0;
+            long idTypeDalle = 0;
+            long idClient = 0;
 
-            projet.
+
+            DBEntities db = new DBEntities();
+
+            //Création des classes Empreinte et TypeDalle
+            Empreinte addEmpreinte = new Empreinte();
+            TypeDalle addTypeDalle = new TypeDalle();
+            addEmpreinte = db.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
+            addTypeDalle = db.TypeDalle.Where(i => i.idTypeDalle == idTypeDalle).FirstOrDefault();
+
+            
+            //Création maison type dalle
+            Maison_TypeDalle addMaisonTypeDalle = new Maison_TypeDalle()
+            {
+                historiquePrixM2 = addTypeDalle.prixM2,
+                idTypeDalle= idTypeDalle,
+                TypeDalle =addTypeDalle
+                // Manque liaison Maison
+                // Manque idMaison
+            };
+
+            List<Maison_TypeDalle> lstMaiTypDal = new List<Maison_TypeDalle>();
+            lstMaiTypDal.Add(addMaisonTypeDalle);
+
+            //Client
+            Client addClient = new Client();
+            addClient = db.Client.Where(i => i.idClient == idClient).FirstOrDefault();
+
+            //Création projet
+            Projet addProjet = new Projet();
+            List<Projet> lstPrj = new List<Projet>();
+            lstPrj.Add(addProjet);
+
+
+            Maison addMaison = new Maison()
+            {
+                nomMaison = addNomMaison,
+                idEmpreinte = idEmpreinte,
+                Empreinte = addEmpreinte,
+                Maison_TypeDalle = lstMaiTypDal,
+                Projet= lstPrj
+            };
+
+            addProjet.idMaison = addMaison.idMaison;
+            addProjet.nom = nomProjet;
+            addProjet.kitMonte = monte;
+            addProjet.Maison = addMaison;
+            addProjet.Client = addClient;
+            addProjet.idClient = idClient;
+
+            //Enregistrer
+            //db.Maison_TypeDalle.Add(addMaisonTypeDalle);
+            //db.Maison.Add(addMaison);
+            //db.Projet.Add(addProjet);
+            //db.SaveChanges();
+
+
+
+
 
             if (lstV.SelectedItem != null)
             {
