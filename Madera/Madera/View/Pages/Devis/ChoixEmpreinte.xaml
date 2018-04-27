@@ -37,7 +37,7 @@
             </ListView.ItemsPanel>
         </ListView>
         <Button Content="Annuler" HorizontalAlignment="Left" Margin="229,736,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Ajouter" HorizontalAlignment="Left" Margin="1053,736,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button x:Name="BtnAdd" Content="Ajouter" HorizontalAlignment="Left" Margin="1053,736,0,0" VerticalAlignment="Top" Width="75" Click="BtnAdd_Click"/>
         <Label x:Name="lblPrenomClient" Content="Label" HorizontalAlignment="Left" Margin="1105,11,0,0" VerticalAlignment="Top" Width="71"/>
         <StackPanel Orientation="Horizontal" Margin="930,207,30,179">
             <Border BorderThickness="1" BorderBrush="Black" Width="318" >

@@ -76,7 +76,7 @@ namespace Madera.View.Pages.Devis
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             string addNomMaison = TxtNomMaison.Text;
             string nomProjet = TxtNomMaison.Text + "";
@@ -174,5 +174,9 @@ namespace Madera.View.Pages.Devis
             Client client = db.Client.Where(i => i.idClient == id_client).FirstOrDefault();
             return client;
         }
+
+        
+
+        
     }
 }

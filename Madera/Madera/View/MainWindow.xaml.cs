@@ -24,7 +24,7 @@ namespace Madera
             AppDomain.CurrentDomain.SetData("DataDirectory", path);
         }
 
-        private void btn_connexion_Click(object sender, RoutedEventArgs e) {
+        private void Btn_connexion_Click(object sender, RoutedEventArgs e) {
 
             DBEntities DB = new DBEntities();
 

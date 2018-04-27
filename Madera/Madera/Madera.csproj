@@ -365,6 +365,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Pictures\Modules\Porte\Abysse.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Akimel.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Apollo.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Arapao.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Athena.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Belleville.jpg" />
+    <Resource Include="Pictures\Gammes\eco.jpg" />
+    <Resource Include="Pictures\Modules\Porte\luce.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Aurore.jpg" />
     <Resource Include="Pictures\TypeDalle\Dalle.jpg" />
     <Resource Include="Pictures\TypeDalle\Mixte.jpg" />
     <Resource Include="Pictures\TypeDalle\Poutrelle.jpg" />
@@ -385,9 +394,9 @@
     <Resource Include="Pictures\Vue2D\PorteHorizontal.png" />
     <Resource Include="Pictures\Vue2D\PorteVertical.png" />
     <Resource Include="Pictures\Modules\1.jpg" />
-    <Resource Include="Pictures\Modules\2.jpg" />
+    <Resource Include="Pictures\Modules\Porte\2.jpg" />
     <Resource Include="Pictures\Modules\3.jpg" />
-    <Resource Include="Pictures\Modules\4.jpg" />
+    <Resource Include="Pictures\Modules\Porte\4.jpg" />
     <Resource Include="Pictures\Couleurs\1.jpg" />
     <Resource Include="Pictures\Couleurs\2.jpg" />
     <Resource Include="Pictures\Couleurs\3.jpg" />

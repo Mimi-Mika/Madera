@@ -15,6 +15,8 @@ namespace Madera.Model
         public Finition NewFinition { get; set; }
         public Projet NewProjet { get; set; }
         public Maison NewMaison { get; set; }
-        public TypeDalle NewTypeDalle { get; set; } 
+        public TypeDalle NewTypeDalle { get; set; }
+        public List<Module_Maison> NewModuleMaison { get; set; }
+        public List<Module> NewModule { get; set; }
     }
 }

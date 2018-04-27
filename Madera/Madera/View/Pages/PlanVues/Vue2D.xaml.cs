@@ -260,6 +260,28 @@ namespace Madera.View.Pages.PlanVues
                                 MyControl1.Background = brush;
                                 //Ajouter evenement pour mur exterieur
                                 MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
+
+                                Module module = new Module()
+                                {
+                                    nom = "murExterieur",
+                                    hauteur = 250,
+                                    largeur = 100,
+                                    prix = 0,
+                                    idGamme = 1,
+                                    idCouleur = 1,
+                                    idType = 1,
+
+
+                                };
+
+                                Module_Maison ModMaison = new Module_Maison()
+                                {
+                                    posXDebut = 1,
+                                    posXFin = 1,
+                                    posYDebut = 1,
+                                    posYFin = 1,
+                                };
+
                             }
                             //Murs interieurs
                             else

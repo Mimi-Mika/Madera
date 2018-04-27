@@ -37,7 +37,7 @@ namespace Madera.View.Pages.Devis
             ((MetroWindow)this.Parent).Content = tdb;
         }
 
-        private void btn_add(object sender, RoutedEventArgs e)
+        private void Btn_add(object sender, RoutedEventArgs e)
         {
             DBEntities DB = new DBEntities();
             long test = Convert.ToInt64(ListeClient.SelectedValue.ToString());

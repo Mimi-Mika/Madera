@@ -23,7 +23,7 @@
         <Label Content="Mot de passe :" Margin="0,366,0,0" VerticalAlignment="Top" Width="350" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
         <PasswordBox x:Name="password" controls:TextBoxHelper.ClearTextButton="True" Height="23" Margin="0,392,0,0" VerticalAlignment="Top" Width="350" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
         <Image Height="72" VerticalAlignment="Top" HorizontalAlignment="Right" Width="77" Source="/Madera;component/Pictures/CESI-SMALL1000.png" Margin="0,8,11.6,0" Grid.Column="1"/>
-        <Button x:Name="btn_connexion" Style="{StaticResource AccentedSquareButtonStyle}" Content="Connexion" Margin="0,455,0,0" VerticalAlignment="Top" Click="btn_connexion_Click" VerticalContentAlignment="Center" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" IsDefault="True" Width="90"/>
+        <Button x:Name="btn_connexion" Style="{StaticResource AccentedSquareButtonStyle}" Content="Connexion" Margin="0,455,0,0" VerticalAlignment="Top" Click="Btn_connexion_Click" VerticalContentAlignment="Center" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" IsDefault="True" Width="90"/>
 
     </Grid>
 </controls:MetroWindow>
