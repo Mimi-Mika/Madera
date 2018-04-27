@@ -365,6 +365,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Pictures\Modules\Mur\AfterFire.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Bricolo.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Brut.jpg" />
+    <Resource Include="Pictures\Modules\Mur\CivilWars.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Compliké.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Dark.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Parket.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Rondin.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Rondin2.jpg" />
+    <Resource Include="Pictures\Modules\Mur\Vieu.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\BlackFun.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\Boitox.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\eklair.png" />
+    <Resource Include="Pictures\Modules\Fenetre\Fenard.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\gautique.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\NewAge.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\smallPVC.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\SmellGood.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\Tradi.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\Ugly.jpg" />
     <Resource Include="Pictures\Modules\Porte\Abysse.jpg" />
     <Resource Include="Pictures\Modules\Porte\Akimel.jpg" />
     <Resource Include="Pictures\Modules\Porte\Apollo.jpg" />
@@ -393,9 +413,9 @@
     <Resource Include="Pictures\Vue2D\FenetreVertical.png" />
     <Resource Include="Pictures\Vue2D\PorteHorizontal.png" />
     <Resource Include="Pictures\Vue2D\PorteVertical.png" />
-    <Resource Include="Pictures\Modules\1.jpg" />
+    <Resource Include="Pictures\Modules\Mur\1.jpg" />
     <Resource Include="Pictures\Modules\Porte\2.jpg" />
-    <Resource Include="Pictures\Modules\3.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\3.jpg" />
     <Resource Include="Pictures\Modules\Porte\4.jpg" />
     <Resource Include="Pictures\Couleurs\1.jpg" />
     <Resource Include="Pictures\Couleurs\2.jpg" />
