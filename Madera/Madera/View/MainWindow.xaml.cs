@@ -14,7 +14,8 @@ namespace Madera
     public partial class MainWindow : MetroWindow
     {
         MasterClasse Master = new MasterClasse();
-        public MainWindow() {
+        public MainWindow()
+        {
             InitializeComponent();
 
             //Chemin relatif pour la connection a la BDD
@@ -24,20 +25,23 @@ namespace Madera
             AppDomain.CurrentDomain.SetData("DataDirectory", path);
         }
 
-        private void Btn_connexion_Click(object sender, RoutedEventArgs e) {
+        private void Btn_connexion_Click(object sender, RoutedEventArgs e)
+        {
 
             DBEntities DB = new DBEntities();
 
             Commercial testLogin = DB.Commercial.FirstOrDefault(u => u.nom == login.Text && u.mdp == password.Password);
 
-            if (testLogin !=null) {
-                Master.NewCommercial = testLogin;
+            if (testLogin != null)
+            {
+                Master.LockCommercial = testLogin;
                 Home home = new Home(Master);
                 home.Show();
                 Close();
-                
+
             }
-            else {
+            else
+            {
                 error_message.Content = "Login ou mot de passe incorrect !";
             }
 

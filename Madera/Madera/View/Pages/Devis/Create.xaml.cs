@@ -2,20 +2,9 @@
 using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Madera.View.Pages.Devis
 {
@@ -27,6 +16,7 @@ namespace Madera.View.Pages.Devis
         MasterClasse Master = new MasterClasse();
         public Create(MasterClasse _Master)
         {
+            Master = _Master;
             InitializeComponent();
             RemplirListeClient();
         }
@@ -40,8 +30,12 @@ namespace Madera.View.Pages.Devis
         private void Btn_add(object sender, RoutedEventArgs e)
         {
             DBEntities DB = new DBEntities();
+
+            //TODO: Reinitialiser le master (sauf le commercial)
+
+
             long test = Convert.ToInt64(ListeClient.SelectedValue.ToString());
-            Master.NewClient = DB.Client.Where(i => i.idClient == test).FirstOrDefault();
+            Master.LockClient = DB.Client.Where(i => i.idClient == test).FirstOrDefault();
             ChoixEmpreinte tdb = new ChoixEmpreinte(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
@@ -49,7 +43,7 @@ namespace Madera.View.Pages.Devis
         private void RemplirListeClient()
         {
             DBEntities DB = new DBEntities();
-            ListeClient.ItemsSource   = DB.Client.ToList();
+            ListeClient.ItemsSource = DB.Client.ToList();
             ListeClient.DisplayMemberPath = "nom";
             ListeClient.SelectedValuePath = "idClient";
         }

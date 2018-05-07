@@ -3,37 +3,27 @@ using Madera.View.Pages.PlanVues;
 using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Madera.View.Pages.Devis
 {
-    
+
     /// <summary>
     /// Logique d'interaction pour Index.xaml
     /// </summary>
     public partial class Index : Page
     {
         MasterClasse Master = new MasterClasse();
-        int IdClient;
-        int IdEmpreinte;
 
-        public Index()
+        public Index(MasterClasse _Master)
         {
+            Master = _Master;
             InitializeComponent();
             loadClient();
             loadDevis();
+            //TODO: Charger les types d'avancement (tous, brouillon, devis, facture)
         }
 
         private void loadClient()
@@ -60,25 +50,28 @@ namespace Madera.View.Pages.Devis
         {
             if (ListeDevis.SelectedItem != null)
             {
-                DBEntities DB = new DBEntities();
+                //DBEntities DB = new DBEntities();
 
-                Projet projet = new Projet();
-                projet = (Projet)ListeDevis.SelectedItem;
+                //Projet projet = new Projet();
+                //projet = (Projet)ListeDevis.SelectedItem;
 
-                IdClient = (int)projet.idClient.Value;
+                //IdClient = (int)projet.idClient.Value;
 
-                var truc = DB.Maison.Where(i => i.idMaison == (int)projet.idMaison).FirstOrDefault();
-                IdEmpreinte = (int)truc.idEmpreinte;
+                //var truc = DB.Maison.Where(i => i.idMaison == (int)projet.idMaison).FirstOrDefault();
+                //IdEmpreinte = (int)truc.idEmpreinte;
+
+                //TODO: Vider les tables du Master (sauf commercial)
+                //TODO: Remplir les tables du master avec le projet selectionner
 
                 Vue2D vue2d = new Vue2D(Master);
                 ((MetroWindow)this.Parent).Content = vue2d;
-                
+
             }
             else
             {
                 MessageBox.Show("Merci de selectionner un Devis");
             }
-            
+
         }
 
         private void loadDevis()
@@ -90,6 +83,17 @@ namespace Madera.View.Pages.Devis
 
         private void cmbClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            filter();
+        }
+
+        private void CmbEtat_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            filter();
+        }
+
+        private void filter()
+        {
+            //TODO: Filter avec cmbClient + cmbEtat (il manque un jeu de donnée "Projet EtatCommande" en base pour le faire)
             int id_client = Convert.ToInt32(cmbClient.SelectedValue.ToString());
             DBEntities DB = new DBEntities();
             ListeDevis.ItemsSource = DB.Projet.Where(i => i.idClient == id_client).ToList();

@@ -18,9 +18,11 @@
         <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Ajouter" HorizontalAlignment="Left" Margin="45,60,0,0" VerticalAlignment="Top" Width="75" Background="#CC11DA22" mah:ControlsHelper.ContentCharacterCasing="Normal" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Click="btn_ajout"/>
         <Button Content="retour" Margin="0,9,10,0" VerticalAlignment="Top" Width="75" Background="#FFA3A3A3" mah:ControlsHelper.ContentCharacterCasing="Lower" Click="Click_btn_retour" HorizontalAlignment="Right"/>
         <iconPacks:PackIconModern Width="75" Height="75" Kind="UserTie" VerticalContentAlignment="Stretch" Margin="0,60,10,0" HorizontalAlignment="Right" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
-        <DataGrid x:Name="ListeDevis" HorizontalAlignment="Left" Height="515" Margin="21,248,0,0" VerticalAlignment="Top" Width="1225" />
-        <ComboBox x:Name="cmbClient" HorizontalAlignment="Left" Height="34" Margin="256,182,0,0" VerticalAlignment="Top" Width="340" SelectionChanged="cmbClient_SelectionChanged"/>
-        <Label Content="Choisir le client" HorizontalAlignment="Left" Margin="21,182,0,0" VerticalAlignment="Top" Height="34" Width="190"/>
-        <Button x:Name="btnChoisirDevis" Content="Choisir le devis" HorizontalAlignment="Left" Margin="672,182,0,0" VerticalAlignment="Top" Width="169" Height="34" Click="btnChoisirDevis_Click"/>
+        <DataGrid x:Name="ListeDevis" HorizontalAlignment="Left" Height="451" Margin="21,248,0,0" VerticalAlignment="Top" Width="1225" />
+        <ComboBox x:Name="cmbClient" HorizontalAlignment="Left" Height="34" Margin="125,182,0,0" VerticalAlignment="Top" Width="298" SelectionChanged="cmbClient_SelectionChanged"/>
+        <Label Content="Choisir le client :" HorizontalAlignment="Left" Margin="21,182,0,0" VerticalAlignment="Top" Height="34" Width="99"/>
+        <Button x:Name="btnChoisirDevis" Content="Choisir le devis" HorizontalAlignment="Left" Margin="1120,182,0,0" VerticalAlignment="Top" Width="126" Height="34" Click="btnChoisirDevis_Click"/>
+        <Label Content="Etat du projet :" HorizontalAlignment="Left" Margin="521,182,0,0" VerticalAlignment="Top" Height="34" Width="99"/>
+        <ComboBox x:Name="CmbEtat" HorizontalAlignment="Left" Height="34" Margin="625,182,0,0" VerticalAlignment="Top" Width="197" SelectionChanged="CmbEtat_SelectionChanged"/>
     </Grid>
 </Page>

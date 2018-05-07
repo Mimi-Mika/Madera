@@ -21,10 +21,10 @@ namespace Madera.View.Pages.PlanVues
     public partial class Vue3D : Page
     {
         MasterClasse Master = new MasterClasse();
-        public static Maison m3daffiche;
-        public Vue3D(Maison _m3daffiche = null)
+        public static Maison m3DAffiche;
+        public Vue3D(MasterClasse _Master)
         {
-            m3daffiche = _m3daffiche;
+            Master = _Master;
             InitializeComponent();
 
         }
@@ -67,16 +67,21 @@ namespace Madera.View.Pages.PlanVues
             // Define lights.
             DefineLights();
 
+            //TODO: A tester
             DBEntities DB = new DBEntities();
-            if (m3daffiche == null)
+            if (Master == null)
             {
                 int idM = 1;
-                m3daffiche = DB.Maison.Where(i => i.idMaison == idM).FirstOrDefault();
+                m3DAffiche = DB.Maison.Where(i => i.idMaison == idM).FirstOrDefault();
+            }
+            else
+            {
+                m3DAffiche = DB.Maison.Where(i => i.idMaison == Master.NewMaison.idMaison).FirstOrDefault();
             }
 
             List<Module_Maison> listModulesMaison = new List<Module_Maison>();
 
-            listModulesMaison = DB.Module_Maison.Where(i => i.idMaison == m3daffiche.idMaison).ToList();
+            listModulesMaison = DB.Module_Maison.Where(i => i.idMaison == m3DAffiche.idMaison).ToList();
 
             // Create the model.
             DefineModel(MainModel3Dgroup, listModulesMaison);

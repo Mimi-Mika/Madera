@@ -29,7 +29,7 @@ namespace Madera.View.Pages.Clients
 
         private void btn_add_client(object sender, RoutedEventArgs e)
         {
-            
+
             Create add_client = new Create(Master);
             ((MetroWindow)this.Parent).Content = add_client;
         }
@@ -37,7 +37,7 @@ namespace Madera.View.Pages.Clients
         private void btn_edit_client(object sender, RoutedEventArgs e)
         {
             Client client = (Client)ListeClient.SelectedItem;
-            Master.NewClient = client;
+            Master.LockClient = client;
             Edit edit_client = new Edit(Master);
             ((MetroWindow)this.Parent).Content = edit_client;
         }

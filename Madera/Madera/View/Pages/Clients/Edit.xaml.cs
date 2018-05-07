@@ -19,7 +19,7 @@ namespace Madera.View.Pages.Clients
         {
             Master = _Master;
             Client cli = new Client();
-            cli = Master.NewClient;
+            cli = Master.LockClient;
             InitializeComponent();
             this.client = cli;
             num_client.Content = this.client.idClient.ToString();

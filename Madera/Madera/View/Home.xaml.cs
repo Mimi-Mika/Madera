@@ -1,7 +1,6 @@
 ﻿using Madera.Model;
 using Madera.View.Pages.Tdb;
 using MahApps.Metro.Controls;
-using System;
 using System.Windows;
 
 namespace Madera.View
@@ -11,14 +10,19 @@ namespace Madera.View
     /// </summary>
     public partial class Home : MetroWindow
     {
-        public Home(MasterClasse Master) {
+        MasterClasse _Master = new MasterClasse();
+
+        public Home(MasterClasse Master)
+        {
+            _Master = Master;
             InitializeComponent();
             //home.Source = new Uri("Pages/Tdb/Tdb.xaml", UriKind.Relative);
 
             this.Content = new Tableau_de_bord(Master);
         }
 
-        private void Click_btn_deconnexion(object sender, RoutedEventArgs e) {
+        private void Click_btn_deconnexion(object sender, RoutedEventArgs e)
+        {
             new MainWindow().Show();
             Close();
         }
