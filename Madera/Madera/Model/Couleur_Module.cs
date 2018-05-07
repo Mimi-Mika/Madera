@@ -12,14 +12,15 @@ namespace Madera.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Module_Favori
+    public partial class Couleur_Module
     {
-        public Nullable<double> distanceSol { get; set; }
-        public Nullable<long> numSlot { get; set; }
-        public long idModule { get; set; }
-        public long idFavori { get; set; }
+        public long idCouleur_Module { get; set; }
+        public Nullable<long> idModule { get; set; }
+        public Nullable<long> idCouleur { get; set; }
+        public Nullable<long> idModule_Maison { get; set; }
     
-        public virtual Favori Favori { get; set; }
+        public virtual Couleur Couleur { get; set; }
         public virtual Module Module { get; set; }
+        public virtual Module_Maison Module_Maison { get; set; }
     }
 }

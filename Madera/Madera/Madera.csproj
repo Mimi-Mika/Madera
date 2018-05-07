@@ -143,6 +143,9 @@
     <Compile Include="Model\Couleur.cs">
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Couleur_Module.cs">
+      <DependentUpon>ModelMadera.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Empreinte.cs">
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
