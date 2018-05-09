@@ -135,8 +135,8 @@ namespace Madera.View.Pages.PlanVues
             CreeLaGridVide(col, lig);
             TailleDesButtons();
 
-            //TODO: Modifier le if pour si on arrive de "Devis créé" ou de "Devis Editer" (Test liste module maison == vide ou pas)
-            if (true)
+            //Done: Modifier le if pour si on arrive de "Devis créé" ou de "Devis Editer" (Test liste module maison == vide ou pas)
+            if (_Master.NewModuleMaison == null)
             {
                 //Ajoute les boutons pour un devis a créer
                 CrééLesBoutons(col, lig, zoneMorteCoordX, zoneMorteTailleX, zoneMorteCoordY, zoneMorteTailleY);
@@ -336,13 +336,13 @@ namespace Madera.View.Pages.PlanVues
             for (int i = 0; i < grid2D.ColumnDefinitions.Count; i++)
             {
                 if ((i % 2) == 0)
-                    grid2D.ColumnDefinitions[i].Width = new GridLength(15);
+                    grid2D.ColumnDefinitions[i].Width = new GridLength(25);
             }
 
             for (int i = 0; i < grid2D.RowDefinitions.Count; i++)
             {
                 if ((i % 2) == 0)
-                    grid2D.RowDefinitions[i].Height = new GridLength(15);
+                    grid2D.RowDefinitions[i].Height = new GridLength(25);
 
             }
         }
@@ -353,13 +353,134 @@ namespace Madera.View.Pages.PlanVues
         private void AjouterLesBoutons()
         {
             //TODO: Ajouter les boutons pour un devis a éditer
-
-            //TODO: Faire une boucle sur les modules Maison
-            for (int i = 0; i < _Master.NewModuleMaison.Count; i++)
+            foreach (Module_Maison moduleMaison in _Master.NewModuleMaison)
             {
+                Button MyControl1 = new Button() { Content = "" };
+                int x = 0;
+                int y = 0;
+
+
+                //si verticale
+                
+
+                MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
+                var brush = new ImageBrush();
                 //TODO: Récuperer les X et Y créer les boutons et associer l'object 
+
+                //Si mur exterieur
+                if (moduleMaison.Module.TypeModule.nomType.Contains("Exterieur"))
+                {
+                    //Done: calculer si hori ou vertic
+                    if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
+                    {
+                        y = (int)moduleMaison.posYDebut * 2 + 1;
+                        if (moduleMaison.posXDebut == 0)
+                        {
+                            x = 0;
+                        }
+                        else
+                        {
+                            x = (int)moduleMaison.posXDebut * 2 + 1;
+                        }
+                    }
+                    //si hori
+                    else
+                    {
+                        x = (int)moduleMaison.posXDebut * 2 + 1;
+                        if ((int)moduleMaison.posYDebut == 0)
+                        {
+                            y = 0;
+                        }
+                        else
+                        {
+                            y = (int)moduleMaison.posYDebut * 2 + 1;
+                        }
+                    }
+
+                    //Ajouter evenement pour mur exterieur
+                    MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
+
+                    if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
+                    {
+                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
+                        //TODO: Modifier object pour avoir coordonnées type etc...
+                        //ModMaison.idModule = 1;
+                    }
+
+                    if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
+                    {
+                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
+                        //TODO: Modifier object pour avoir coordonnées type etc...
+                    }
+
+                    if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
+                    {
+                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
+                        //TODO: Modifier object pour avoir coordonnées type etc...
+                    }
+
+
+                }
+                else
+                {
+                    //Ajouter evenement pour mur exterieur
+                    MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
+
+                    //Done: calculer si hori ou vertic
+                    if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
+                    {
+                        y = (int)moduleMaison.posYDebut * 2;
+                        if (moduleMaison.posXDebut == 0)
+                        {
+                            x = 0;
+                        }
+                        else
+                        {
+                            x = (int)moduleMaison.posXDebut * 2 + 1;
+                        }
+                    }
+                    //si hori
+                    else
+                    {
+                        x = (int)moduleMaison.posXDebut * 2;
+                        if ((int)moduleMaison.posYDebut == 0)
+                        {
+                            y = 0;
+                        }
+                        else
+                        {
+                            y = (int)moduleMaison.posYDebut * 2 + 1;
+                        }
+                    }
+
+                    if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
+                    {
+                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
+                        //TODO: Modifier object pour avoir coordonnées type etc...
+                        //ModMaison.idModule = 1;
+                    }
+
+                    if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
+                    {
+                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
+                        //TODO: Modifier object pour avoir coordonnées type etc...
+                    }
+
+                    if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
+                    {
+                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
+                        //TODO: Modifier object pour avoir coordonnées type etc...
+                    }
+
+                }
+
+                Grid.SetColumn(MyControl1, x);
+                Grid.SetRow(MyControl1, y);
+
+                MyControl1.Background = brush;
+                MyControl1.SetValue(FrameworkElement.TagProperty, moduleMaison);
+                grid2D.Children.Add(MyControl1);
             }
-            MessageBox.Show("");
         }
         #endregion
 

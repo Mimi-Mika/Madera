@@ -25,18 +25,9 @@ namespace Madera.View.Pages.Devis
             InitializeComponent();
             ChargerEmpreinte();
             ChargerTypeDalle();
+            GetInfosClient();
 
 
-            //TODO: A mettre dans le module "GetinfosClient"
-            Client client = Master.LockClient;
-            //IdClient = Master.NewClient.idClient;
-            lblNumClient.Content = "#" + client.idClient;
-            lblNomClient.Content = client.nom;
-            lblPrenomClient.Content = client.prenom;
-            lblMail.Content = client.mail;
-
-            //TODO: Faire qu'un radio bouton soit cocher au lancement
-            //TODO: Définir un nom de maison générique
         }
 
         private void ChargerTypeDalle()
@@ -134,11 +125,17 @@ namespace Madera.View.Pages.Devis
                 //Enregistrer la Maison en Master
                 Master.NewMaison = addMaison;
 
-
                 //Enregistrement Maison_TypeDalle en BDD
+                //Done: Prix de la dalle
+                double? zoneMorteMoins = 0;
+                if (Master.LockZoneMorte != null)
+                {
+                    zoneMorteMoins = Master.LockTypeDalle.prixM2 * Master.LockZoneMorte.longueur * Master.LockZoneMorte.largeur;
+                }
+
                 Maison_TypeDalle addMaisonTypeDalle = new Maison_TypeDalle()
                 {
-                    historiquePrixM2 = Master.LockTypeDalle.prixM2,
+                    historiquePrixM2 = Master.LockTypeDalle.prixM2 * Master.LockEmpreinte.largeur * Master.LockEmpreinte.longueur - zoneMorteMoins,
                     idTypeDalle = Master.LockTypeDalle.idTypeDalle,
                     idMaison = Master.NewMaison.idMaison,
                 };
@@ -177,14 +174,13 @@ namespace Madera.View.Pages.Devis
                 Master.NewProjet = addProjet;
 
                 //Enregistrer EtatCommande en Master (Brouillon)
-                Master.LockEtatCommande = db.EtatCommande.Where(i => i.idEtatCommande == 1).FirstOrDefault();
-
+                Master.LockEtatCommande = db.EtatCommande.ToList();
 
                 //TODO: BDD Date en real? 
                 //TODO: BDD PaimentValide en int???
                 Projet_EtatCommande addProjetEtatCommande = new Projet_EtatCommande()
                 {
-                    idEtatCommande = Master.LockEtatCommande.idEtatCommande,
+                    idEtatCommande = 1, // Brouillon
                     idProjet = addProjet.idProjet,
                     dates = 1254488,
                     prix = 0,
@@ -194,7 +190,7 @@ namespace Madera.View.Pages.Devis
                 db.SaveChanges();
 
                 //Enregistrer EtatCommande en Master
-                Master.NewProjetEtatCommande = addProjetEtatCommande;
+                Master.NewProjetEtatCommande.Add(addProjetEtatCommande);
 
 
 
@@ -207,11 +203,20 @@ namespace Madera.View.Pages.Devis
             }
         }
 
-        private Client GetInfosClient(int id_client)
+        private void GetInfosClient()
         {
-            DBEntities db = new DBEntities();
-            Client client = db.Client.Where(i => i.idClient == id_client).FirstOrDefault();
-            return client;
+            //Done: A mettre dans le module "GetinfosClient"
+            Client client = Master.LockClient;
+            //IdClient = Master.NewClient.idClient;
+            lblNumClient.Content = "#" + client.idClient;
+            lblNomClient.Content = client.nom;
+            lblPrenomClient.Content = client.prenom;
+            lblMail.Content = client.mail;
+
+            //Done: Faire qu'un radio bouton soit cocher au lancement
+            RbMontee.IsChecked = true;
+            //TODO: Définir un nom de maison générique
+
         }
     }
 }

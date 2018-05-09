@@ -23,15 +23,17 @@ namespace Madera.View.Pages.Devis
             InitializeComponent();
             loadClient();
             loadDevis();
-            //TODO: Charger les types d'avancement (tous, brouillon, devis, facture)
+            //Done: Charger les types d'avancement
+            loadEtat();
+
         }
 
         private void loadClient()
         {
             DBEntities DB = new DBEntities();
-            cmbClient.ItemsSource = DB.Client.ToList();
-            cmbClient.DisplayMemberPath = "nom";
-            cmbClient.SelectedValuePath = "idClient";
+            CmbClient.ItemsSource = DB.Client.ToList();
+            CmbClient.DisplayMemberPath = "nom";
+            CmbClient.SelectedValuePath = "idClient";
         }
 
         private void Click_btn_retour(object sender, RoutedEventArgs e)
@@ -50,7 +52,7 @@ namespace Madera.View.Pages.Devis
         {
             if (ListeDevis.SelectedItem != null)
             {
-                //DBEntities DB = new DBEntities();
+                //
 
                 //Projet projet = new Projet();
                 //projet = (Projet)ListeDevis.SelectedItem;
@@ -60,8 +62,59 @@ namespace Madera.View.Pages.Devis
                 //var truc = DB.Maison.Where(i => i.idMaison == (int)projet.idMaison).FirstOrDefault();
                 //IdEmpreinte = (int)truc.idEmpreinte;
 
-                //TODO: Vider les tables du Master (sauf commercial)
-                //TODO: Remplir les tables du master avec le projet selectionner
+                //Done: Vider les tables du Master (sauf commercial)
+                Master.LockClient = null;
+                Master.LockEmpreinte = null;
+                Master.LockEtatCommande = null;
+                Master.LockTypeDalle = null;
+                Master.LockZoneMorte = null;
+                Master.NewProjetEtatCommande = null;
+                Master.NewProjet = null;
+                Master.NewModuleMaison = null;
+                Master.LockModule = null;
+                Master.NewMaisonTypeDalle = null;
+                Master.NewMaison = null;
+                Master.LockFinition = null;
+                Master.LockCouleur = null;
+                Master.LockTypeModule = null;
+                Master.LockGamme = null;
+                Master.NewCouleurModule = null;
+                Master.NewFavori = null;
+                Master.NewModuleFavori = null;
+
+                //Done: Remplir les tables du master avec le projet selectionner
+                //TODO: Toutes les listes "Lock" sans condition de where peuvent etre charger en début de prog et ne plus etre reset
+                DBEntities DB = new DBEntities();
+
+                string test666 = ListeDevis.SelectedValue.ToString();
+                int test999 = Convert.ToInt32(test666);
+
+                Master.NewProjet = DB.Projet.Where(i => i.idProjet == test999).FirstOrDefault();
+                Master.LockClient = DB.Client.Where(i => i.idClient == Master.NewProjet.idClient).FirstOrDefault();
+                Master.NewMaison = DB.Maison.Where(i => i.idMaison == Master.NewProjet.idMaison).FirstOrDefault();
+                Master.LockEmpreinte = DB.Empreinte.Where(i => i.idEmpreinte == Master.NewMaison.idEmpreinte).FirstOrDefault();
+                Master.LockZoneMorte = DB.ZoneMorte.Where(i => i.idZoneMorte == Master.LockEmpreinte.idZoneMorte).FirstOrDefault();
+                Master.NewMaisonTypeDalle = DB.Maison_TypeDalle.Where(i => i.idMaison == Master.NewMaison.idMaison).FirstOrDefault();
+                Master.LockTypeDalle = DB.TypeDalle.Where(i => i.idTypeDalle == Master.NewMaisonTypeDalle.idTypeDalle).FirstOrDefault();
+                Master.NewProjetEtatCommande = Master.NewProjet.Projet_EtatCommande.ToList();
+                Master.LockEtatCommande = DB.EtatCommande.ToList();
+                Master.NewModuleMaison = DB.Module_Maison.Where(i => i.idMaison == Master.NewMaison.idMaison).ToList();
+                Master.LockModule = new System.Collections.Generic.List<Module>();
+                foreach (Module_Maison item in Master.NewModuleMaison)
+                {
+                    Master.LockModule.Add(item.Module);
+                }
+                Master.LockTypeModule = (DB.TypeModule.ToList());
+                Master.LockGamme = (DB.Gamme.ToList());
+                Master.LockFinition = (DB.Finition.ToList());
+                Master.LockCouleur = (DB.Couleur.ToList());
+                Master.NewCouleurModule = new System.Collections.Generic.List<Couleur_Module>();
+                foreach (var item in Master.LockModule)
+                {
+                    Master.NewCouleurModule.AddRange(DB.Couleur_Module.Where(i => i.idModule == item.idModule).ToList());
+                }
+                Master.NewFavori = (DB.Favori.ToList());
+                Master.NewModuleFavori = (DB.Module_Favori.ToList());
 
                 Vue2D vue2d = new Vue2D(Master);
                 ((MetroWindow)this.Parent).Content = vue2d;
@@ -77,27 +130,38 @@ namespace Madera.View.Pages.Devis
         private void loadDevis()
         {
             DBEntities DB = new DBEntities();
-            ListeDevis.ItemsSource = DB.Projet.Select(i => i).ToList();
+            ListeDevis.ItemsSource = DB.Projet.ToList();
+            ListeDevis.DisplayMemberPath = "nom";
+            ListeDevis.DisplayMemberPath = "numOF";
             ListeDevis.SelectedValuePath = "idClient";
         }
 
-        private void cmbClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void loadEtat()
+        {
+            DBEntities DB = new DBEntities();
+            CmbEtat.ItemsSource = DB.EtatCommande.ToList();
+            CmbEtat.DisplayMemberPath = "nom";
+            CmbEtat.SelectedValuePath = "idEtatCommande";
+        }
+
+        private void CmbClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             filter();
         }
 
         private void CmbEtat_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            filter();
+            //filter();
         }
 
         private void filter()
         {
             //TODO: Filter avec cmbClient + cmbEtat (il manque un jeu de donnée "Projet EtatCommande" en base pour le faire)
-            int id_client = Convert.ToInt32(cmbClient.SelectedValue.ToString());
+            int id_client = Convert.ToInt32(CmbClient.SelectedValue.ToString());
+            //int id_etat = Convert.ToInt32(CmbEtat.SelectedValue.ToString());  .Where(i => i.idProjet == id_etat)
             DBEntities DB = new DBEntities();
             ListeDevis.ItemsSource = DB.Projet.Where(i => i.idClient == id_client).ToList();
-            ListeDevis.SelectedValuePath = "idClient";
+            ListeDevis.SelectedValuePath = "idProjet";
         }
     }
 }

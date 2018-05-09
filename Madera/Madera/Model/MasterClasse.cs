@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +21,20 @@ namespace Madera.Model
         public Maison_TypeDalle NewMaisonTypeDalle { get; set; }
         public TypeDalle LockTypeDalle { get; set; }
 
-        public Projet_EtatCommande NewProjetEtatCommande { get; set; }
-        public EtatCommande LockEtatCommande { get; set; }
+        public List<Projet_EtatCommande> NewProjetEtatCommande { get; set; }
+        public List<EtatCommande> LockEtatCommande { get; set; }
 
-        public Couleur NewCouleur { get; set; }
-        public Finition NewFinition { get; set; }
+        public List<Couleur> LockCouleur { get; set; }
+        public List<Couleur_Module> NewCouleurModule { get; set; }
+        public List<Finition> LockFinition { get; set; }
         public List<Module_Maison> NewModuleMaison { get; set; }
-        public List<Module> NewModule { get; set; }
+        public List<TypeModule> LockTypeModule { get; set; }
+        public List<Module> LockModule { get; set; }
+
+        public List<Favori> NewFavori { get; set; }
+        public List<Module_Favori> NewModuleFavori { get; set; }
+        public List<Gamme> LockGamme { get; set; }
+
+
     }
 }
