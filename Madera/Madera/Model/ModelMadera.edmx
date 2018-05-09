@@ -203,7 +203,6 @@
           <Property Name="largeur" Type="integer" />
           <Property Name="coordonneeX" Type="integer" />
           <Property Name="coordonneeY" Type="integer" />
-          <Property Name="idEmpreinte" Type="integer" />
         </EntityType>
         <Association Name="FK_Couleur_Module_0_0">
           <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
@@ -433,18 +432,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ZoneMorte_0_0">
-          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="0..1" />
-          <End Role="ZoneMorte" Type="Self.ZoneMorte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empreinte">
-              <PropertyRef Name="idEmpreinte" />
-            </Principal>
-            <Dependent Role="ZoneMorte">
-              <PropertyRef Name="idEmpreinte" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DBModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" store:Type="Tables" />
           <EntitySet Name="Commercial" EntityType="Self.Commercial" store:Type="Tables" />
@@ -541,10 +528,6 @@
             <End Role="Projet" EntitySet="Projet" />
             <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
           </AssociationSet>
-          <AssociationSet Name="FK_ZoneMorte_0_0" Association="Self.FK_ZoneMorte_0_0">
-            <End Role="Empreinte" EntitySet="Empreinte" />
-            <End Role="ZoneMorte" EntitySet="ZoneMorte" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -596,7 +579,6 @@
           <Property Name="idZoneMorte" Type="Int64" />
           <NavigationProperty Name="ZoneMorte" Relationship="Self.FK_Empreinte_0_0" FromRole="Empreinte" ToRole="ZoneMorte" />
           <NavigationProperty Name="Maison" Relationship="Self.FK_Maison_0_0" FromRole="Empreinte" ToRole="Maison" />
-          <NavigationProperty Name="ZoneMorte1" Relationship="Self.FK_ZoneMorte_0_0" FromRole="Empreinte" ToRole="ZoneMorte" />
         </EntityType>
         <EntityType Name="EtatCommande">
           <Key>
@@ -754,9 +736,7 @@
           <Property Name="largeur" Type="Int64" />
           <Property Name="coordonneeX" Type="Int64" />
           <Property Name="coordonneeY" Type="Int64" />
-          <Property Name="idEmpreinte" Type="Int64" />
           <NavigationProperty Name="Empreinte" Relationship="Self.FK_Empreinte_0_0" FromRole="ZoneMorte" ToRole="Empreinte" />
-          <NavigationProperty Name="Empreinte1" Relationship="Self.FK_ZoneMorte_0_0" FromRole="ZoneMorte" ToRole="Empreinte" />
         </EntityType>
         <Association Name="FK_Projet_0_0">
           <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
@@ -790,18 +770,6 @@
               <PropertyRef Name="idEmpreinte" />
             </Principal>
             <Dependent Role="Maison">
-              <PropertyRef Name="idEmpreinte" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ZoneMorte_0_0">
-          <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="0..1" />
-          <End Role="ZoneMorte" Type="Self.ZoneMorte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empreinte">
-              <PropertyRef Name="idEmpreinte" />
-            </Principal>
-            <Dependent Role="ZoneMorte">
               <PropertyRef Name="idEmpreinte" />
             </Dependent>
           </ReferentialConstraint>
@@ -955,10 +923,6 @@
           <AssociationSet Name="FK_Maison_0_0" Association="Self.FK_Maison_0_0">
             <End Role="Empreinte" EntitySet="Empreinte" />
             <End Role="Maison" EntitySet="Maison" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ZoneMorte_0_0" Association="Self.FK_ZoneMorte_0_0">
-            <End Role="Empreinte" EntitySet="Empreinte" />
-            <End Role="ZoneMorte" EntitySet="ZoneMorte" />
           </AssociationSet>
           <AssociationSet Name="FK_Projet_EtatCommande_0_0" Association="Self.FK_Projet_EtatCommande_0_0">
             <End Role="EtatCommande" EntitySet="EtatCommande" />
@@ -1321,7 +1285,6 @@
                 <ScalarProperty Name="largeur" ColumnName="largeur" />
                 <ScalarProperty Name="coordonneeX" ColumnName="coordonneeX" />
                 <ScalarProperty Name="coordonneeY" ColumnName="coordonneeY" />
-                <ScalarProperty Name="idEmpreinte" ColumnName="idEmpreinte" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
