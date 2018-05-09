@@ -143,7 +143,7 @@
           <Property Name="historiquePrixFinition" Type="real" />
           <Property Name="idModule" Type="integer" Nullable="false" />
           <Property Name="idMaison" Type="integer" Nullable="false" />
-          <Property Name="idModule_maison" Type="integer" Nullable="false" />
+          <Property Name="idModule_maison" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Projet">
           <Key>
@@ -164,14 +164,7 @@
           <Property Name="kitMonte" Type="integer" />
           <Property Name="idMaison" Type="integer" />
           <Property Name="idClient" Type="integer" />
-        </EntityType>
-        <EntityType Name="Projet_Commercial">
-          <Key>
-            <PropertyRef Name="idProjet" />
-            <PropertyRef Name="idCommercial" />
-          </Key>
-          <Property Name="idProjet" Type="integer" Nullable="false" />
-          <Property Name="idCommercial" Type="integer" Nullable="false" />
+          <Property Name="idCommercial" Type="integer" />
         </EntityType>
         <EntityType Name="Projet_EtatCommande">
           <Key>
@@ -357,18 +350,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Module_Maison_0_0">
-          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
-          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maison">
-              <PropertyRef Name="idMaison" />
-            </Principal>
-            <Dependent Role="Module_Maison">
-              <PropertyRef Name="idMaison" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Module_Maison_1_0">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
           <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
           <ReferentialConstraint>
@@ -380,19 +361,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Projet_0_0">
-          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
-          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
+        <Association Name="FK_Module_Maison_1_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
+          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="idClient" />
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
             </Principal>
-            <Dependent Role="Projet">
-              <PropertyRef Name="idClient" />
+            <Dependent Role="Module_Maison">
+              <PropertyRef Name="idMaison" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Projet_1_0">
+        <Association Name="FK_Projet_0_0">
           <End Role="Maison" Type="Self.Maison" Multiplicity="0..1" />
           <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
           <ReferentialConstraint>
@@ -404,27 +385,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Projet_Commercial_0_0">
-          <End Role="Commercial" Type="Self.Commercial" Multiplicity="1" />
-          <End Role="Projet_Commercial" Type="Self.Projet_Commercial" Multiplicity="*" />
+        <Association Name="FK_Projet_1_0">
+          <End Role="Commercial" Type="Self.Commercial" Multiplicity="0..1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Commercial">
               <PropertyRef Name="idCommercial" />
             </Principal>
-            <Dependent Role="Projet_Commercial">
+            <Dependent Role="Projet">
               <PropertyRef Name="idCommercial" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Projet_Commercial_1_0">
-          <End Role="Projet" Type="Self.Projet" Multiplicity="1" />
-          <End Role="Projet_Commercial" Type="Self.Projet_Commercial" Multiplicity="*" />
+        <Association Name="FK_Projet_2_0">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Projet">
-              <PropertyRef Name="idProjet" />
+            <Principal Role="Client">
+              <PropertyRef Name="idClient" />
             </Principal>
-            <Dependent Role="Projet_Commercial">
-              <PropertyRef Name="idProjet" />
+            <Dependent Role="Projet">
+              <PropertyRef Name="idClient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -480,7 +461,6 @@
           <EntitySet Name="Module_Favori" EntityType="Self.Module_Favori" store:Type="Tables" />
           <EntitySet Name="Module_Maison" EntityType="Self.Module_Maison" store:Type="Tables" />
           <EntitySet Name="Projet" EntityType="Self.Projet" store:Type="Tables" />
-          <EntitySet Name="Projet_Commercial" EntityType="Self.Projet_Commercial" store:Type="Tables" />
           <EntitySet Name="Projet_EtatCommande" EntityType="Self.Projet_EtatCommande" store:Type="Tables" />
           <EntitySet Name="TypeDalle" EntityType="Self.TypeDalle" store:Type="Tables" />
           <EntitySet Name="TypeModule" EntityType="Self.TypeModule" store:Type="Tables" />
@@ -534,28 +514,24 @@
             <End Role="Module_Favori" EntitySet="Module_Favori" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_Maison_0_0" Association="Self.FK_Module_Maison_0_0">
-            <End Role="Maison" EntitySet="Maison" />
-            <End Role="Module_Maison" EntitySet="Module_Maison" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Module_Maison_1_0" Association="Self.FK_Module_Maison_1_0">
             <End Role="Module" EntitySet="Module" />
             <End Role="Module_Maison" EntitySet="Module_Maison" />
           </AssociationSet>
-          <AssociationSet Name="FK_Projet_0_0" Association="Self.FK_Projet_0_0">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="Projet" EntitySet="Projet" />
+          <AssociationSet Name="FK_Module_Maison_1_0" Association="Self.FK_Module_Maison_1_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Module_Maison" EntitySet="Module_Maison" />
           </AssociationSet>
-          <AssociationSet Name="FK_Projet_1_0" Association="Self.FK_Projet_1_0">
+          <AssociationSet Name="FK_Projet_0_0" Association="Self.FK_Projet_0_0">
             <End Role="Maison" EntitySet="Maison" />
             <End Role="Projet" EntitySet="Projet" />
           </AssociationSet>
-          <AssociationSet Name="FK_Projet_Commercial_0_0" Association="Self.FK_Projet_Commercial_0_0">
+          <AssociationSet Name="FK_Projet_1_0" Association="Self.FK_Projet_1_0">
             <End Role="Commercial" EntitySet="Commercial" />
-            <End Role="Projet_Commercial" EntitySet="Projet_Commercial" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Projet_Commercial_1_0" Association="Self.FK_Projet_Commercial_1_0">
             <End Role="Projet" EntitySet="Projet" />
-            <End Role="Projet_Commercial" EntitySet="Projet_Commercial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_2_0" Association="Self.FK_Projet_2_0">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Projet" EntitySet="Projet" />
           </AssociationSet>
           <AssociationSet Name="FK_Projet_EtatCommande_0_0" Association="Self.FK_Projet_EtatCommande_0_0">
             <End Role="EtatCommande" EntitySet="EtatCommande" />
@@ -597,7 +573,7 @@
           <Property Name="tel" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="mail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="mdp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Projet" Relationship="Self.Projet_Commercial" FromRole="Commercial" ToRole="Projet" />
+          <NavigationProperty Name="Projet1" Relationship="DBModel.FK_Projet_1_01" FromRole="Commercial" ToRole="Projet" />
         </EntityType>
         <EntityType Name="Couleur">
           <Key>
@@ -735,7 +711,7 @@
           <NavigationProperty Name="Client" Relationship="Self.FK_Projet_0_0" FromRole="Projet" ToRole="Client" />
           <NavigationProperty Name="Maison" Relationship="Self.FK_Projet_1_0" FromRole="Projet" ToRole="Maison" />
           <NavigationProperty Name="Projet_EtatCommande" Relationship="Self.FK_Projet_EtatCommande_1_0" FromRole="Projet" ToRole="Projet_EtatCommande" />
-          <NavigationProperty Name="Commercial" Relationship="Self.Projet_Commercial" FromRole="Projet" ToRole="Commercial" />
+          <Property Name="idCommercial" Type="Int64" />
         </EntityType>
         <EntityType Name="Projet_EtatCommande">
           <Key>
@@ -950,10 +926,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Projet_Commercial">
-          <End Role="Commercial" Type="Self.Commercial" Multiplicity="*" />
-          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Client" EntityType="Self.Client" />
           <EntitySet Name="Commercial" EntityType="Self.Commercial" />
@@ -1028,10 +1000,6 @@
             <End Role="Projet" EntitySet="Projet" />
             <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
           </AssociationSet>
-          <AssociationSet Name="Projet_Commercial" Association="Self.Projet_Commercial">
-            <End Role="Commercial" EntitySet="Commercial" />
-            <End Role="Projet" EntitySet="Projet" />
-          </AssociationSet>
           <EntitySet Name="Couleur_Module" EntityType="DBModel.Couleur_Module" />
           <AssociationSet Name="FK_Couleur_Module_0_0" Association="DBModel.FK_Couleur_Module_0_0">
             <End Role="Couleur" EntitySet="Couleur" />
@@ -1053,6 +1021,10 @@
           <AssociationSet Name="FK_Module_Maison_1_0" Association="DBModel.FK_Module_Maison_1_0">
             <End Role="Module" EntitySet="Module" />
             <End Role="Module_Maison" EntitySet="Module_Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_1_01" Association="DBModel.FK_Projet_1_01">
+            <End Role="Commercial" EntitySet="Commercial" />
+            <End Role="Projet" EntitySet="Projet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Couleur_Module">
@@ -1143,6 +1115,18 @@
             </Principal>
             <Dependent Role="Module_Maison">
               <PropertyRef Name="idModule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_1_01">
+          <End Type="DBModel.Commercial" Role="Commercial" Multiplicity="0..1" />
+          <End Type="DBModel.Projet" Role="Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commercial">
+              <PropertyRef Name="idCommercial" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="idCommercial" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1280,6 +1264,7 @@
           <EntitySetMapping Name="Projet">
             <EntityTypeMapping TypeName="DBModel.Projet">
               <MappingFragment StoreEntitySet="Projet">
+                <ScalarProperty Name="idCommercial" ColumnName="idCommercial" />
                 <ScalarProperty Name="idProjet" ColumnName="idProjet" />
                 <ScalarProperty Name="devisSynchro" ColumnName="devisSynchro" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
@@ -1340,14 +1325,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Projet_Commercial" TypeName="DBModel.Projet_Commercial" StoreEntitySet="Projet_Commercial">
-            <EndProperty Name="Commercial">
-              <ScalarProperty Name="idCommercial" ColumnName="idCommercial" />
-            </EndProperty>
-            <EndProperty Name="Projet">
-              <ScalarProperty Name="idProjet" ColumnName="idProjet" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Couleur_Module">
             <EntityTypeMapping TypeName="DBModel.Couleur_Module">
               <MappingFragment StoreEntitySet="Couleur_Module">

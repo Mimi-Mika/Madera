@@ -18,7 +18,6 @@ namespace Madera.Model
         public Projet()
         {
             this.Projet_EtatCommande = new HashSet<Projet_EtatCommande>();
-            this.Commercial = new HashSet<Commercial>();
         }
     
         public long idProjet { get; set; }
@@ -36,12 +35,11 @@ namespace Madera.Model
         public Nullable<long> kitMonte { get; set; }
         public Nullable<long> idMaison { get; set; }
         public Nullable<long> idClient { get; set; }
+        public Nullable<long> idCommercial { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual Maison Maison { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Projet_EtatCommande> Projet_EtatCommande { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Commercial> Commercial { get; set; }
     }
 }

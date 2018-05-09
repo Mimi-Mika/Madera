@@ -17,7 +17,7 @@ namespace Madera.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Commercial()
         {
-            this.Projet = new HashSet<Projet>();
+            this.Projet1 = new HashSet<Projet>();
         }
     
         public long idCommercial { get; set; }
@@ -29,6 +29,6 @@ namespace Madera.Model
         public string mdp { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Projet> Projet { get; set; }
+        public virtual ICollection<Projet> Projet1 { get; set; }
     }
 }
