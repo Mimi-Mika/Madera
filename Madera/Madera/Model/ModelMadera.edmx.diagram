@@ -25,7 +25,6 @@
         <AssociationConnector Association="DBModel.FK_Projet_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Empreinte_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Maison_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK_ZoneMorte_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Projet_EtatCommande_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Module_Favori_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Gamme_0_0" ManuallyRouted="false" >
