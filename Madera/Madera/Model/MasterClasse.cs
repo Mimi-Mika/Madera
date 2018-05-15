@@ -9,7 +9,7 @@ namespace Madera.Model
 {
     public class MasterClasse
     {
-        //TODO: Modifier nom si nouvelle table a entrer: New sinon Lock
+        //Done: Modifier nom si nouvelle table a entrer: New sinon Lock
         public Commercial LockCommercial { get; set; }
         public Client LockClient { get; set; }
         public Projet NewProjet { get; set; }

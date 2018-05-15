@@ -357,7 +357,7 @@ namespace Madera.View.Pages.PlanVues
 
         private void PlacerLesObjectsSurLesBoutons()
         {
-            //TODO:Placer les btn de la base
+            //Done:Placer les btn de la base
             foreach (Module_Maison moduleMaison in _Master.NewModuleMaison)
             {
                 int x = 0;
@@ -433,7 +433,7 @@ namespace Madera.View.Pages.PlanVues
         /// </summary>
         //private void AjouterLesBoutons()
         //{
-        //    //TODO: Ajouter les boutons pour un devis a éditer
+        //    //: Ajouter les boutons pour un devis a éditer
         //    foreach (Module_Maison moduleMaison in _Master.NewModuleMaison)
         //    {
         //        Button MyControl1 = new Button() { Content = "" };
@@ -446,7 +446,7 @@ namespace Madera.View.Pages.PlanVues
 
         //        MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
         //        var brush = new ImageBrush();
-        //        //TODO: Récuperer les X et Y créer les boutons et associer l'object 
+        //        //: Récuperer les X et Y créer les boutons et associer l'object 
 
         //        //Si mur exterieur
         //        if (moduleMaison.Module.TypeModule.nomType.Contains("Exterieur"))
@@ -484,20 +484,20 @@ namespace Madera.View.Pages.PlanVues
         //            if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
         //            {
         //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
-        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //: Modifier object pour avoir coordonnées type etc...
         //                //ModMaison.idModule = 1;
         //            }
 
         //            if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
         //            {
         //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
-        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //: Modifier object pour avoir coordonnées type etc...
         //            }
 
         //            if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
         //            {
         //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
-        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //: Modifier object pour avoir coordonnées type etc...
         //            }
 
 
@@ -537,20 +537,20 @@ namespace Madera.View.Pages.PlanVues
         //            if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
         //            {
         //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
-        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //: Modifier object pour avoir coordonnées type etc...
         //                //ModMaison.idModule = 1;
         //            }
 
         //            if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
         //            {
         //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
-        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //: Modifier object pour avoir coordonnées type etc...
         //            }
 
         //            if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
         //            {
         //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
-        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //: Modifier object pour avoir coordonnées type etc...
         //            }
 
         //        }
@@ -598,7 +598,7 @@ namespace Madera.View.Pages.PlanVues
         {
             if (listModule.SelectedItem != null)
             {
-                //TODO: Récupérer l'object dans le boutton et le modifier
+                //Done: Récupérer l'object dans le boutton et le modifier
                 DBEntities DB = new DBEntities();
                 Button btn = ((Button)sender);
                 //Grid grid = (Grid)btn.Parent;
@@ -884,7 +884,18 @@ namespace Madera.View.Pages.PlanVues
 
         private void BtnSav_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Passer l'état du projet de Brouillon à Devis
+            //Done: Passer l'état du projet de Brouillon à Devis
+            DBEntities db = new DBEntities();
+            Projet_EtatCommande addProjetEtatCommande = new Projet_EtatCommande()
+            {
+                idEtatCommande = 2, // Brouillon
+                idProjet = _Master.NewProjet.idProjet,
+                dates = 1254488,
+                prix = 0,
+                paiementValide = 0
+            };
+            db.Projet_EtatCommande.Add(addProjetEtatCommande);
+            db.SaveChanges();
         }
         #endregion
     }

@@ -12,7 +12,7 @@ namespace Madera.View.Pages.Devis
     /// </summary>
     public partial class Edit : Page
     {
-        //TODO: Supprimer la page ==> passage direct sur vue 2D
+        //HACK: Supprimer la page ==> passage direct sur vue 2D
 
 
         MasterClasse Master = new MasterClasse();

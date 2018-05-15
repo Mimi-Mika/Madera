@@ -170,7 +170,7 @@ namespace Madera.View.Pages.Devis
 
         private void filter()
         {
-            //TODO: Filter avec cmbClient + cmbEtat (il manque un jeu de donnée "Projet EtatCommande" en base pour le faire)
+            //HACK: Filter avec cmbClient + cmbEtat (il manque un jeu de donnée "Projet EtatCommande" en base pour le faire)
             int id_client = Convert.ToInt32(CmbClient.SelectedValue.ToString());
             //int id_etat = Convert.ToInt32(CmbEtat.SelectedValue.ToString());  .Where(i => i.idProjet == id_etat)
             DBEntities DB = new DBEntities();

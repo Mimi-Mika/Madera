@@ -145,9 +145,9 @@ namespace Madera.View.Pages.Devis
                 Master.NewMaisonTypeDalle = addMaisonTypeDalle;
 
 
-                //TODO: BDD Enregistrer le Commercial
-                //TODO: Renseigner vrais prix
-                //TODO: Renseigner vrais nom Devis
+                //Done: BDD Enregistrer le Commercial
+                //Done: Renseigner vrais prix
+                //Done: Renseigner vrais nom Devis
                 //Enregistrement Projet en BDD
                 Projet addProjet = new Projet()
                 {
@@ -176,8 +176,8 @@ namespace Madera.View.Pages.Devis
                 //Enregistrer EtatCommande en Master (Brouillon)
                 Master.LockEtatCommande = db.EtatCommande.ToList();
 
-                //TODO: BDD Date en real? 
-                //TODO: BDD PaimentValide en int???
+                //HACK: BDD Date en real? 
+                //HACK: BDD PaimentValide en int???
                 Projet_EtatCommande addProjetEtatCommande = new Projet_EtatCommande()
                 {
                     idEtatCommande = 1, // Brouillon

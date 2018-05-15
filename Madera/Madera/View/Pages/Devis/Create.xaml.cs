@@ -31,7 +31,7 @@ namespace Madera.View.Pages.Devis
         {
             DBEntities DB = new DBEntities();
 
-            //TODO: Reinitialiser le master (sauf le commercial)
+            //Done: Reinitialiser le master (sauf le commercial) <== sur la page qui appelle
 
 
             long test = Convert.ToInt64(ListeClient.SelectedValue.ToString());
