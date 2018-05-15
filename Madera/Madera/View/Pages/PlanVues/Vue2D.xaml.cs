@@ -11,21 +11,54 @@ using System.Windows.Media.Imaging;
 
 namespace Madera.View.Pages.PlanVues
 {
+    public static class GridExtensions
+    {
+        public static Button GetXYChild(this Grid instance, int x, int y)
+        {
+            if (null == instance)
+            {
+                throw new ArgumentNullException("instance");
+            }
+            Button btn = new Button();
+            foreach (Button fe in instance.Children)
+            {
+                if (Grid.GetRow(fe) == y && Grid.GetColumn(fe) == x)
+                {
+                    btn = fe;
+                }
+            }
+            return btn;
+        }
+    }
     /// <summary>
     /// Logique d'interaction pour Vue2D.xaml
     /// </summary>
     public partial class Vue2D : Page
     {
+        bool isNew = new bool();
         MasterClasse _Master = new MasterClasse();
+
         public Vue2D(MasterClasse Master)
         {
+            DBEntities DB = new DBEntities();
             _Master = Master;
+
+            if (_Master.NewModuleMaison == null)
+            {
+                isNew = true;
+            }
+            else
+            {
+                isNew = false;
+                _Master.NewModuleMaison = DB.Module_Maison.Where(i => i.idMaison == _Master.NewMaison.idMaison).ToList();
+            }
             InitializeComponent();
             RemplirLabel();
             RemplirLesListe();
+            CreeLaGridVide();
+            TailleDesButtons();
 
-            CreateEmptyFloorPlan();
-
+            AfficherLesBoutons();
         }
 
         #region Initialisation
@@ -85,76 +118,31 @@ namespace Madera.View.Pages.PlanVues
             lblNumClient.Content = _Master.LockClient.idClient;
         }
 
-        /// <summary>
-        /// Creation de la Gris avec les boutons
-        /// </summary>
-        private void CreateEmptyFloorPlan()
-        {
-            long idEmpreinte = _Master.LockEmpreinte.idEmpreinte;
-            int idZoneMorte = 0;
-            DBEntities DB = new DBEntities();
-
-            this.DataContext = this;
-
-            Empreinte empreinteSelection = new Empreinte();
-            empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
-
-            if (empreinteSelection.idZoneMorte != null)
-            {
-                idZoneMorte = (int)empreinteSelection.idZoneMorte;
-            }
-            int col = (int)empreinteSelection.longueur * 2 + 1;
-            int lig = (int)empreinteSelection.largeur * 2 + 1;
-
-            int zoneMorteTailleX = 0;
-            int zoneMorteTailleY = 0;
-            int zoneMorteCoordX = 0;
-            int zoneMorteCoordY = 0;
-
-            ZoneMorte zoneMorteSelection = new ZoneMorte();
-            zoneMorteSelection = DB.ZoneMorte.Where(i => i.idZoneMorte == idZoneMorte).FirstOrDefault();
-            if ((int)zoneMorteSelection.coordonneeX != 0)
-            {
-                zoneMorteCoordX = ((int)zoneMorteSelection.coordonneeX * 2 + 1);
-                zoneMorteTailleX = ((int)zoneMorteSelection.longueur * 2 + 1);
-            }
-            else
-            {
-                zoneMorteTailleX = ((int)zoneMorteSelection.longueur * 2 + 1) + 1;
-            }
-            if ((int)zoneMorteSelection.coordonneeY != 0)
-            {
-                zoneMorteCoordY = ((int)zoneMorteSelection.coordonneeY * 2 + 1);
-                zoneMorteTailleY = ((int)zoneMorteSelection.largeur * 2 + 1);
-            }
-            else
-            {
-                zoneMorteTailleY = ((int)zoneMorteSelection.largeur * 2 + 1) + 1;
-            }
-
-            CreeLaGridVide(col, lig);
-            TailleDesButtons();
-
-            //Done: Modifier le if pour si on arrive de "Devis créé" ou de "Devis Editer" (Test liste module maison == vide ou pas)
-            if (_Master.NewModuleMaison == null)
-            {
-                //Ajoute les boutons pour un devis a créer
-                CrééLesBoutons(col, lig, zoneMorteCoordX, zoneMorteTailleX, zoneMorteCoordY, zoneMorteTailleY);
-            }
-            else
-            {
-                //Ajouter les boutons pour un devis a éditer
-                AjouterLesBoutons();
-            }
-        }
+        ///// <summary>
+        ///// Creation de la Gris avec les boutons
+        ///// </summary>
+        //private void CreateEmptyFloorPlan()
+        //{
+        //    //Done: Modifier le if pour si on arrive de "Devis créé" ou de "Devis Editer" (Test liste module maison == vide ou pas)
+        //    if (_Master.NewModuleMaison == null)
+        //    {
+        //        //Ajoute les boutons pour un devis a créer
+        //        AfficherLesBoutons();
+        //    }
+        //    else
+        //    {
+        //        //Ajouter les boutons pour un devis a éditer
+        //        AjouterLesBoutons();
+        //    }
+        //}
 
         /// <summary>
         /// Crée la Grid
         /// </summary>
-        /// <param name="col"></param>
-        /// <param name="lig"></param>
-        private void CreeLaGridVide(int col, int lig)
+        private void CreeLaGridVide()
         {
+            int col = (int)_Master.LockEmpreinte.longueur * 2 + 1;
+            int lig = (int)_Master.LockEmpreinte.largeur * 2 + 1;
             // Crée le Grid vide
             // Fois 2 + 1 pour mur (ext et interieur)
             for (int i = 0; i < lig; i++)
@@ -179,15 +167,53 @@ namespace Madera.View.Pages.PlanVues
         /// <summary>
         /// Créer les boutons sur la grille
         /// </summary>
-        /// <param name="col"></param>
-        /// <param name="lig"></param>
-        /// <param name="zoneMorteCoordX"></param>
-        /// <param name="zoneMorteTailleX"></param>
-        /// <param name="zoneMorteCoordY"></param>
-        /// <param name="zoneMorteTailleY"></param>
-        private void CrééLesBoutons(int col, int lig, int zoneMorteCoordX, int zoneMorteTailleX, int zoneMorteCoordY, int zoneMorteTailleY)
+        private void AfficherLesBoutons()
         {
-            int count = 1;
+            int col = (int)_Master.LockEmpreinte.longueur * 2 + 1;
+            int lig = (int)_Master.LockEmpreinte.largeur * 2 + 1;
+
+            int zoneMorteTailleX = 0;
+            int zoneMorteTailleY = 0;
+            int zoneMorteCoordX = 0;
+            int zoneMorteCoordY = 0;
+
+            int idZoneMorte = 0;
+            long idEmpreinte = _Master.LockEmpreinte.idEmpreinte;
+
+            DBEntities DB = new DBEntities();
+            ZoneMorte zoneMorteSelection = new ZoneMorte();
+            
+
+            Empreinte empreinteSelection = new Empreinte();
+            empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
+
+            if (empreinteSelection.idZoneMorte != null)
+            {
+                idZoneMorte = (int)empreinteSelection.idZoneMorte;
+            }
+
+            zoneMorteSelection = DB.ZoneMorte.Where(i => i.idZoneMorte == idZoneMorte).FirstOrDefault();
+            if ((int)zoneMorteSelection.coordonneeX != 0)
+            {
+                zoneMorteCoordX = ((int)zoneMorteSelection.coordonneeX * 2 + 1);
+                zoneMorteTailleX = ((int)zoneMorteSelection.longueur * 2 + 1);
+            }
+            else
+            {
+                zoneMorteTailleX = ((int)zoneMorteSelection.longueur * 2 + 1) + 1;
+            }
+            if ((int)zoneMorteSelection.coordonneeY != 0)
+            {
+                zoneMorteCoordY = ((int)zoneMorteSelection.coordonneeY * 2 + 1);
+                zoneMorteTailleY = ((int)zoneMorteSelection.largeur * 2 + 1);
+            }
+            else
+            {
+                zoneMorteTailleY = ((int)zoneMorteSelection.largeur * 2 + 1) + 1;
+            }
+
+
+
             for (int y = 0; y < grid2D.RowDefinitions.Count; y++)
             {
                 for (int x = 0; x < grid2D.ColumnDefinitions.Count; x++)
@@ -195,6 +221,7 @@ namespace Madera.View.Pages.PlanVues
                     //ne tracer que les murs
                     if ((((y % 2) == 0) && ((x % 2) != 0)) || (((y % 2) != 0) && ((x % 2) == 0)))
                     {
+                        Module_Maison ModMaison = new Module_Maison();
                         //ne pas tracer la zone morte
                         if ((col - zoneMorteCoordX - zoneMorteTailleX + 1 != 0 && x == zoneMorteCoordX + zoneMorteTailleX - 2) ||
                             (lig - zoneMorteCoordY - zoneMorteTailleY + 1 != 0 && y == zoneMorteCoordY + zoneMorteTailleY - 2) ||
@@ -205,125 +232,180 @@ namespace Madera.View.Pages.PlanVues
                         {
 
                             Button MyControl1 = new Button() { Content = "" }; // ("x" + (x + 1).ToString() + " y" + (y + 1).ToString());
-
                             Grid.SetColumn(MyControl1, x);
                             Grid.SetRow(MyControl1, y);
 
-                            // tracer mur si zone morte coller en haut a droite
-                            // tracer mur si zone morte coller en haut a droite
-                            // tracer mur ext de haut avec meme y que la zone morte si zone morte pas coller a haut
-                            // tracer mur ext de gauche avec meme x que la zone morte si zone morte pas coller a gauche
-                            // tracer mur si zone morte coller en haut a droite
-                            // tracer mur si zone morte coller en haut a droite
-                            // tracer mur ext de bas avec meme y que la zone morte si zone morte pas coller a bas
-                            // tracer mur ext de droite avec meme x que la zone morte si zone morte pas coller a droite
-                            // tracer haut zone morte
-                            // tracer gauche zone morte
-                            // tracer bas zone morte
-                            // tracer droite zone morte
-
-                            //Chercher les murs exterieurs
-                            if ((y == 0 && (x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2)) ||
-                                (x == 0 && (y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2)) ||
-                                (y == 0 && zoneMorteCoordY != 0) ||
-                                (x == 0 && zoneMorteCoordX != 0) ||
-                                (y == lig - 1 && (x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2)) ||
-                                (x == col - 1 && (y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2)) ||
-                                (y == lig - 1 && zoneMorteCoordY != lig - 1) ||
-                                (x == col - 1 && zoneMorteCoordX != col - 1) ||
-                                (y == zoneMorteCoordY - 1 && !(x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2)) ||
-                                (x == zoneMorteCoordX - 1 && !(y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2)) ||
-                                 y == zoneMorteCoordY + zoneMorteTailleY - 2 && !(x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2) ||
-                                 x == zoneMorteCoordX + zoneMorteTailleX - 2 && !(y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2))
+                            if (isNew)
                             {
-                                MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
-                                var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative)) };
-                                MyControl1.Background = brush;
-                                //Ajouter evenement pour mur exterieur
-                                MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
-
-                                Module module = new Module()
+                                // tracer mur si zone morte coller en haut a droite
+                                // tracer mur si zone morte coller en haut a droite
+                                // tracer mur ext de haut avec meme y que la zone morte si zone morte pas coller a haut
+                                // tracer mur ext de gauche avec meme x que la zone morte si zone morte pas coller a gauche
+                                // tracer mur si zone morte coller en haut a droite
+                                // tracer mur si zone morte coller en haut a droite
+                                // tracer mur ext de bas avec meme y que la zone morte si zone morte pas coller a bas
+                                // tracer mur ext de droite avec meme x que la zone morte si zone morte pas coller a droite
+                                // tracer haut zone morte
+                                // tracer gauche zone morte
+                                // tracer bas zone morte
+                                // tracer droite zone morte
+                                //Chercher les murs exterieurs
+                                if ((y == 0 && (x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2)) ||
+                                    (x == 0 && (y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2)) ||
+                                    (y == 0 && zoneMorteCoordY != 0) ||
+                                    (x == 0 && zoneMorteCoordX != 0) ||
+                                    (y == lig - 1 && (x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2)) ||
+                                    (x == col - 1 && (y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2)) ||
+                                    (y == lig - 1 && zoneMorteCoordY != lig - 1) ||
+                                    (x == col - 1 && zoneMorteCoordX != col - 1) ||
+                                    (y == zoneMorteCoordY - 1 && !(x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2)) ||
+                                    (x == zoneMorteCoordX - 1 && !(y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2)) ||
+                                     y == zoneMorteCoordY + zoneMorteTailleY - 2 && !(x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2) ||
+                                     x == zoneMorteCoordX + zoneMorteTailleX - 2 && !(y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2))
                                 {
-                                    nom = "murExterieur",
-                                    hauteur = 250,
-                                    largeur = 100,
-                                    prix = 0,
-                                    idGamme = 1, //par defaut 1ere Gamme Couleur et Type
-                                    idType = 1,
-                                };
 
-                                Module_Maison ModMaison = new Module_Maison()
-                                {
-                                    distanceSol = 0
-                                };
+                                    var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative)) };
+                                    MyControl1.Background = brush;
+                                    //Ajouter evenement pour mur exterieur
+                                    MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
 
 
-                                //test si horizotal ou vertical
-                                if ((x % 2) == 0)
-                                {
-                                    switch (x)
+                                    Module module = DB.Module.Where(i => i.idModule == 1).FirstOrDefault();
+                                    ModMaison.distanceSol = 0;
+                                    ModMaison.idModule = module.idModule;
+                                    ModMaison.idMaison = _Master.NewMaison.idMaison;
+
+
+                                    //test si horizotal ou vertical
+                                    if ((x % 2) == 0)
                                     {
-                                        case 0:
-                                            ModMaison.posXDebut = x;
-                                            break;
-                                        default:
-                                            ModMaison.posXDebut = (x) / 2;
-                                            break;
+                                        switch (x)
+                                        {
+                                            case 0:
+                                                ModMaison.posXDebut = x;
+                                                break;
+                                            default:
+                                                ModMaison.posXDebut = (x) / 2;
+                                                break;
+                                        }
+                                        switch (y)
+                                        {
+                                            case 1:
+                                                ModMaison.posYDebut = y - 1;
+                                                break;
+                                            default:
+                                                ModMaison.posYDebut = (y - 1) / 2;
+                                                break;
+                                        }
+                                        ModMaison.posXFin = ModMaison.posXDebut;
+                                        ModMaison.posYFin = ModMaison.posYDebut + 1;
                                     }
-                                    switch (y)
+                                    else
                                     {
-                                        case 1:
-                                            ModMaison.posYDebut = y - 1;
-                                            break;
-                                        default:
-                                            ModMaison.posYDebut = (y - 1) / 2;
-                                            break;
+                                        switch (x)
+                                        {
+                                            case 1:
+                                                ModMaison.posXDebut = x - 1;
+                                                break;
+                                            default:
+                                                ModMaison.posXDebut = (x - 1) / 2;
+                                                break;
+                                        }
+                                        switch (y)
+                                        {
+                                            case 0:
+                                                ModMaison.posYDebut = y;
+                                                break;
+                                            default:
+                                                ModMaison.posYDebut = (y) / 2;
+                                                break;
+                                        }
+                                        ModMaison.posXFin = ModMaison.posXDebut + 1;
+                                        ModMaison.posYFin = ModMaison.posYDebut;
                                     }
-                                    ModMaison.posXFin = ModMaison.posXDebut;
-                                    ModMaison.posYFin = ModMaison.posYDebut + 1;
+
+                                    MyControl1.SetValue(FrameworkElement.TagProperty, ModMaison);
+                                    //Done: Enregistrer Mur en base en brouillon
+                                    DB.Module_Maison.Add(ModMaison);
+                                    DB.SaveChanges();
+
+                                    //Done: Enregistrer sur le master
+                                    if (_Master.NewModuleMaison == null)
+                                    {
+                                        _Master.NewModuleMaison = new List<Module_Maison>();
+                                    }
+                                    _Master.NewModuleMaison.Add(ModMaison);
                                 }
                                 else
                                 {
-                                    switch (x)
-                                    {
-                                        case 1:
-                                            ModMaison.posXDebut = x - 1;
-                                            break;
-                                        default:
-                                            ModMaison.posXDebut = (x - 1) / 2;
-                                            break;
-                                    }
-                                    switch (y)
-                                    {
-                                        case 0:
-                                            ModMaison.posYDebut = y;
-                                            break;
-                                        default:
-                                            ModMaison.posYDebut = (y) / 2;
-                                            break;
-                                    }
-                                    ModMaison.posXFin = ModMaison.posXDebut + 1;
-                                    ModMaison.posYFin = ModMaison.posYDebut;
-                                }
-
-                                MyControl1.SetValue(FrameworkElement.TagProperty, ModMaison);
-
-                                //TODO: Enregistrer Mur en base sur le brouillon
-                            }
-                            //Murs interieurs
-                            else
-                            {
-                                //Ne pas lier d'object
-                                MyControl1.Name = "IntButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
-                                //Ajouter evenement pour mur interieur
-                                MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
-
-
+                                    //Ajouter evenement pour mur interieur
+                                    MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
+                                }  
                             }
                             grid2D.Children.Add(MyControl1);
-                            count++;
                         }
                     }
+                }
+            }
+            if (isNew != true)
+            {
+                //Done:Placer les btn de la base
+                PlacerLesObjectsSurLesBoutons();
+            }
+
+        }
+
+        private void PlacerLesObjectsSurLesBoutons()
+        {
+            //TODO:Placer les btn de la base
+            foreach (Module_Maison moduleMaison in _Master.NewModuleMaison)
+            {
+                int x = 0;
+                int y = 0;
+
+                //Done: calculer si hori ou vertic
+                if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
+                {
+                    y = (int)moduleMaison.posYDebut * 2 + 1;
+                    x = (int)moduleMaison.posXDebut * 2;
+                }
+                //si hori
+                else
+                {
+                    x = (int)moduleMaison.posXDebut * 2 + 1;
+                    y = (int)moduleMaison.posYDebut * 2;
+                }
+
+
+                Button MyControl1 = GridExtensions.GetXYChild(grid2D, x, y);
+                //Done: Choisir l'image
+                Function2D F2D = new Function2D();
+                MyControl1.Background = F2D.ChoisirLeBrush(moduleMaison.Module.TypeModule.nomType);
+                //Done: Affecter l'object au bouton
+                MyControl1.SetValue(FrameworkElement.TagProperty, moduleMaison);
+                //Done: Affecter les bon evenement
+                if (moduleMaison.Module.TypeModule.nomType.Contains("Exterieur"))
+                {
+                    MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
+                    MyControl1.Content = "Ok";
+                }
+                else
+                {
+                    MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
+                    MyControl1.Content = "Ok";
+                }
+            }
+
+            foreach (Button item in grid2D.Children)
+            {
+                if (item.Content.ToString() != "Ok")
+                {
+                    item.Click += new RoutedEventHandler(BtnClickMurInt);
+                    item.Content = "";
+                }
+                else
+                {
+                    item.Content = "";
                 }
             }
         }
@@ -343,145 +425,144 @@ namespace Madera.View.Pages.PlanVues
             {
                 if ((i % 2) == 0)
                     grid2D.RowDefinitions[i].Height = new GridLength(25);
-
             }
         }
 
         /// <summary>
         /// Ajouter les Murs existant
         /// </summary>
-        private void AjouterLesBoutons()
-        {
-            //TODO: Ajouter les boutons pour un devis a éditer
-            foreach (Module_Maison moduleMaison in _Master.NewModuleMaison)
-            {
-                Button MyControl1 = new Button() { Content = "" };
-                int x = 0;
-                int y = 0;
+        //private void AjouterLesBoutons()
+        //{
+        //    //TODO: Ajouter les boutons pour un devis a éditer
+        //    foreach (Module_Maison moduleMaison in _Master.NewModuleMaison)
+        //    {
+        //        Button MyControl1 = new Button() { Content = "" };
+        //        int x = 0;
+        //        int y = 0;
 
 
-                //si verticale
-                
-
-                MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
-                var brush = new ImageBrush();
-                //TODO: Récuperer les X et Y créer les boutons et associer l'object 
-
-                //Si mur exterieur
-                if (moduleMaison.Module.TypeModule.nomType.Contains("Exterieur"))
-                {
-                    //Done: calculer si hori ou vertic
-                    if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
-                    {
-                        y = (int)moduleMaison.posYDebut * 2 + 1;
-                        if (moduleMaison.posXDebut == 0)
-                        {
-                            x = 0;
-                        }
-                        else
-                        {
-                            x = (int)moduleMaison.posXDebut * 2 + 1;
-                        }
-                    }
-                    //si hori
-                    else
-                    {
-                        x = (int)moduleMaison.posXDebut * 2 + 1;
-                        if ((int)moduleMaison.posYDebut == 0)
-                        {
-                            y = 0;
-                        }
-                        else
-                        {
-                            y = (int)moduleMaison.posYDebut * 2 + 1;
-                        }
-                    }
-
-                    //Ajouter evenement pour mur exterieur
-                    MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
-
-                    if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
-                    {
-                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
-                        //TODO: Modifier object pour avoir coordonnées type etc...
-                        //ModMaison.idModule = 1;
-                    }
-
-                    if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
-                    {
-                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
-                        //TODO: Modifier object pour avoir coordonnées type etc...
-                    }
-
-                    if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
-                    {
-                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
-                        //TODO: Modifier object pour avoir coordonnées type etc...
-                    }
+        //        //si verticale
 
 
-                }
-                else
-                {
-                    //Ajouter evenement pour mur exterieur
-                    MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
+        //        MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
+        //        var brush = new ImageBrush();
+        //        //TODO: Récuperer les X et Y créer les boutons et associer l'object 
 
-                    //Done: calculer si hori ou vertic
-                    if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
-                    {
-                        y = (int)moduleMaison.posYDebut * 2;
-                        if (moduleMaison.posXDebut == 0)
-                        {
-                            x = 0;
-                        }
-                        else
-                        {
-                            x = (int)moduleMaison.posXDebut * 2 + 1;
-                        }
-                    }
-                    //si hori
-                    else
-                    {
-                        x = (int)moduleMaison.posXDebut * 2;
-                        if ((int)moduleMaison.posYDebut == 0)
-                        {
-                            y = 0;
-                        }
-                        else
-                        {
-                            y = (int)moduleMaison.posYDebut * 2 + 1;
-                        }
-                    }
+        //        //Si mur exterieur
+        //        if (moduleMaison.Module.TypeModule.nomType.Contains("Exterieur"))
+        //        {
+        //            //Done: calculer si hori ou vertic
+        //            if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
+        //            {
+        //                y = (int)moduleMaison.posYDebut * 2 + 1;
+        //                if (moduleMaison.posXDebut == 0)
+        //                {
+        //                    x = 0;
+        //                }
+        //                else
+        //                {
+        //                    x = (int)moduleMaison.posXDebut * 2 + 1;
+        //                }
+        //            }
+        //            //si hori
+        //            else
+        //            {
+        //                x = (int)moduleMaison.posXDebut * 2 + 1;
+        //                if ((int)moduleMaison.posYDebut == 0)
+        //                {
+        //                    y = 0;
+        //                }
+        //                else
+        //                {
+        //                    y = (int)moduleMaison.posYDebut * 2 + 1;
+        //                }
+        //            }
 
-                    if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
-                    {
-                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
-                        //TODO: Modifier object pour avoir coordonnées type etc...
-                        //ModMaison.idModule = 1;
-                    }
+        //            //Ajouter evenement pour mur exterieur
+        //            MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
 
-                    if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
-                    {
-                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
-                        //TODO: Modifier object pour avoir coordonnées type etc...
-                    }
+        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
+        //            {
+        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
+        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //ModMaison.idModule = 1;
+        //            }
 
-                    if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
-                    {
-                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
-                        //TODO: Modifier object pour avoir coordonnées type etc...
-                    }
+        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
+        //            {
+        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
+        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //            }
 
-                }
+        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
+        //            {
+        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
+        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //            }
 
-                Grid.SetColumn(MyControl1, x);
-                Grid.SetRow(MyControl1, y);
 
-                MyControl1.Background = brush;
-                MyControl1.SetValue(FrameworkElement.TagProperty, moduleMaison);
-                grid2D.Children.Add(MyControl1);
-            }
-        }
+        //        }
+        //        else
+        //        {
+        //            //Ajouter evenement pour mur exterieur
+        //            MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
+
+        //            //Done: calculer si hori ou vertic
+        //            if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
+        //            {
+        //                y = (int)moduleMaison.posYDebut * 2;
+        //                if (moduleMaison.posXDebut == 0)
+        //                {
+        //                    x = 0;
+        //                }
+        //                else
+        //                {
+        //                    x = (int)moduleMaison.posXDebut * 2 + 1;
+        //                }
+        //            }
+        //            //si hori
+        //            else
+        //            {
+        //                x = (int)moduleMaison.posXDebut * 2;
+        //                if ((int)moduleMaison.posYDebut == 0)
+        //                {
+        //                    y = 0;
+        //                }
+        //                else
+        //                {
+        //                    y = (int)moduleMaison.posYDebut * 2 + 1;
+        //                }
+        //            }
+
+        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
+        //            {
+        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
+        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //                //ModMaison.idModule = 1;
+        //            }
+
+        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
+        //            {
+        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
+        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //            }
+
+        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
+        //            {
+        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
+        //                //TODO: Modifier object pour avoir coordonnées type etc...
+        //            }
+
+        //        }
+
+        //        Grid.SetColumn(MyControl1, x);
+        //        Grid.SetRow(MyControl1, y);
+
+        //        MyControl1.Background = brush;
+        //        MyControl1.SetValue(FrameworkElement.TagProperty, moduleMaison);
+        //        grid2D.Children.Add(MyControl1);
+        //    }
+        //}
         #endregion
 
         #region click
@@ -515,91 +596,77 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void BtnClickMurExt(object sender, RoutedEventArgs e)
         {
-
-            //TODO: Récupérer l'object dans le boutton et le modifier
-            Button btn = ((Button)sender);
-            Grid grid = (Grid)btn.Parent;
-            int row = 0;
-            int col = 0;
-            row = Grid.GetRow(btn);
-            col = Grid.GetColumn(btn);
-
-            Module_Maison ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
-
-            //MessageBox.Show(((Button)sender).Background.GetType().ToString());
-            DBEntities DB = new DBEntities();
-            string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
-
-            var brush = new ImageBrush();
-
-            //Test si mur vertical ou horizontal
-            if (grid2D.ColumnDefinitions[col].ActualWidth < grid2D.RowDefinitions[row].ActualHeight)
+            if (listModule.SelectedItem != null)
             {
-                //button en ligne
+                //TODO: Récupérer l'object dans le boutton et le modifier
+                DBEntities DB = new DBEntities();
+                Button btn = ((Button)sender);
+                //Grid grid = (Grid)btn.Parent;
+                int row = Grid.GetRow(btn);
+                ImageBrush brush = new ImageBrush();
+                int col = Grid.GetColumn(btn);
+                Module_Maison ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+
+                //MessageBox.Show(((Button)sender).Background.GetType().ToString());
+
                 if (rbAjout.IsChecked == true)
                 {
+                    //Done: Modifier le btn existant
+                    string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
                     if (test.Contains("Exterieur"))
                     {
-                        if (test.Contains("Porte"))
-                        {
-                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
-                            //TODO: Modifier object pour avoir coordonnées type etc...
-                            ModMaison.idModule = 1;
-                        }
-
-                        if (test.Contains("Fenetre"))
-                        {
-                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
-                            //TODO: Modifier object pour avoir coordonnées type etc...
-                        }
-
-                        if (test.Contains("Mur"))
-                        {
-                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.png", UriKind.Relative));
-                            //TODO: Modifier object pour avoir coordonnées type etc...
-                        }
-                        ((Button)sender).Background = brush;
+                        Function2D F2D = new Function2D();
+                        brush = F2D.ChoisirLeBrush(test);
+                        ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
+                        ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Bug impossible !!!!");
                     }
                 }
                 else
                 {
+                    //Done: Reset le button
                     brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
-                    ((Button)sender).Background = brush;
-                    //TODO: Changer le id module en murExterieur
+
+                    //Done: Changer le id module en murExterieur basique
+                    ModMaison.distanceSol = 0;
+                    ModMaison.idModule = 1; //Module mur Ext classic
                 }
+
+                ((Button)sender).Background = brush;
+                //Done: Enregistrer les modif modules
+                //Module
+                (from x in DB.Module_Maison
+                 where x.idModule_maison == ModMaison.idModule_maison
+                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+
+                //Hauteur
+                (from x in DB.Module_Maison
+                 where x.idModule_maison == ModMaison.idModule_maison
+                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+
+                //TODO: Voir table des couleurs finition....
+
+                btn.SetValue(FrameworkElement.TagProperty, ModMaison);
+
+                DB.SaveChanges();
+
+                //TODO: Modifier dans le master
+                (from x in _Master.NewModuleMaison
+                 where x.idModule_maison == ModMaison.idModule_maison
+                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                //Hauteur
+                (from x in _Master.NewModuleMaison
+                 where x.idModule_maison == ModMaison.idModule_maison
+                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
             }
             else
             {
-                //bouton en colone
-                if (rbAjout.IsChecked == true)
-                {
-                    if (test.Contains("Exterieur"))
-                    {
-                        if (test.Contains("Porte"))
-                        {
-                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteVertical.png", UriKind.Relative));
-                            //TODO: Modifier object pour avoir coordonnées type etc...
-                        }
-                        if (test.Contains("Fenetre"))
-                        {
-                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreVertical.png", UriKind.Relative));
-                            //TODO: Modifier object pour avoir coordonnées type etc...
-                        }
-                        if (test.Contains("Mur"))
-                        {
-                            brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.png", UriKind.Relative));
-                            //TODO: Modifier object pour avoir coordonnées type etc...
-                        }
-                        ((Button)sender).Background = brush;
-                    }
-                }
-                else
-                {
-                    brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
-                    ((Button)sender).Background = brush;
-                    //TODO: Changer le id module en murExterieur
-                }
+                MessageBox.Show("Choisir un module");
             }
+
         }
 
         /// <summary>
@@ -609,120 +676,187 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void BtnClickMurInt(object sender, RoutedEventArgs e)
         {
-            Button btn = ((Button)sender);
-            Grid grid = (Grid)btn.Parent;
-            int row = 0;
-            int col = 0;
-            row = Grid.GetRow(btn);
-            col = Grid.GetColumn(btn);
-            ImageBrush brush = new ImageBrush();
-
-            //TODO: Créer un object a lier au bouton
-
-            //Done: Changer algo ==> verif si bouton rb checked en 1er
-            if (rbAjout.IsChecked == true)
+            if (listModule.SelectedItem != null)
             {
-                //Test si vertical ou horizontal
-                if (grid2D.ColumnDefinitions[col].ActualWidth < grid2D.RowDefinitions[row].ActualHeight)
+                //TODO: Récupérer l'object dans le boutton et le modifier
+                bool IsConnectedWithTheRestOfTheWorld = false;
+                DBEntities DB = new DBEntities();
+                Button btn = ((Button)sender);
+                //Grid grid = (Grid)btn.Parent;
+                int row = Grid.GetRow(btn);
+                ImageBrush brush = new ImageBrush();
+                int col = Grid.GetColumn(btn);
+                Module_Maison ModMaison = new Module_Maison();
+
+                //Done: Changer algo ==> verif si bouton rb checked en 1er
+                if (rbAjout.IsChecked == true)
                 {
-                    //Bouton en ligne
-                    if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                    try
                     {
-                        DBEntities DB = new DBEntities();
-                        string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
-
-                        if (test.Contains("Interieur"))
+                        ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+                        IsConnectedWithTheRestOfTheWorld = true;
+                    }
+                    catch (Exception)
+                    {
+                        ModMaison.idMaison = _Master.NewMaison.idMaison;
+                        if ((col % 2) == 0)
                         {
-                            //TODO: Changer les tests avec un switch/case
-                            if (test.Contains("Porte"))
+                            switch (col)
                             {
-                                brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative)) };
-                                //TODO: Modifier object pour avoir coordonnées type etc...
+                                case 0:
+                                    ModMaison.posXDebut = col;
+                                    break;
+                                default:
+                                    ModMaison.posXDebut = (col) / 2;
+                                    break;
                             }
+                            switch (row)
+                            {
+                                case 1:
+                                    ModMaison.posYDebut = row - 1;
+                                    break;
+                                default:
+                                    ModMaison.posYDebut = (row - 1) / 2;
+                                    break;
+                            }
+                            ModMaison.posXFin = ModMaison.posXDebut;
+                            ModMaison.posYFin = ModMaison.posYDebut + 1;
+                        }
+                        else
+                        {
+                            switch (col)
+                            {
+                                case 1:
+                                    ModMaison.posXDebut = col - 1;
+                                    break;
+                                default:
+                                    ModMaison.posXDebut = (col - 1) / 2;
+                                    break;
+                            }
+                            switch (row)
+                            {
+                                case 0:
+                                    ModMaison.posYDebut = row;
+                                    break;
+                                default:
+                                    ModMaison.posYDebut = (row) / 2;
+                                    break;
+                            }
+                            ModMaison.posXFin = ModMaison.posXDebut + 1;
+                            ModMaison.posYFin = ModMaison.posYDebut;
+                        }
 
-                            if (test.Contains("Fenetre"))
-                            {
-                                brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative)) };
-                                //TODO: Modifier object pour avoir coordonnées type etc...
-                            }
+                        Grid.SetColumn(btn, col);
+                        Grid.SetRow(btn, row);
 
-                            if (test.Contains("Mur"))
+                        btn.SetValue(FrameworkElement.TagProperty, ModMaison);
+                        throw;
+                    }
+
+                    //Test si vertical ou horizontal
+                    if (col % 2 == 0)
+                    {
+                        //Bouton en ligne
+                        if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                        {
+                            string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
+                            if (test.Contains("Interieur"))
                             {
-                                brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative)) };
-                                //TODO: Modifier object pour avoir coordonnées type etc...
+                                Function2D F2D = new Function2D();
+                                brush = F2D.ChoisirLeBrush(test);
+                                ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
+                                ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
+                                //Done: Enregistrer les modif modules
+                                //Module
+                                (from x in DB.Module_Maison
+                                 where x.idModule_maison == ModMaison.idModule_maison
+                                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+
+                                //hauteur
+                                (from x in DB.Module_Maison
+                                 where x.idModule_maison == ModMaison.idModule_maison
+                                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
                             }
-                            ((Button)sender).Background = brush;
+                            else
+                            {
+                                MessageBox.Show("Choisir un module pour mur interieur !!!!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //Bouton en colonne
+                        if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 0 && Grid.GetColumn(i) == col + 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 0 && Grid.GetColumn(i) == col - 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                        {
+                            string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
+                            if (test.Contains("Interieur"))
+                            {
+                                Function2D F2D = new Function2D();
+                                brush = F2D.ChoisirLeBrush(test);
+                                ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
+                                ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
+                                //Done: Enregistrer les modif modules
+                                //Module
+                                (from x in DB.Module_Maison
+                                 where x.idModule_maison == ModMaison.idModule_maison
+                                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+
+                                //hauteur
+                                (from x in DB.Module_Maison
+                                 where x.idModule_maison == ModMaison.idModule_maison
+                                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Choisir un module pour mur interieur !!!!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
+                    
                 }
                 else
                 {
-                    //Bouton en colonne
-                    if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 0 && Grid.GetColumn(i) == col + 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                        ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 0 && Grid.GetColumn(i) == col - 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                    //Done: Verifier la présence d'un object lier si oui ==> supprimer l'object du Master + BDD
+                    if (IsConnectedWithTheRestOfTheWorld == true)
                     {
-                        if (rbAjout.IsChecked == true)
-                        {
+                        //Recup l'object
+                        ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
 
+                        //supprimer objet sur le button
+                        btn.SetValue(FrameworkElement.TagProperty, null);
 
-                            DBEntities DB = new DBEntities();
-                            string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
+                        //supprimer l'objet en base
+                        var delet = DB.Module_Maison.Where(i => i.idModule_maison == ModMaison.idModule_maison).FirstOrDefault();
+                        DB.Module_Maison.Remove(delet);
 
-                            if (test.Contains("Interieur"))
-                            {
-                                //TODO: Changer les tests avec un switch/case
-                                if (test.Contains("Porte"))
-                                {
-                                    brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteVertical.png", UriKind.Relative)) };
-                                    //TODO: Modifier object pour avoir coordonnées type etc...
-                                }
+                        //supprimer en master
+                        _Master.NewModuleMaison.Remove(ModMaison);
 
-                                if (test.Contains("Fenetre"))
-                                {
-                                    brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreVertical.png", UriKind.Relative)) };
-                                    //TODO: Modifier object pour avoir coordonnées type etc...
-                                }
-
-                                if (test.Contains("Mur"))
-                                {
-                                    brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative)) };
-                                    //TODO: Modifier object pour avoir coordonnées type etc...
-                                }
-                                ((Button)sender).Background = brush;
-                            }
-                        }
+                        //supprimer l'image
+                        ((Button)sender).Background = null;
                     }
-                    else
-                    {
-                        MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
 
-                //TODO: Si déja object exitant le modifier sinon en créer un
-                //TODO: Enregister en BDD
-            }
-            else
-            {
-                //TODO: Verifier la présence d'un object lier si oui ==> supprimer l'object du Master + BDD
-                if (((Button)sender).Background != null)
-                {
-                    ((Button)sender).Background = null;
+                    DB.SaveChanges();
                 }
             }
-
         }
 
         /// <summary>

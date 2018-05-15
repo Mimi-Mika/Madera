@@ -234,6 +234,7 @@
     <Compile Include="View\Pages\Factures\ModelPDF.xaml.cs">
       <DependentUpon>ModelPDF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\PlanVues\Function2D.cs" />
     <Compile Include="View\Pages\PlanVues\Vue2D.xaml.cs">
       <DependentUpon>Vue2D.xaml</DependentUpon>
     </Compile>

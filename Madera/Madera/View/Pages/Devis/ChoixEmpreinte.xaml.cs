@@ -111,7 +111,6 @@ namespace Madera.View.Pages.Devis
                 //Enregistrement des classes Empreinte et TypeDalle en MASTER et ZoneMorte
                 Master.LockTypeDalle = db.TypeDalle.Where(i => i.idTypeDalle == idTypeDalle).FirstOrDefault();
                 Master.LockEmpreinte = db.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
-                Master.LockZoneMorte = db.ZoneMorte.Where(i => i.idEmpreinte == Master.LockEmpreinte.idEmpreinte).FirstOrDefault();
 
                 //Enregistrement de la maison en BDD
                 Maison addMaison = new Maison()
@@ -156,16 +155,17 @@ namespace Madera.View.Pages.Devis
                     kitMonte = monte,
                     idClient = Master.LockClient.idClient,
                     idMaison = Master.NewMaison.idMaison,
-                    prixFabrication = 0,
-                    prixComposant = 0,
-                    prixFinal = 0,
-                    prixInstallation = 0,
-                    numDevis = "",
+                    prixFabrication = addMaisonTypeDalle.historiquePrixM2,
+                    prixComposant = 0, // pas de compo pour la dalle
+                    prixFinal = addMaisonTypeDalle.historiquePrixM2,
+                    prixInstallation = addMaisonTypeDalle.historiquePrixM2 * 1.30,
+                    numDevis = "DevCliNo" + "" + db.Projet.Where(i => i.idClient == Master.LockClient.idClient).Count() + 1,
                     numFacture = "",
                     numOF = "",
                     numOM = "",
                     reductionMarge = 0,
-                    devisSynchro = 0
+                    devisSynchro = 0,
+                    idCommercial = Master.LockCommercial.idCommercial
                 };
                 db.Projet.Add(addProjet);
                 db.SaveChanges();
@@ -190,6 +190,7 @@ namespace Madera.View.Pages.Devis
                 db.SaveChanges();
 
                 //Enregistrer EtatCommande en Master
+                Master.NewProjetEtatCommande = new List<Projet_EtatCommande>();
                 Master.NewProjetEtatCommande.Add(addProjetEtatCommande);
 
 
@@ -215,8 +216,9 @@ namespace Madera.View.Pages.Devis
 
             //Done: Faire qu'un radio bouton soit cocher au lancement
             RbMontee.IsChecked = true;
-            //TODO: Définir un nom de maison générique
-
+            //Done: Définir un nom de maison générique
+            DateTime dateTime = DateTime.UtcNow.Date;
+            TxtNomMaison.Text = "Maison " + client.nom + " " + dateTime.ToString("dd/MM/yyyy");
         }
     }
 }

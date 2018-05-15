@@ -9,7 +9,6 @@ using System.Windows.Controls;
 
 namespace Madera.View.Pages.Devis
 {
-
     /// <summary>
     /// Logique d'interaction pour Index.xaml
     /// </summary>
@@ -25,7 +24,6 @@ namespace Madera.View.Pages.Devis
             loadDevis();
             //Done: Charger les types d'avancement
             loadEtat();
-
         }
 
         private void loadClient()
@@ -44,6 +42,26 @@ namespace Madera.View.Pages.Devis
 
         private void btn_ajout(object sender, RoutedEventArgs e)
         {
+            //Done: Vider les tables du Master (sauf commercial)
+            Master.LockClient = null;
+            Master.LockEmpreinte = null;
+            Master.LockEtatCommande = null;
+            Master.LockTypeDalle = null;
+            Master.LockZoneMorte = null;
+            Master.NewProjetEtatCommande = null;
+            Master.NewProjet = null;
+            Master.NewModuleMaison = null;
+            Master.LockModule = null;
+            Master.NewMaisonTypeDalle = null;
+            Master.NewMaison = null;
+            Master.LockFinition = null;
+            Master.LockCouleur = null;
+            Master.LockTypeModule = null;
+            Master.LockGamme = null;
+            Master.NewCouleurModule = null;
+            Master.NewFavori = null;
+            Master.NewModuleFavori = null;
+
             Devis.Create tdb = new Devis.Create(Master);
             ((MetroWindow)this.Parent).Content = tdb;
         }
@@ -83,7 +101,7 @@ namespace Madera.View.Pages.Devis
                 Master.NewModuleFavori = null;
 
                 //Done: Remplir les tables du master avec le projet selectionner
-                //TODO: Toutes les listes "Lock" sans condition de where peuvent etre charger en début de prog et ne plus etre reset
+                //HACK: Toutes les listes "Lock" sans condition de where peuvent etre charger en début de prog et ne plus etre reset
                 DBEntities DB = new DBEntities();
 
                 string test666 = ListeDevis.SelectedValue.ToString();
@@ -99,11 +117,7 @@ namespace Madera.View.Pages.Devis
                 Master.NewProjetEtatCommande = Master.NewProjet.Projet_EtatCommande.ToList();
                 Master.LockEtatCommande = DB.EtatCommande.ToList();
                 Master.NewModuleMaison = DB.Module_Maison.Where(i => i.idMaison == Master.NewMaison.idMaison).ToList();
-                Master.LockModule = new System.Collections.Generic.List<Module>();
-                foreach (Module_Maison item in Master.NewModuleMaison)
-                {
-                    Master.LockModule.Add(item.Module);
-                }
+                Master.LockModule = DB.Module.ToList();
                 Master.LockTypeModule = (DB.TypeModule.ToList());
                 Master.LockGamme = (DB.Gamme.ToList());
                 Master.LockFinition = (DB.Finition.ToList());
@@ -133,7 +147,7 @@ namespace Madera.View.Pages.Devis
             ListeDevis.ItemsSource = DB.Projet.ToList();
             ListeDevis.DisplayMemberPath = "nom";
             ListeDevis.DisplayMemberPath = "numOF";
-            ListeDevis.SelectedValuePath = "idClient";
+            ListeDevis.SelectedValuePath = "idProjet";
         }
 
         private void loadEtat()

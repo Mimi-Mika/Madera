@@ -65,11 +65,11 @@
                 </StackPanel>
             </Border>
         </StackPanel>
-        <Label Content="Nom de la maison :" HorizontalAlignment="Left" Margin="967,631,0,0" VerticalAlignment="Top" Width="112"/>
-        <TextBox x:Name="TxtNomMaison" HorizontalAlignment="Left" Height="23" Margin="1105,631,0,0" TextWrapping="Wrap" Text="Maison" VerticalAlignment="Top" Width="120"/>
-        <RadioButton x:Name="RbMontee" Content="" HorizontalAlignment="Left" Margin="1105,668,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="Rb" Content="" HorizontalAlignment="Left" Margin="1105,695,0,0" VerticalAlignment="Top"/>
-        <Label Content="Maison montée" HorizontalAlignment="Left" Margin="967,662,0,0" VerticalAlignment="Top" Width="112"/>
-        <Label Content="Maison à montée" HorizontalAlignment="Left" Margin="967,691,0,0" VerticalAlignment="Top"/>
+        <Label Content="Nom de la maison :" HorizontalAlignment="Left" Margin="932,626,0,0" VerticalAlignment="Top" Width="112"/>
+        <TextBox x:Name="TxtNomMaison" HorizontalAlignment="Left" Height="23" Margin="1070,626,0,0" TextWrapping="Wrap" Text="Maison" VerticalAlignment="Top" Width="175"/>
+        <RadioButton x:Name="RbMontee" Content="" HorizontalAlignment="Left" Margin="1070,663,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="Rb" Content="" HorizontalAlignment="Left" Margin="1070,690,0,0" VerticalAlignment="Top"/>
+        <Label Content="Maison montée" HorizontalAlignment="Left" Margin="932,657,0,0" VerticalAlignment="Top" Width="112"/>
+        <Label Content="Maison à montée" HorizontalAlignment="Left" Margin="932,686,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>
