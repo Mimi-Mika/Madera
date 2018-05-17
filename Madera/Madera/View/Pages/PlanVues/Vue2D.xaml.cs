@@ -182,7 +182,7 @@ namespace Madera.View.Pages.PlanVues
 
             DBEntities DB = new DBEntities();
             ZoneMorte zoneMorteSelection = new ZoneMorte();
-            
+
 
             Empreinte empreinteSelection = new Empreinte();
             empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
@@ -340,7 +340,7 @@ namespace Madera.View.Pages.PlanVues
                                 {
                                     //Ajouter evenement pour mur interieur
                                     MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
-                                }  
+                                }
                             }
                             grid2D.Children.Add(MyControl1);
                         }
@@ -676,10 +676,9 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void BtnClickMurInt(object sender, RoutedEventArgs e)
         {
-            if (listModule.SelectedItem != null)
+            if (listModule.SelectedItem != null || rbVider.IsChecked == true)
             {
                 //TODO: Récupérer l'object dans le boutton et le modifier
-                bool IsConnectedWithTheRestOfTheWorld = false;
                 DBEntities DB = new DBEntities();
                 Button btn = ((Button)sender);
                 //Grid grid = (Grid)btn.Parent;
@@ -691,13 +690,10 @@ namespace Madera.View.Pages.PlanVues
                 //Done: Changer algo ==> verif si bouton rb checked en 1er
                 if (rbAjout.IsChecked == true)
                 {
-                    try
+                    ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+                    if (ModMaison == null)
                     {
-                        ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
-                        IsConnectedWithTheRestOfTheWorld = true;
-                    }
-                    catch (Exception)
-                    {
+                        ModMaison = new Module_Maison();
                         ModMaison.idMaison = _Master.NewMaison.idMaison;
                         if ((col % 2) == 0)
                         {
@@ -750,19 +746,18 @@ namespace Madera.View.Pages.PlanVues
                         Grid.SetRow(btn, row);
 
                         btn.SetValue(FrameworkElement.TagProperty, ModMaison);
-                        throw;
                     }
 
                     //Test si vertical ou horizontal
-                    if (col % 2 == 0)
+                    if (row % 2 == 0)
                     {
                         //Bouton en ligne
                         if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
                             ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
                             ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
                             ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 0 && Grid.GetColumn(i) == col + 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 0 && Grid.GetColumn(i) == col - 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
                         {
                             string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
                             if (test.Contains("Interieur"))
@@ -772,15 +767,26 @@ namespace Madera.View.Pages.PlanVues
                                 ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
                                 ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
                                 //Done: Enregistrer les modif modules
-                                //Module
-                                (from x in DB.Module_Maison
-                                 where x.idModule_maison == ModMaison.idModule_maison
-                                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                                //Création
+                                if (ModMaison.idModule_maison == 0)
+                                {
+                                    DB.Module_Maison.Add(ModMaison);
+                                }
+                                //MAJ
+                                else
+                                {
+                                    //Module
+                                    (from x in DB.Module_Maison
+                                     where x.idModule_maison == ModMaison.idModule_maison
+                                     select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
 
-                                //hauteur
-                                (from x in DB.Module_Maison
-                                 where x.idModule_maison == ModMaison.idModule_maison
-                                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                                    //hauteur
+                                    (from x in DB.Module_Maison
+                                     where x.idModule_maison == ModMaison.idModule_maison
+                                     select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                                }
+                                DB.SaveChanges();
+                                btn.Background = brush;
                             }
                             else
                             {
@@ -799,8 +805,8 @@ namespace Madera.View.Pages.PlanVues
                             ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
                             ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
                             ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 0 && Grid.GetColumn(i) == col + 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 0 && Grid.GetColumn(i) == col - 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 2 && Grid.GetColumn(i) == col - 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
                         {
                             string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
                             if (test.Contains("Interieur"))
@@ -810,15 +816,28 @@ namespace Madera.View.Pages.PlanVues
                                 ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
                                 ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
                                 //Done: Enregistrer les modif modules
-                                //Module
-                                (from x in DB.Module_Maison
-                                 where x.idModule_maison == ModMaison.idModule_maison
-                                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                                //Création
+                                if (ModMaison.idModule_maison == 0)
+                                {
+                                    DB.Module_Maison.Add(ModMaison);
+                                }
+                                //MAJ
+                                else
+                                {
+                                    //Module
+                                    (from x in DB.Module_Maison
+                                     where x.idModule_maison == ModMaison.idModule_maison
+                                     select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
 
-                                //hauteur
-                                (from x in DB.Module_Maison
-                                 where x.idModule_maison == ModMaison.idModule_maison
-                                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                                    //hauteur
+                                    (from x in DB.Module_Maison
+                                     where x.idModule_maison == ModMaison.idModule_maison
+                                     select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                                }
+                                DB.SaveChanges();
+
+                                //MAJ visuel
+                                btn.Background = brush;
                             }
                             else
                             {
@@ -830,12 +849,13 @@ namespace Madera.View.Pages.PlanVues
                             MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
-                    
+
                 }
                 else
                 {
                     //Done: Verifier la présence d'un object lier si oui ==> supprimer l'object du Master + BDD
-                    if (IsConnectedWithTheRestOfTheWorld == true)
+                    ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+                    if (ModMaison != null)
                     {
                         //Recup l'object
                         ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);

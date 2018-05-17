@@ -366,6 +366,27 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Pictures\Modules\Porte\Aspirine.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Classico.jpg" />
+    <Resource Include="Pictures\Modules\Porte\EBigOne.jpg" />
+    <Resource Include="Pictures\Modules\Porte\HoriZon.jpg" />
+    <Resource Include="Pictures\Modules\Porte\OMFail.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Portugal2016.jpg" />
+    <Resource Include="Pictures\Modules\Porte\Rtpgfdcv.jpg" />
+    <Resource Include="Pictures\Modules\Porte\WhiteSpirit.jpg" />
+    <Resource Include="Pictures\Modules\Mur\zzbardage.jpg" />
+    <Resource Include="Pictures\Modules\Mur\zzCave.jpg" />
+    <Resource Include="Pictures\Modules\Mur\zzPalette.jpg" />
+    <Resource Include="Pictures\Modules\Mur\zzParament.jpg" />
+    <Resource Include="Pictures\Modules\Mur\zzPlaco.jpg" />
+    <Resource Include="Pictures\Modules\Mur\zzTetris.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\intBoomLaTete.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\intEglise.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\intGuyYoTine.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\intHole.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\intHole2.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\intHole3.jpg" />
+    <Resource Include="Pictures\Modules\Fenetre\intKasier.jpg" />
     <Resource Include="Pictures\Modules\Mur\AfterFire.jpg" />
     <Resource Include="Pictures\Modules\Mur\Bricolo.jpg" />
     <Resource Include="Pictures\Modules\Mur\Brut.jpg" />
