@@ -31,7 +31,6 @@ namespace Madera.Model
         public virtual DbSet<Empreinte> Empreinte { get; set; }
         public virtual DbSet<EtatCommande> EtatCommande { get; set; }
         public virtual DbSet<Favori> Favori { get; set; }
-        public virtual DbSet<Finition> Finition { get; set; }
         public virtual DbSet<Gamme> Gamme { get; set; }
         public virtual DbSet<Maison> Maison { get; set; }
         public virtual DbSet<Maison_TypeDalle> Maison_TypeDalle { get; set; }
@@ -42,7 +41,6 @@ namespace Madera.Model
         public virtual DbSet<TypeDalle> TypeDalle { get; set; }
         public virtual DbSet<TypeModule> TypeModule { get; set; }
         public virtual DbSet<ZoneMorte> ZoneMorte { get; set; }
-        public virtual DbSet<Couleur_Module> Couleur_Module { get; set; }
         public virtual DbSet<Module_Maison> Module_Maison { get; set; }
     }
 }

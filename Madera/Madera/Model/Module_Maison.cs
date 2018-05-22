@@ -14,12 +14,6 @@ namespace Madera.Model
     
     public partial class Module_Maison
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Module_Maison()
-        {
-            this.Couleur_Module = new HashSet<Couleur_Module>();
-        }
-    
         public Nullable<long> posXDebut { get; set; }
         public Nullable<long> posYDebut { get; set; }
         public Nullable<long> posXFin { get; set; }
@@ -31,10 +25,10 @@ namespace Madera.Model
         public long idModule { get; set; }
         public long idMaison { get; set; }
         public long idModule_maison { get; set; }
+        public long idCouleur { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Couleur_Module> Couleur_Module { get; set; }
         public virtual Maison Maison { get; set; }
         public virtual Module Module { get; set; }
+        public virtual Couleur Couleur { get; set; }
     }
 }

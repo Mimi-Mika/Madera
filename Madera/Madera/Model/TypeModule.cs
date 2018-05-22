@@ -22,7 +22,6 @@ namespace Madera.Model
     
         public long idType { get; set; }
         public string nomType { get; set; }
-        public string imgUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Module> Module { get; set; }

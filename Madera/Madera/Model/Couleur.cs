@@ -17,7 +17,7 @@ namespace Madera.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Couleur()
         {
-            this.Couleur_Module = new HashSet<Couleur_Module>();
+            this.Module_Maison = new HashSet<Module_Maison>();
         }
     
         public long idCouleur { get; set; }
@@ -26,6 +26,6 @@ namespace Madera.Model
         public string imgUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Couleur_Module> Couleur_Module { get; set; }
+        public virtual ICollection<Module_Maison> Module_Maison { get; set; }
     }
 }

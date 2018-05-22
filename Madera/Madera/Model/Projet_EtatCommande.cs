@@ -14,7 +14,6 @@ namespace Madera.Model
     
     public partial class Projet_EtatCommande
     {
-        public Nullable<decimal> dates { get; set; }
         public Nullable<double> prix { get; set; }
         public Nullable<long> paiementValide { get; set; }
         public long idProjet { get; set; }

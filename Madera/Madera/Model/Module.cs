@@ -18,7 +18,6 @@ namespace Madera.Model
         public Module()
         {
             this.Module_Favori = new HashSet<Module_Favori>();
-            this.Couleur_Module = new HashSet<Couleur_Module>();
             this.Module_Maison = new HashSet<Module_Maison>();
         }
     
@@ -35,8 +34,6 @@ namespace Madera.Model
         public virtual TypeModule TypeModule { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Module_Favori> Module_Favori { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Couleur_Module> Couleur_Module { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Module_Maison> Module_Maison { get; set; }
     }

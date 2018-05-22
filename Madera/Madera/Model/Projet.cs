@@ -36,6 +36,7 @@ namespace Madera.Model
         public Nullable<long> idMaison { get; set; }
         public Nullable<long> idClient { get; set; }
         public Nullable<long> idCommercial { get; set; }
+        public Nullable<long> DernierEtatCommande { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual Maison Maison { get; set; }

@@ -143,9 +143,6 @@
     <Compile Include="Model\Couleur.cs">
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Couleur_Module.cs">
-      <DependentUpon>ModelMadera.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Empreinte.cs">
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
@@ -153,9 +150,6 @@
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Favori.cs">
-      <DependentUpon>ModelMadera.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Finition.cs">
       <DependentUpon>ModelMadera.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gamme.cs">
