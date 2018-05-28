@@ -10,7 +10,7 @@
       Title="Apercu3D" Width="1366" Height="700">
 
     <Grid>
-        <Viewport3D Grid.Row="0" Grid.Column="0" Name="MainViewport"/>
+        <Viewport3D Grid.Row="0" Grid.Column="0" Name="MainViewport" MouseDown="MainViewport_MouseDown"/>
         <Button x:Name="Button1" Content="Export Picture to Pdf" Margin="0,80,170,0" VerticalAlignment="Top" Click="Button1_Click" HorizontalAlignment="Right" Width="121"/>
         <Button x:Name="btnUp" Content="H" HorizontalAlignment="Left" Margin="100,50,0,0" VerticalAlignment="Top" Width="38" Click="btnUp_Click"/>
         <Button x:Name="btnDroite" Content="D" HorizontalAlignment="Left" Margin="143,80,0,0" VerticalAlignment="Top" Width="38" Click="btnDroite_Click"/>

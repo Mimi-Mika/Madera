@@ -12,6 +12,7 @@ using System.Windows.Media.Media3D;
 using MahApps.Metro.Controls;
 using Madera.Model;
 using System.Linq;
+using Madera.View.Pages.MessageBoxCustom;
 
 namespace Madera.View.Pages.PlanVues
 {
@@ -20,8 +21,19 @@ namespace Madera.View.Pages.PlanVues
     /// </summary>
     public partial class Vue3D : Page
     {
+        // Materials used for normal and selected models.
+        private Material NormalMaterial, SelectedMaterial;
+
+        // The currently selected model.
+        private GeometryModel3D SelectedModel = null;
+
+        // The list of selectable models.
+        private List<GeometryModel3D> SelectableModels =
+            new List<GeometryModel3D>();
+
         MasterClasse Master = new MasterClasse();
         public static Maison m3DAffiche;
+
         public Vue3D(MasterClasse _Master)
         {
             Master = _Master;
@@ -66,6 +78,7 @@ namespace Madera.View.Pages.PlanVues
 
             // Define lights.
             DefineLights();
+            SelectedMaterial = new DiffuseMaterial(Brushes.Red);
 
             //TODO: A tester
             DBEntities DB = new DBEntities();
@@ -121,15 +134,14 @@ namespace Madera.View.Pages.PlanVues
             foreach (var item in _listModulesMaison)
             {
 
-                printPanneau(model_group, (int)item.Module.TypeModule.idType, (int)item.posXDebut, (int)item.posYDebut, (int)item.posXFin, (int)item.posYFin);
+                printPanneau(item, model_group, (int)item.Module.TypeModule.idType, (int)item.posXDebut, (int)item.posYDebut, (int)item.posXFin, (int)item.posYFin);
 
             }
 
         }
 
-        private void printPanneau(Model3DGroup model_group, int _type, int _xD, int _yD, int _xF, int _yF)
+        private void printPanneau(Module_Maison ModMaison, Model3DGroup model_group, int _type, int _xD, int _yD, int _xF, int _yF)
         {
-
             // Make a mesh to hold the surface.
             MeshGeometry3D meshWall = new MeshGeometry3D();
             MeshGeometry3D meshInt = new MeshGeometry3D();
@@ -152,6 +164,12 @@ namespace Madera.View.Pages.PlanVues
             // Add the model to the model groups.
             model_group.Children.Add(surface_model);
             model_group.Children.Add(surface_modelInt);
+
+            surface_model.SetValue(FrameworkElement.TagProperty, ModMaison);
+            surface_modelInt.SetValue(FrameworkElement.TagProperty, ModMaison);
+
+            SelectableModels.Add(surface_model);
+            SelectableModels.Add(surface_modelInt);
 
             //dessiner(meshInt, 0, 29, 20, 30, 0, 25);    // 1er bout cloison
             int xD = (_xD * 10) - CameraXCentre;
@@ -558,6 +576,47 @@ namespace Madera.View.Pages.PlanVues
         {
             Vue2D vue2d = new Vue2D(Master);
             ((MetroWindow)this.Parent).Content = vue2d;
+        }
+
+        // See what was clicked.
+        private void MainViewport_MouseDown(
+            object sender, MouseButtonEventArgs e)
+        {
+            // Deselect the prevously selected model.
+            if (SelectedModel != null)
+            {
+                SelectedModel.Material = NormalMaterial;
+                SelectedModel = null;
+            }
+
+            // Get the mouse's position relative to the viewport.
+            Point mouse_pos = e.GetPosition(MainViewport);
+
+            // Perform the hit test.
+            HitTestResult result =
+                VisualTreeHelper.HitTest(MainViewport, mouse_pos);
+
+            // See if we hit a model.
+            RayMeshGeometry3DHitTestResult mesh_result =
+                result as RayMeshGeometry3DHitTestResult;
+            if (mesh_result != null)
+            {
+                GeometryModel3D model =
+                    (GeometryModel3D)mesh_result.ModelHit;
+                if (SelectableModels.Contains(model))
+                {
+                    SelectedModel = model;
+                    NormalMaterial = model.Material;
+                    SelectedModel.Material = SelectedMaterial;
+                    Module_Maison ModMaison = (Module_Maison)model.GetValue(FrameworkElement.TagProperty);
+
+                    Module Mod = Master.LockModule.Where(i => i.idModule == ModMaison.idModule).FirstOrDefault();
+
+
+                    msgbox msg = new msgbox(Master, ModMaison);
+                    msg.ShowDialog();
+                }
+            }
         }
     }
 }

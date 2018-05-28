@@ -228,6 +228,9 @@
     <Compile Include="View\Pages\Factures\ModelPDF.xaml.cs">
       <DependentUpon>ModelPDF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\MessageBoxCustom\msgbox.xaml.cs">
+      <DependentUpon>msgbox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\PlanVues\Function2D.cs" />
     <Compile Include="View\Pages\PlanVues\ModMaisonPos.cs" />
     <Compile Include="View\Pages\PlanVues\Vue2D.xaml.cs">
@@ -296,6 +299,10 @@
     <Page Include="View\Pages\Factures\ModelPDF.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\MessageBoxCustom\msgbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\PlanVues\Vue2D.xaml">
       <SubType>Designer</SubType>
