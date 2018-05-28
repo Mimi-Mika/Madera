@@ -156,16 +156,17 @@ namespace Madera.View.Pages.Devis
                     idClient = Master.LockClient.idClient,
                     idMaison = Master.NewMaison.idMaison,
                     prixFabrication = addMaisonTypeDalle.historiquePrixM2,
-                    prixComposant = 0, // pas de compo pour la dalle
-                    prixFinal = addMaisonTypeDalle.historiquePrixM2,
-                    prixInstallation = addMaisonTypeDalle.historiquePrixM2 * 1.30,
-                    numDevis = "DevCliNo" + "" + db.Projet.Where(i => i.idClient == Master.LockClient.idClient).Count() + 1,
+                    prixComposant = addMaisonTypeDalle.historiquePrixM2 * 0.3, // pas de compo pour la dalle
+                    prixInstallation = addMaisonTypeDalle.historiquePrixM2 * 0.8,
+                    prixFinal = addMaisonTypeDalle.historiquePrixM2 * (1 + 0.3 + 0.8),
+                    numDevis = "DevCliNo" + "" + (db.Projet.Where(i => i.idClient == Master.LockClient.idClient).Count() + 1),
                     numFacture = "",
                     numOF = "",
                     numOM = "",
                     reductionMarge = 0,
                     devisSynchro = 0,
-                    idCommercial = Master.LockCommercial.idCommercial
+                    idCommercial = Master.LockCommercial.idCommercial,
+                    DernierEtatCommande = 1
                 };
                 db.Projet.Add(addProjet);
                 db.SaveChanges();
@@ -176,13 +177,11 @@ namespace Madera.View.Pages.Devis
                 //Enregistrer EtatCommande en Master (Brouillon)
                 Master.LockEtatCommande = db.EtatCommande.ToList();
 
-                //HACK: BDD Date en real? 
-                //HACK: BDD PaimentValide en int???
                 Projet_EtatCommande addProjetEtatCommande = new Projet_EtatCommande()
                 {
                     idEtatCommande = 1, // Brouillon
                     idProjet = addProjet.idProjet,
-                    dates = 1254488,
+                    dates = DateTime.Now.ToString(),
                     prix = 0,
                     paiementValide = 0
                 };

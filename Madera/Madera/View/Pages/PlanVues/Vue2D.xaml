@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Madera.View.Pages.PlanVues"
       mc:Ignorable="d"
-      Title="Vue2D" Height="800" Width="1200">
+      Title="Vue2D" Height="782" Width="1200">
 
     <Grid x:Name="GridMother" Margin="1,1,1,1">
         <Grid.ColumnDefinitions>
@@ -61,15 +61,26 @@
                 <StackPanel>
                     <TextBlock Text="Module" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
                     <ListBox x:Name="listModule"  BorderThickness="1" BorderBrush="Black" Height="375"
-                     ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False">
+                     ScrollViewer.CanContentScroll="False" IsSynchronizedWithCurrentItem="False" SelectionChanged="listModule_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding imgUrl}" Height="90" Width="90" Margin="1"/>
                                     <StackPanel Margin="1">
                                         <TextBlock Text="{Binding nom}" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding hauteur}"/>
-                                        <TextBlock Text="{Binding largeur}" FontStyle="Italic"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="hauteur : " FontStyle="Italic"/>
+                                            <TextBlock Text="{Binding hauteur}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="largeur  : " FontStyle="Italic"/>
+                                            <TextBlock Text="{Binding largeur}" FontStyle="Italic"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="prix       : " FontStyle="Italic"/>
+                                            <TextBlock Text="{Binding prix}" FontStyle="Italic"/>
+                                            <TextBlock Text="€" FontStyle="Italic"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -77,38 +88,13 @@
                     </ListBox>
                 </StackPanel>
             </Border>
-            <StackPanel Orientation="Horizontal" Height="150" Width="200" VerticalAlignment="Bottom">
-                <Border BorderThickness="1" BorderBrush="Black" Height="200" Width="100">
-                    <StackPanel>
-                        <TextBlock Text="Finition" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                        <ListBox x:Name="listFinition" BorderThickness="1" BorderBrush="Black" Height="125"
-                            ScrollViewer.CanContentScroll="False"  IsSynchronizedWithCurrentItem="False" >
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Border BorderThickness="1" BorderBrush="Black">
-                                            <Image Source="{Binding imgUrl}" Height="30" Width="30"  Margin="1"/>
-                                        </Border>
-                                        <StackPanel  Margin="1">
-                                            <TextBlock Text="{Binding nom}" FontWeight="Bold"  />
-                                            <StackPanel Orientation="Horizontal"  >
-                                                <TextBlock Text="+"/>
-                                                <TextBlock Text="{Binding surCout}"/>
-                                                <TextBlock Text="%"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                </Border>
+            <StackPanel Orientation="Horizontal" Height="240" Width="200" VerticalAlignment="Bottom">
 
-                <Border BorderThickness="1" BorderBrush="Black" Height="150" Width="100">
-                    <StackPanel>
+                <Border BorderThickness="1" BorderBrush="Black" Width="200" Margin="0,10">
+                    <StackPanel Margin="-1,-1,-1,1">
                         <TextBlock Text="Couleur" HorizontalAlignment="Center"  FontWeight="Heavy" Margin="0,0,0,5"/>
-                        <ListBox x:Name="listCouleur"  BorderThickness="1" BorderBrush="Black" Height="125"
-                           IsSynchronizedWithCurrentItem="False" Width="100" HorizontalAlignment="Left" Margin="0,0,-2,0">
+                        <ListBox x:Name="listCouleur"  BorderThickness="1" BorderBrush="Black" Height="197"
+                           IsSynchronizedWithCurrentItem="False" Width="198" HorizontalAlignment="Left" Margin="0,0,0,0" SelectionChanged="listCouleur_SelectionChanged">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" >
@@ -133,25 +119,58 @@
 
 
             </StackPanel>
-            <StackPanel Height="100">
-                <RadioButton x:Name="rbAjout"  Content="Ajouter" Margin="20,10,0,0"/>
-                <RadioButton x:Name="rbVider" Content="Vider" Margin="20,10,0,0"/>
-            </StackPanel>
         </StackPanel>
         <Grid Grid.Column="2" Margin="0,0,3,0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="44*"/>
-                <RowDefinition Height="339*"/>
-                <RowDefinition Height="65*"/>
+                <RowDefinition Height="42*"/>
+                <RowDefinition Height="337*"/>
+                <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="grid2D" Grid.Column="0" Grid.Row="1"/>
-            <Button x:Name="btnRet" Content="Retour" HorizontalAlignment="Left" Margin="34,16,0,0" VerticalAlignment="Top" Width="75" Click="BtnRet_Click" Height="27" Grid.Row="2"/>
-            <Button x:Name="btn3D" Content="Vue3D" HorizontalAlignment="Left" Height="27" Margin="148,16,0,0" VerticalAlignment="Top" Width="87" Click="Btn3D_Click" Grid.Row="2"/>
-            <Button x:Name="btnSav" Content="Enregistrer" Margin="276,16,587,0" Grid.Row="2" VerticalAlignment="Top" Click="BtnSav_Click"/>
-            <Label Content="Nom Client :" HorizontalAlignment="Left" Height="29" Margin="64,24,0,0" VerticalAlignment="Top" Width="80"/>
-            <Label x:Name="lblNom" Content="Label" HorizontalAlignment="Left" Margin="182,24,0,0" VerticalAlignment="Top" Width="138" Height="29"/>
-            <Label Content="Numéro Client :" HorizontalAlignment="Left" Margin="726,24,0,0" VerticalAlignment="Top" Width="108" Height="29"/>
-            <Label x:Name="lblNumClient" Content="Label" HorizontalAlignment="Left" Margin="857,24,0,0" VerticalAlignment="Top" Height="29" Width="98"/>
+            <Grid x:Name="grid2D" Grid.Column="0" Grid.Row="1" Margin="0,0,57,0"/>
+            <Button x:Name="btnRet" Content="Retour" HorizontalAlignment="Left" Margin="872,18,0,0" VerticalAlignment="Top" Width="75" Click="BtnRet_Click" Height="27"/>
+            <Button x:Name="btn3D" Content="Vue3D" HorizontalAlignment="Left" Height="27" Margin="897,52,-15,0" VerticalAlignment="Top" Width="87" Click="Btn3D_Click" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="89.792"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Button x:Name="btnSav" Content="Enregistrer" Margin="887,510,-24,0" Grid.Row="1" VerticalAlignment="Top" Click="BtnSav_Click" RenderTransformOrigin="0.5,0.5" Height="27">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90.858"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Label Content="Nom Client :" HorizontalAlignment="Left" Height="29" Margin="629,5,0,0" VerticalAlignment="Top" Width="80"/>
+            <Label x:Name="lblNom" Content="Label" HorizontalAlignment="Left" Margin="760,5,0,0" VerticalAlignment="Top" Width="138" Height="29"/>
+            <Label Content="Numéro Client :" HorizontalAlignment="Left" Margin="629,24,0,0" VerticalAlignment="Top" Width="108" Height="29"/>
+            <Label x:Name="lblNumClient" Content="Label" HorizontalAlignment="Left" Margin="760,24,0,0" VerticalAlignment="Top" Height="29" Width="98"/>
+            <Label Content="Finition         :" HorizontalAlignment="Left" Margin="24,1,0,0" VerticalAlignment="Top" Width="85" Height="26"/>
+            <Label Content="Huisserie      :" HorizontalAlignment="Left" Margin="24,18,0,0" VerticalAlignment="Top" Width="85" Height="26"/>
+            <Label x:Name="lblFinition" Content="Label" HorizontalAlignment="Left" Margin="109,1,0,0" VerticalAlignment="Top" Width="121" Height="26"/>
+            <Label x:Name="LblHuisserie" Content="Label" HorizontalAlignment="Left" Margin="109,18,0,0" VerticalAlignment="Top" Width="121" Height="26"/>
+            <Label Content="Couverture   :" HorizontalAlignment="Left" Margin="24,35,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
+            <Label Content="Isolation       :" HorizontalAlignment="Left" Margin="24,52,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
+            <Label x:Name="lblCouverture" Content="Label" HorizontalAlignment="Left" Margin="109,35,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+            <Label x:Name="lblIsolation" Content="Label" HorizontalAlignment="Left" Margin="109,52,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+            <RadioButton x:Name="rbAjout"  Content="Ajouter" Margin="10,5,779,8" Grid.Row="2" Click="rbAjout_Click"/>
+            <RadioButton x:Name="rbVider" Content="Vider" Margin="195,5,594,8" Grid.Row="2" Click="rbVider_Click"/>
+            <RadioButton x:Name="rbSelectionner" Content="Selectionner" Margin="375,5,414,8" Grid.Row="2" Click="rbSelectionner_Click"/>
+            <Label Content="Module :" HorizontalAlignment="Left" Margin="294,1,0,0" VerticalAlignment="Top"/>
+            <Label Content="Couleur :" HorizontalAlignment="Left" Margin="294,35,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblModule" Content="Label" HorizontalAlignment="Left" Margin="398,1,0,0" VerticalAlignment="Top" Width="178"/>
+            <Label x:Name="lblCouleur" Content="Label" HorizontalAlignment="Left" Margin="398,35,0,0" VerticalAlignment="Top" Width="178"/>
+            <Label Content="PrixModule :" HorizontalAlignment="Left" Margin="294,18,0,0" VerticalAlignment="Top"/>
+            <Label Content="PrixCouleur :" HorizontalAlignment="Left" Margin="294,52,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblPrixModule" Content="Label" HorizontalAlignment="Left" Margin="398,18,0,0" VerticalAlignment="Top" Width="178"/>
+            <Label x:Name="lblPrixCouleur" Content="Label" HorizontalAlignment="Left" Margin="398,52,0,0" VerticalAlignment="Top" Width="178"/>
         </Grid>
     </Grid>
 </Page>

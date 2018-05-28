@@ -100,9 +100,9 @@
           <Property Name="hauteur" Type="integer" />
           <Property Name="largeur" Type="integer" />
           <Property Name="prix" Type="real" />
+          <Property Name="imgUrl" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="idGamme" Type="integer" />
           <Property Name="idType" Type="integer" />
-          <Property Name="imgUrl" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <EntityType Name="Module_Favori">
           <Key>
@@ -118,6 +118,7 @@
           <Key>
             <PropertyRef Name="idModule_maison" />
           </Key>
+          <Property Name="idModule_maison" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="posXDebut" Type="integer" />
           <Property Name="posYDebut" Type="integer" />
           <Property Name="posXFin" Type="integer" />
@@ -125,10 +126,8 @@
           <Property Name="distanceSol" Type="real" />
           <Property Name="historiquePrixModule" Type="real" />
           <Property Name="historiquePrixCouleur" Type="real" />
-          <Property Name="historiquePrixFinition" Type="real" />
           <Property Name="idModule" Type="integer" Nullable="false" />
           <Property Name="idMaison" Type="integer" Nullable="false" />
-          <Property Name="idModule_maison" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idCouleur" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Projet">
@@ -238,18 +237,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Module_0_0">
-          <End Role="TypeModule" Type="Self.TypeModule" Multiplicity="0..1" />
-          <End Role="Module" Type="Self.Module" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TypeModule">
-              <PropertyRef Name="idType" />
-            </Principal>
-            <Dependent Role="Module">
-              <PropertyRef Name="idType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Module_1_0">
           <End Role="Gamme" Type="Self.Gamme" Multiplicity="0..1" />
           <End Role="Module" Type="Self.Module" Multiplicity="*" />
           <ReferentialConstraint>
@@ -258,6 +245,18 @@
             </Principal>
             <Dependent Role="Module">
               <PropertyRef Name="idGamme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_1_0">
+          <End Role="TypeModule" Type="Self.TypeModule" Multiplicity="0..1" />
+          <End Role="Module" Type="Self.Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeModule">
+              <PropertyRef Name="idType" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -298,18 +297,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Module_Maison_1_0">
-          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
-          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maison">
-              <PropertyRef Name="idMaison" />
-            </Principal>
-            <Dependent Role="Module_Maison">
-              <PropertyRef Name="idMaison" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Module_Maison_2_0">
           <End Role="Couleur" Type="Self.Couleur" Multiplicity="1" />
           <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
           <ReferentialConstraint>
@@ -318,6 +305,18 @@
             </Principal>
             <Dependent Role="Module_Maison">
               <PropertyRef Name="idCouleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Maison_2_0">
+          <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
+          <End Role="Module_Maison" Type="Self.Module_Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
+            </Principal>
+            <Dependent Role="Module_Maison">
+              <PropertyRef Name="idMaison" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -416,11 +415,11 @@
             <End Role="Maison_TypeDalle" EntitySet="Maison_TypeDalle" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_0_0" Association="Self.FK_Module_0_0">
-            <End Role="TypeModule" EntitySet="TypeModule" />
+            <End Role="Gamme" EntitySet="Gamme" />
             <End Role="Module" EntitySet="Module" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_1_0" Association="Self.FK_Module_1_0">
-            <End Role="Gamme" EntitySet="Gamme" />
+            <End Role="TypeModule" EntitySet="TypeModule" />
             <End Role="Module" EntitySet="Module" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_Favori_0_0" Association="Self.FK_Module_Favori_0_0">
@@ -436,11 +435,11 @@
             <End Role="Module_Maison" EntitySet="Module_Maison" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_Maison_1_0" Association="Self.FK_Module_Maison_1_0">
-            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Couleur" EntitySet="Couleur" />
             <End Role="Module_Maison" EntitySet="Module_Maison" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_Maison_2_0" Association="Self.FK_Module_Maison_2_0">
-            <End Role="Couleur" EntitySet="Couleur" />
+            <End Role="Maison" EntitySet="Maison" />
             <End Role="Module_Maison" EntitySet="Module_Maison" />
           </AssociationSet>
           <AssociationSet Name="FK_Projet_0_0" Association="Self.FK_Projet_0_0">
@@ -478,7 +477,7 @@
           <Property Name="adresse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="tel" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="mail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Projet" Relationship="Self.FK_Projet_0_0" FromRole="Client" ToRole="Projet" />
+          <NavigationProperty Name="Projet" Relationship="DBModel.FK_Projet_0_0" FromRole="Client" ToRole="Projet" />
         </EntityType>
         <EntityType Name="Commercial">
           <Key>
@@ -491,17 +490,7 @@
           <Property Name="tel" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="mail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="mdp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Projet1" Relationship="DBModel.FK_Projet_1_01" FromRole="Commercial" ToRole="Projet" />
-        </EntityType>
-        <EntityType Name="Couleur">
-          <Key>
-            <PropertyRef Name="idCouleur" />
-          </Key>
-          <Property Name="idCouleur" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="surCout" Type="Double" />
-          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Module_Maison" Relationship="DBModel.FK_Module_Maison_2_0" FromRole="Couleur" ToRole="Module_Maison" />
+          <NavigationProperty Name="Projet" Relationship="DBModel.FK_Projet_1_0" FromRole="Commercial" ToRole="Projet" />
         </EntityType>
         <EntityType Name="Empreinte">
           <Key>
@@ -532,19 +521,6 @@
           <Property Name="tailleSlot" Type="Double" />
           <NavigationProperty Name="Module_Favori" Relationship="Self.FK_Module_Favori_0_0" FromRole="Favori" ToRole="Module_Favori" />
         </EntityType>
-        <EntityType Name="Gamme">
-          <Key>
-            <PropertyRef Name="idGamme" />
-          </Key>
-          <Property Name="idGamme" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Module" Relationship="Self.FK_Module_2_0" FromRole="Gamme" ToRole="Module" />
-          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="finition" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="huisserie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="couverture" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="isolation" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Maison">
           <Key>
             <PropertyRef Name="idMaison" />
@@ -554,8 +530,8 @@
           <Property Name="idEmpreinte" Type="Int64" />
           <NavigationProperty Name="Empreinte" Relationship="Self.FK_Maison_0_0" FromRole="Maison" ToRole="Empreinte" />
           <NavigationProperty Name="Maison_TypeDalle" Relationship="Self.FK_Maison_TypeDalle_1_0" FromRole="Maison" ToRole="Maison_TypeDalle" />
-          <NavigationProperty Name="Projet" Relationship="Self.FK_Projet_1_0" FromRole="Maison" ToRole="Projet" />
-          <NavigationProperty Name="Module_Maison" Relationship="DBModel.FK_Module_Maison_0_0" FromRole="Maison" ToRole="Module_Maison" />
+          <NavigationProperty Name="Module_Maison" Relationship="DBModel.FK_Module_Maison_2_0" FromRole="Maison" ToRole="Module_Maison" />
+          <NavigationProperty Name="Projet" Relationship="DBModel.FK_Projet_2_0" FromRole="Maison" ToRole="Projet" />
         </EntityType>
         <EntityType Name="Maison_TypeDalle">
           <Key>
@@ -579,11 +555,11 @@
           <Property Name="prix" Type="Double" />
           <Property Name="idGamme" Type="Int64" />
           <Property Name="idType" Type="Int64" />
-          <NavigationProperty Name="Gamme" Relationship="Self.FK_Module_2_0" FromRole="Module" ToRole="Gamme" />
           <NavigationProperty Name="TypeModule" Relationship="Self.FK_Module_0_0" FromRole="Module" ToRole="TypeModule" />
           <NavigationProperty Name="Module_Favori" Relationship="Self.FK_Module_Favori_1_0" FromRole="Module" ToRole="Module_Favori" />
           <Property Name="imgUrl" Type="String" />
-          <NavigationProperty Name="Module_Maison" Relationship="DBModel.FK_Module_Maison_1_0" FromRole="Module" ToRole="Module_Maison" />
+          <NavigationProperty Name="Gamme" Relationship="DBModel.FK_Module_0_01" FromRole="Module" ToRole="Gamme" />
+          <NavigationProperty Name="Module_Maison" Relationship="DBModel.FK_Module_Maison_0_0" FromRole="Module" ToRole="Module_Maison" />
         </EntityType>
         <EntityType Name="Module_Favori">
           <Key>
@@ -597,31 +573,6 @@
           <NavigationProperty Name="Favori" Relationship="Self.FK_Module_Favori_0_0" FromRole="Module_Favori" ToRole="Favori" />
           <NavigationProperty Name="Module" Relationship="Self.FK_Module_Favori_1_0" FromRole="Module_Favori" ToRole="Module" />
         </EntityType>
-        <EntityType Name="Projet">
-          <Key>
-            <PropertyRef Name="idProjet" />
-          </Key>
-          <Property Name="idProjet" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="devisSynchro" Type="Int64" />
-          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="prixFabrication" Type="Double" />
-          <Property Name="prixComposant" Type="Double" />
-          <Property Name="prixInstallation" Type="Double" />
-          <Property Name="prixFinal" Type="Double" />
-          <Property Name="reductionMarge" Type="Double" />
-          <Property Name="numDevis" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="numFacture" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="numOF" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="numOM" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="kitMonte" Type="Int64" />
-          <Property Name="idMaison" Type="Int64" />
-          <Property Name="idClient" Type="Int64" />
-          <NavigationProperty Name="Client" Relationship="Self.FK_Projet_0_0" FromRole="Projet" ToRole="Client" />
-          <NavigationProperty Name="Maison" Relationship="Self.FK_Projet_1_0" FromRole="Projet" ToRole="Maison" />
-          <NavigationProperty Name="Projet_EtatCommande" Relationship="Self.FK_Projet_EtatCommande_1_0" FromRole="Projet" ToRole="Projet_EtatCommande" />
-          <Property Name="idCommercial" Type="Int64" />
-          <Property Name="DernierEtatCommande" Type="Int64" />
-        </EntityType>
         <EntityType Name="Projet_EtatCommande">
           <Key>
             <PropertyRef Name="idProjet" />
@@ -632,7 +583,8 @@
           <Property Name="idProjet" Type="Int64" Nullable="false" />
           <Property Name="idEtatCommande" Type="Int64" Nullable="false" />
           <NavigationProperty Name="EtatCommande" Relationship="Self.FK_Projet_EtatCommande_0_0" FromRole="Projet_EtatCommande" ToRole="EtatCommande" />
-          <NavigationProperty Name="Projet" Relationship="Self.FK_Projet_EtatCommande_1_0" FromRole="Projet_EtatCommande" ToRole="Projet" />
+          <Property Name="dates" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projet" Relationship="DBModel.FK_Projet_EtatCommande_0_01" FromRole="Projet_EtatCommande" ToRole="Projet" />
         </EntityType>
         <EntityType Name="TypeDalle">
           <Key>
@@ -662,18 +614,6 @@
           <Property Name="coordonneeY" Type="Int64" />
           <NavigationProperty Name="Empreinte" Relationship="Self.FK_Empreinte_0_0" FromRole="ZoneMorte" ToRole="Empreinte" />
         </EntityType>
-        <Association Name="FK_Projet_0_0">
-          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
-          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="idClient" />
-            </Principal>
-            <Dependent Role="Projet">
-              <PropertyRef Name="idClient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Empreinte_0_0">
           <End Role="ZoneMorte" Type="Self.ZoneMorte" Multiplicity="0..1" />
           <End Role="Empreinte" Type="Self.Empreinte" Multiplicity="*" />
@@ -722,18 +662,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Module_2_0">
-          <End Role="Gamme" Type="Self.Gamme" Multiplicity="0..1" />
-          <End Role="Module" Type="Self.Module" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gamme">
-              <PropertyRef Name="idGamme" />
-            </Principal>
-            <Dependent Role="Module">
-              <PropertyRef Name="idGamme" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Maison_TypeDalle_1_0">
           <End Role="Maison" Type="Self.Maison" Multiplicity="1" />
           <End Role="Maison_TypeDalle" Type="Self.Maison_TypeDalle" Multiplicity="*" />
@@ -742,18 +670,6 @@
               <PropertyRef Name="idMaison" />
             </Principal>
             <Dependent Role="Maison_TypeDalle">
-              <PropertyRef Name="idMaison" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Projet_1_0">
-          <End Role="Maison" Type="Self.Maison" Multiplicity="0..1" />
-          <End Role="Projet" Type="Self.Projet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Maison">
-              <PropertyRef Name="idMaison" />
-            </Principal>
-            <Dependent Role="Projet">
               <PropertyRef Name="idMaison" />
             </Dependent>
           </ReferentialConstraint>
@@ -794,39 +710,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Projet_EtatCommande_1_0">
-          <End Role="Projet" Type="Self.Projet" Multiplicity="1" />
-          <End Role="Projet_EtatCommande" Type="Self.Projet_EtatCommande" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Projet">
-              <PropertyRef Name="idProjet" />
-            </Principal>
-            <Dependent Role="Projet_EtatCommande">
-              <PropertyRef Name="idProjet" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Client" EntityType="Self.Client" />
           <EntitySet Name="Commercial" EntityType="Self.Commercial" />
-          <EntitySet Name="Couleur" EntityType="Self.Couleur" />
           <EntitySet Name="Empreinte" EntityType="Self.Empreinte" />
           <EntitySet Name="EtatCommande" EntityType="Self.EtatCommande" />
           <EntitySet Name="Favori" EntityType="Self.Favori" />
-          <EntitySet Name="Gamme" EntityType="Self.Gamme" />
           <EntitySet Name="Maison" EntityType="Self.Maison" />
           <EntitySet Name="Maison_TypeDalle" EntityType="Self.Maison_TypeDalle" />
           <EntitySet Name="Module" EntityType="Self.Module" />
           <EntitySet Name="Module_Favori" EntityType="Self.Module_Favori" />
-          <EntitySet Name="Projet" EntityType="Self.Projet" />
           <EntitySet Name="Projet_EtatCommande" EntityType="Self.Projet_EtatCommande" />
           <EntitySet Name="TypeDalle" EntityType="Self.TypeDalle" />
           <EntitySet Name="TypeModule" EntityType="Self.TypeModule" />
           <EntitySet Name="ZoneMorte" EntityType="Self.ZoneMorte" />
-          <AssociationSet Name="FK_Projet_0_0" Association="Self.FK_Projet_0_0">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="Projet" EntitySet="Projet" />
-          </AssociationSet>
+		  <EntitySet Name="Couleur" EntityType="DBModel.Couleur" />
+          <EntitySet Name="Module_Maison" EntityType="DBModel.Module_Maison" />
+		  <EntitySet Name="Projet" EntityType="DBModel.Projet" />
           <AssociationSet Name="FK_Empreinte_0_0" Association="Self.FK_Empreinte_0_0">
             <End Role="ZoneMorte" EntitySet="ZoneMorte" />
             <End Role="Empreinte" EntitySet="Empreinte" />
@@ -843,17 +743,9 @@
             <End Role="Favori" EntitySet="Favori" />
             <End Role="Module_Favori" EntitySet="Module_Favori" />
           </AssociationSet>
-          <AssociationSet Name="FK_Module_2_0" Association="Self.FK_Module_2_0">
-            <End Role="Gamme" EntitySet="Gamme" />
-            <End Role="Module" EntitySet="Module" />
-          </AssociationSet>
           <AssociationSet Name="FK_Maison_TypeDalle_1_0" Association="Self.FK_Maison_TypeDalle_1_0">
             <End Role="Maison" EntitySet="Maison" />
             <End Role="Maison_TypeDalle" EntitySet="Maison_TypeDalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Projet_1_0" Association="Self.FK_Projet_1_0">
-            <End Role="Maison" EntitySet="Maison" />
-            <End Role="Projet" EntitySet="Projet" />
           </AssociationSet>
           <AssociationSet Name="FK_Maison_TypeDalle_0_0" Association="Self.FK_Maison_TypeDalle_0_0">
             <End Role="TypeDalle" EntitySet="TypeDalle" />
@@ -867,32 +759,80 @@
             <End Role="Module" EntitySet="Module" />
             <End Role="Module_Favori" EntitySet="Module_Favori" />
           </AssociationSet>
-          <AssociationSet Name="FK_Projet_EtatCommande_1_0" Association="Self.FK_Projet_EtatCommande_1_0">
-            <End Role="Projet" EntitySet="Projet" />
-            <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
-          </AssociationSet>
-          <EntitySet Name="Module_Maison" EntityType="DBModel.Module_Maison" />
-          <AssociationSet Name="FK_Module_Maison_0_0" Association="DBModel.FK_Module_Maison_0_0">
-            <End Role="Maison" EntitySet="Maison" />
-            <End Role="Module_Maison" EntitySet="Module_Maison" />
+          <EntitySet Name="Gamme" EntityType="DBModel.Gamme" />
+          <AssociationSet Name="FK_Module_0_01" Association="DBModel.FK_Module_0_01">
+            <End Role="Gamme" EntitySet="Gamme" />
+            <End Role="Module" EntitySet="Module" />
           </AssociationSet>
           <AssociationSet Name="FK_Module_Maison_1_0" Association="DBModel.FK_Module_Maison_1_0">
-            <End Role="Module" EntitySet="Module" />
-            <End Role="Module_Maison" EntitySet="Module_Maison" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Projet_1_01" Association="DBModel.FK_Projet_1_01">
-            <End Role="Commercial" EntitySet="Commercial" />
-            <End Role="Projet" EntitySet="Projet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Module_Maison_2_0" Association="DBModel.FK_Module_Maison_2_0">
             <End Role="Couleur" EntitySet="Couleur" />
             <End Role="Module_Maison" EntitySet="Module_Maison" />
           </AssociationSet>
+          <AssociationSet Name="FK_Module_Maison_2_0" Association="DBModel.FK_Module_Maison_2_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Module_Maison" EntitySet="Module_Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Module_Maison_0_0" Association="DBModel.FK_Module_Maison_0_0">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="Module_Maison" EntitySet="Module_Maison" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_0_0" Association="DBModel.FK_Projet_0_0">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_1_0" Association="DBModel.FK_Projet_1_0">
+            <End Role="Commercial" EntitySet="Commercial" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_2_0" Association="DBModel.FK_Projet_2_0">
+            <End Role="Maison" EntitySet="Maison" />
+            <End Role="Projet" EntitySet="Projet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projet_EtatCommande_0_01" Association="DBModel.FK_Projet_EtatCommande_0_01">
+            <End Role="Projet" EntitySet="Projet" />
+            <End Role="Projet_EtatCommande" EntitySet="Projet_EtatCommande" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Gamme">
+          <Key>
+            <PropertyRef Name="idGamme" />
+          </Key>
+          <Property Name="idGamme" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="finition" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="huisserie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="couverture" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isolation" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Module" Relationship="DBModel.FK_Module_0_01" FromRole="Gamme" ToRole="Module" />
+        </EntityType>
+        <Association Name="FK_Module_0_01">
+          <End Type="DBModel.Gamme" Role="Gamme" Multiplicity="0..1" />
+          <End Type="DBModel.Module" Role="Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gamme">
+              <PropertyRef Name="idGamme" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="idGamme" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Couleur">
+          <Key>
+            <PropertyRef Name="idCouleur" />
+          </Key>
+          <Property Name="idCouleur" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="surCout" Type="Double" />
+          <Property Name="imgUrl" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Module_Maison" Relationship="Self.FK_Module_Maison_1_0" FromRole="Couleur" ToRole="Module_Maison" />
+        </EntityType>
         <EntityType Name="Module_Maison">
           <Key>
             <PropertyRef Name="idModule_maison" />
           </Key>
+          <Property Name="idModule_maison" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="posXDebut" Type="Int64" />
           <Property Name="posYDebut" Type="Int64" />
           <Property Name="posXFin" Type="Int64" />
@@ -900,16 +840,26 @@
           <Property Name="distanceSol" Type="Double" />
           <Property Name="historiquePrixModule" Type="Double" />
           <Property Name="historiquePrixCouleur" Type="Double" />
-          <Property Name="historiquePrixFinition" Type="Double" />
           <Property Name="idModule" Type="Int64" Nullable="false" />
           <Property Name="idMaison" Type="Int64" Nullable="false" />
-          <Property Name="idModule_maison" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Maison" Relationship="DBModel.FK_Module_Maison_0_0" FromRole="Module_Maison" ToRole="Maison" />
-          <NavigationProperty Name="Module" Relationship="DBModel.FK_Module_Maison_1_0" FromRole="Module_Maison" ToRole="Module" />
           <Property Name="idCouleur" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Couleur" Relationship="DBModel.FK_Module_Maison_2_0" FromRole="Module_Maison" ToRole="Couleur" />
+          <NavigationProperty Name="Couleur" Relationship="DBModel.FK_Module_Maison_1_0" FromRole="Module_Maison" ToRole="Couleur" />
+          <NavigationProperty Name="Maison" Relationship="DBModel.FK_Module_Maison_2_0" FromRole="Module_Maison" ToRole="Maison" />
+          <NavigationProperty Name="Module" Relationship="DBModel.FK_Module_Maison_0_0" FromRole="Module_Maison" ToRole="Module" />
         </EntityType>
-        <Association Name="FK_Module_Maison_0_0">
+        <Association Name="FK_Module_Maison_1_0">
+          <End Type="DBModel.Couleur" Role="Couleur" Multiplicity="1" />
+          <End Type="DBModel.Module_Maison" Role="Module_Maison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Couleur">
+              <PropertyRef Name="idCouleur" />
+            </Principal>
+            <Dependent Role="Module_Maison">
+              <PropertyRef Name="idCouleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Module_Maison_2_0">
           <End Type="DBModel.Maison" Role="Maison" Multiplicity="1" />
           <End Type="DBModel.Module_Maison" Role="Module_Maison" Multiplicity="*" />
           <ReferentialConstraint>
@@ -921,7 +871,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Module_Maison_1_0">
+        <Association Name="FK_Module_Maison_0_0">
           <End Type="DBModel.Module" Role="Module" Multiplicity="1" />
           <End Type="DBModel.Module_Maison" Role="Module_Maison" Multiplicity="*" />
           <ReferentialConstraint>
@@ -933,7 +883,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Projet_1_01">
+        <EntityType Name="Projet">
+          <Key>
+            <PropertyRef Name="idProjet" />
+          </Key>
+          <Property Name="idProjet" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="devisSynchro" Type="Int64" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="prixFabrication" Type="Double" />
+          <Property Name="prixComposant" Type="Double" />
+          <Property Name="prixInstallation" Type="Double" />
+          <Property Name="prixFinal" Type="Double" />
+          <Property Name="reductionMarge" Type="Double" />
+          <Property Name="numDevis" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="numFacture" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="numOF" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="numOM" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="kitMonte" Type="Int64" />
+          <Property Name="idMaison" Type="Int64" />
+          <Property Name="idClient" Type="Int64" />
+          <Property Name="idCommercial" Type="Int64" />
+          <Property Name="DernierEtatCommande" Type="Int64" />
+          <NavigationProperty Name="Client" Relationship="DBModel.FK_Projet_0_0" FromRole="Projet" ToRole="Client" />
+          <NavigationProperty Name="Commercial" Relationship="DBModel.FK_Projet_1_0" FromRole="Projet" ToRole="Commercial" />
+          <NavigationProperty Name="Maison" Relationship="DBModel.FK_Projet_2_0" FromRole="Projet" ToRole="Maison" />
+          <NavigationProperty Name="Projet_EtatCommande" Relationship="DBModel.FK_Projet_EtatCommande_0_01" FromRole="Projet" ToRole="Projet_EtatCommande" />
+        </EntityType>
+        <Association Name="FK_Projet_0_0">
+          <End Type="DBModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="DBModel.Projet" Role="Projet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="idClient" />
+            </Principal>
+            <Dependent Role="Projet">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_1_0">
           <End Type="DBModel.Commercial" Role="Commercial" Multiplicity="0..1" />
           <End Type="DBModel.Projet" Role="Projet" Multiplicity="*" />
           <ReferentialConstraint>
@@ -945,15 +933,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Module_Maison_2_0">
-          <End Type="DBModel.Couleur" Role="Couleur" Multiplicity="1" />
-          <End Type="DBModel.Module_Maison" Role="Module_Maison" Multiplicity="*" />
+        <Association Name="FK_Projet_2_0">
+          <End Type="DBModel.Maison" Role="Maison" Multiplicity="0..1" />
+          <End Type="DBModel.Projet" Role="Projet" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Couleur">
-              <PropertyRef Name="idCouleur" />
+            <Principal Role="Maison">
+              <PropertyRef Name="idMaison" />
             </Principal>
-            <Dependent Role="Module_Maison">
-              <PropertyRef Name="idCouleur" />
+            <Dependent Role="Projet">
+              <PropertyRef Name="idMaison" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projet_EtatCommande_0_01">
+          <End Type="DBModel.Projet" Role="Projet" Multiplicity="1" />
+          <End Type="DBModel.Projet_EtatCommande" Role="Projet_EtatCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projet">
+              <PropertyRef Name="idProjet" />
+            </Principal>
+            <Dependent Role="Projet_EtatCommande">
+              <PropertyRef Name="idProjet" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -988,16 +988,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Couleur">
-            <EntityTypeMapping TypeName="DBModel.Couleur">
-              <MappingFragment StoreEntitySet="Couleur">
-                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
-                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
-                <ScalarProperty Name="nom" ColumnName="nom" />
-                <ScalarProperty Name="surCout" ColumnName="surCout" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Empreinte">
             <EntityTypeMapping TypeName="DBModel.Empreinte">
               <MappingFragment StoreEntitySet="Empreinte">
@@ -1023,19 +1013,6 @@
                 <ScalarProperty Name="idFavori" ColumnName="idFavori" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
                 <ScalarProperty Name="tailleSlot" ColumnName="tailleSlot" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Gamme">
-            <EntityTypeMapping TypeName="DBModel.Gamme">
-              <MappingFragment StoreEntitySet="Gamme">
-                <ScalarProperty Name="isolation" ColumnName="isolation" />
-                <ScalarProperty Name="couverture" ColumnName="couverture" />
-                <ScalarProperty Name="huisserie" ColumnName="huisserie" />
-                <ScalarProperty Name="finition" ColumnName="finition" />
-                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
-                <ScalarProperty Name="idGamme" ColumnName="idGamme" />
-                <ScalarProperty Name="nom" ColumnName="nom" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1081,32 +1058,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Projet">
-            <EntityTypeMapping TypeName="DBModel.Projet">
-              <MappingFragment StoreEntitySet="Projet">
-                <ScalarProperty Name="DernierEtatCommande" ColumnName="DernierEtatCommande" />
-                <ScalarProperty Name="idCommercial" ColumnName="idCommercial" />
-                <ScalarProperty Name="idProjet" ColumnName="idProjet" />
-                <ScalarProperty Name="devisSynchro" ColumnName="devisSynchro" />
-                <ScalarProperty Name="nom" ColumnName="nom" />
-                <ScalarProperty Name="prixFabrication" ColumnName="prixFabrication" />
-                <ScalarProperty Name="prixComposant" ColumnName="prixComposant" />
-                <ScalarProperty Name="prixInstallation" ColumnName="prixInstallation" />
-                <ScalarProperty Name="prixFinal" ColumnName="prixFinal" />
-                <ScalarProperty Name="reductionMarge" ColumnName="reductionMarge" />
-                <ScalarProperty Name="numDevis" ColumnName="numDevis" />
-                <ScalarProperty Name="numFacture" ColumnName="numFacture" />
-                <ScalarProperty Name="numOF" ColumnName="numOF" />
-                <ScalarProperty Name="numOM" ColumnName="numOM" />
-                <ScalarProperty Name="kitMonte" ColumnName="kitMonte" />
-                <ScalarProperty Name="idMaison" ColumnName="idMaison" />
-                <ScalarProperty Name="idClient" ColumnName="idClient" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Projet_EtatCommande">
             <EntityTypeMapping TypeName="DBModel.Projet_EtatCommande">
               <MappingFragment StoreEntitySet="Projet_EtatCommande">
+                <ScalarProperty Name="dates" ColumnName="dates" />
                 <ScalarProperty Name="prix" ColumnName="prix" />
                 <ScalarProperty Name="paiementValide" ColumnName="paiementValide" />
                 <ScalarProperty Name="idProjet" ColumnName="idProjet" />
@@ -1142,14 +1097,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Gamme">
+            <EntityTypeMapping TypeName="DBModel.Gamme">
+              <MappingFragment StoreEntitySet="Gamme">
+                <ScalarProperty Name="isolation" ColumnName="isolation" />
+                <ScalarProperty Name="couverture" ColumnName="couverture" />
+                <ScalarProperty Name="huisserie" ColumnName="huisserie" />
+                <ScalarProperty Name="finition" ColumnName="finition" />
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="idGamme" ColumnName="idGamme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Couleur">
+            <EntityTypeMapping TypeName="DBModel.Couleur">
+              <MappingFragment StoreEntitySet="Couleur">
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+                <ScalarProperty Name="surCout" ColumnName="surCout" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Module_Maison">
             <EntityTypeMapping TypeName="DBModel.Module_Maison">
               <MappingFragment StoreEntitySet="Module_Maison">
                 <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
-                <ScalarProperty Name="idModule_maison" ColumnName="idModule_maison" />
                 <ScalarProperty Name="idMaison" ColumnName="idMaison" />
                 <ScalarProperty Name="idModule" ColumnName="idModule" />
-                <ScalarProperty Name="historiquePrixFinition" ColumnName="historiquePrixFinition" />
                 <ScalarProperty Name="historiquePrixCouleur" ColumnName="historiquePrixCouleur" />
                 <ScalarProperty Name="historiquePrixModule" ColumnName="historiquePrixModule" />
                 <ScalarProperty Name="distanceSol" ColumnName="distanceSol" />
@@ -1157,6 +1133,30 @@
                 <ScalarProperty Name="posXFin" ColumnName="posXFin" />
                 <ScalarProperty Name="posYDebut" ColumnName="posYDebut" />
                 <ScalarProperty Name="posXDebut" ColumnName="posXDebut" />
+                <ScalarProperty Name="idModule_maison" ColumnName="idModule_maison" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projet">
+            <EntityTypeMapping TypeName="DBModel.Projet">
+              <MappingFragment StoreEntitySet="Projet">
+                <ScalarProperty Name="DernierEtatCommande" ColumnName="DernierEtatCommande" />
+                <ScalarProperty Name="idCommercial" ColumnName="idCommercial" />
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="idMaison" ColumnName="idMaison" />
+                <ScalarProperty Name="kitMonte" ColumnName="kitMonte" />
+                <ScalarProperty Name="numOM" ColumnName="numOM" />
+                <ScalarProperty Name="numOF" ColumnName="numOF" />
+                <ScalarProperty Name="numFacture" ColumnName="numFacture" />
+                <ScalarProperty Name="numDevis" ColumnName="numDevis" />
+                <ScalarProperty Name="reductionMarge" ColumnName="reductionMarge" />
+                <ScalarProperty Name="prixFinal" ColumnName="prixFinal" />
+                <ScalarProperty Name="prixInstallation" ColumnName="prixInstallation" />
+                <ScalarProperty Name="prixComposant" ColumnName="prixComposant" />
+                <ScalarProperty Name="prixFabrication" ColumnName="prixFabrication" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="devisSynchro" ColumnName="devisSynchro" />
+                <ScalarProperty Name="idProjet" ColumnName="idProjet" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

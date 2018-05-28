@@ -4,40 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2c8264bc7b8642168328855e65dc5da6" Name="Diagram1" ZoomLevel="83">
-        <EntityTypeShape EntityType="DBModel.Client" Width="1.5" PointX="16.625" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Commercial" Width="1.5" PointX="11.75" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Couleur" Width="1.5" PointX="6.625" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Empreinte" Width="1.5" PointX="14.125" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.EtatCommande" Width="1.5" PointX="18.75" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Favori" Width="1.5" PointX="6.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Gamme" Width="1.5" PointX="4.25" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Maison" Width="1.5" PointX="11.5" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Maison_TypeDalle" Width="1.5" PointX="11.5" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Module" Width="1.5" PointX="6.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Module_Favori" Width="1.5" PointX="6.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Projet" Width="1.5" PointX="14.125" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Projet_EtatCommande" Width="1.5" PointX="16.625" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.TypeDalle" Width="1.5" PointX="11.5" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.TypeModule" Width="1.5" PointX="4.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.ZoneMorte" Width="1.5" PointX="14.125" PointY="3.25" IsExpanded="true" />
-        <AssociationConnector Association="DBModel.FK_Projet_0_0" ManuallyRouted="false" />
+      <Diagram DiagramId="2c8264bc7b8642168328855e65dc5da6" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="DBModel.Client" Width="1.5" PointX="16.625" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Commercial" Width="1.5" PointX="16.625" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Empreinte" Width="1.5" PointX="12.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.EtatCommande" Width="1.5" PointX="19.125" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Favori" Width="1.5" PointX="2.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Maison" Width="1.5" PointX="11.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Maison_TypeDalle" Width="1.5" PointX="10.625" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Module" Width="1.5" PointX="6.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Module_Favori" Width="1.5" PointX="4.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Projet_EtatCommande" Width="1.5" PointX="16.625" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.TypeDalle" Width="1.5" PointX="10.625" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.TypeModule" Width="1.5" PointX="4.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.ZoneMorte" Width="1.5" PointX="12.5" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="DBModel.FK_Empreinte_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Maison_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Projet_EtatCommande_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Module_Favori_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK_Module_2_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Maison_TypeDalle_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK_Projet_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Maison_TypeDalle_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Module_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="DBModel.FK_Module_Favori_1_0" ManuallyRouted="false" ></AssociationConnector>
-        <AssociationConnector Association="DBModel.FK_Projet_EtatCommande_1_0" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DBModel.Module_Maison" Width="1.5" PointX="9.125" PointY="7.875" />
-        <AssociationConnector Association="DBModel.FK_Module_Maison_0_0" />
+        <EntityTypeShape EntityType="DBModel.Gamme" Width="1.5" PointX="4.5" PointY="8.125" />
+        <AssociationConnector Association="DBModel.FK_Module_0_01" />
+        <EntityTypeShape EntityType="DBModel.Couleur" Width="1.5" PointX="9" PointY="12.625" />
+        <EntityTypeShape EntityType="DBModel.Module_Maison" Width="1.5" PointX="9" PointY="7.875" />
         <AssociationConnector Association="DBModel.FK_Module_Maison_1_0" />
-        <AssociationConnector Association="DBModel.FK_Projet_1_01" />
         <AssociationConnector Association="DBModel.FK_Module_Maison_2_0" />
+        <AssociationConnector Association="DBModel.FK_Module_Maison_0_0" />
+        <EntityTypeShape EntityType="DBModel.Projet" Width="1.5" PointX="14.125" PointY="9.625" />
+        <AssociationConnector Association="DBModel.FK_Projet_0_0" />
+        <AssociationConnector Association="DBModel.FK_Projet_1_0" />
+        <AssociationConnector Association="DBModel.FK_Projet_2_0" />
+        <AssociationConnector Association="DBModel.FK_Projet_EtatCommande_0_01" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

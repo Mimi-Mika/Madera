@@ -25,6 +25,7 @@ namespace Madera.View.Pages.PlanVues
                 if (Grid.GetRow(fe) == y && Grid.GetColumn(fe) == x)
                 {
                     btn = fe;
+                    break;
                 }
             }
             return btn;
@@ -53,10 +54,10 @@ namespace Madera.View.Pages.PlanVues
                 _Master.NewModuleMaison = DB.Module_Maison.Where(i => i.idMaison == _Master.NewMaison.idMaison).ToList();
             }
             InitializeComponent();
-            RemplirLabel();
             RemplirLesListe();
             CreeLaGridVide();
             TailleDesButtons();
+            RemplirLabel();
 
             AfficherLesBoutons();
         }
@@ -84,25 +85,19 @@ namespace Madera.View.Pages.PlanVues
             listTypeModule.SelectedValuePath = "idType";
             listTypeModule.SelectedIndex = 0;
 
-            //Finition, liste avec critère de gamme
-            List<Finition> FinitionList = new List<Finition>();
-            FinitionList = DB.Finition.ToList();
-            listFinition.ItemsSource = FinitionList;
-            listFinition.SelectedValuePath = "idFinition";
-            listFinition.SelectedIndex = 0;
-
-            //Liste des modules ayant la gammme, le type module et la finition selectionnée
-            List<Module> ModuleList = new List<Module>();
-            ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
-            && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
-            listModule.ItemsSource = ModuleList;
-            listFinition.SelectedValuePath = "idModule";
-
             // Couleur liste indépendante
             List<Couleur> CouleurList = new List<Couleur>();
             CouleurList = DB.Couleur.ToList();
             listCouleur.ItemsSource = CouleurList;
             listCouleur.SelectedValuePath = "idCouleur";
+            listCouleur.SelectedIndex = 0;
+
+            //// Module liste indépendante
+            //List<Module> ModuleList = new List<Module>();
+            //ModuleList = DB.Module.ToList();
+            //listModule.ItemsSource = ModuleList;
+            
+            listModule.SelectedIndex = 0;
 
             // Selection radio bouton "Ajouter" par défaut
             rbAjout.IsChecked = true;
@@ -114,27 +109,30 @@ namespace Madera.View.Pages.PlanVues
         private void RemplirLabel()
         {
             DBEntities DB = new DBEntities();
-            lblNom.Content = DB.Client.Where(i => i.idClient == _Master.LockClient.idClient).FirstOrDefault();
+            lblNom.Content = _Master.LockClient.nom.ToString() + " " + _Master.LockClient.prenom.ToString();
             lblNumClient.Content = _Master.LockClient.idClient;
-        }
 
-        ///// <summary>
-        ///// Creation de la Gris avec les boutons
-        ///// </summary>
-        //private void CreateEmptyFloorPlan()
-        //{
-        //    //Done: Modifier le if pour si on arrive de "Devis créé" ou de "Devis Editer" (Test liste module maison == vide ou pas)
-        //    if (_Master.NewModuleMaison == null)
-        //    {
-        //        //Ajoute les boutons pour un devis a créer
-        //        AfficherLesBoutons();
-        //    }
-        //    else
-        //    {
-        //        //Ajouter les boutons pour un devis a éditer
-        //        AjouterLesBoutons();
-        //    }
-        //}
+            if (listGamme.Items.Count != 0 && listGamme.SelectedValue != null)
+            {
+                _Master.LockGamme = DB.Gamme.ToList();
+                lblCouverture.Content = _Master.LockGamme.Where(i => i.idGamme == (long)listGamme.SelectedValue).FirstOrDefault().couverture;
+                lblFinition.Content = _Master.LockGamme.Where(i => i.idGamme == (long)listGamme.SelectedValue).FirstOrDefault().finition;
+                LblHuisserie.Content = _Master.LockGamme.Where(i => i.idGamme == (long)listGamme.SelectedValue).FirstOrDefault().huisserie;
+                lblIsolation.Content = _Master.LockGamme.Where(i => i.idGamme == (long)listGamme.SelectedValue).FirstOrDefault().isolation;
+            }
+            
+
+            if (listModule.Items.Count != 0 && listModule.SelectedValue != null)
+            {
+                lblModule.Content = _Master.LockModule.Where(i => i.idModule == (long)listModule.SelectedValue).FirstOrDefault().nom;
+                lblPrixModule.Content = _Master.LockModule.Where(i => i.idModule == (long)listModule.SelectedValue).FirstOrDefault().prix + "€";
+                if (listCouleur.Items.Count != 0 && listCouleur.SelectedValue != null)
+                {
+                    lblCouleur.Content = _Master.LockCouleur.Where(i => i.idCouleur == (long)listCouleur.SelectedValue).FirstOrDefault().nom;
+                    lblPrixCouleur.Content = _Master.LockCouleur.Where(i => i.idCouleur == (long)listCouleur.SelectedValue).FirstOrDefault().surCout * _Master.LockModule.Where(i => i.idModule == (long)listModule.SelectedValue).FirstOrDefault().prix / 100 + "€";
+                }
+            }
+        }
 
         /// <summary>
         /// Crée la Grid
@@ -172,57 +170,28 @@ namespace Madera.View.Pages.PlanVues
             int col = (int)_Master.LockEmpreinte.longueur * 2 + 1;
             int lig = (int)_Master.LockEmpreinte.largeur * 2 + 1;
 
-            int zoneMorteTailleX = 0;
-            int zoneMorteTailleY = 0;
-            int zoneMorteCoordX = 0;
-            int zoneMorteCoordY = 0;
-
-            int idZoneMorte = 0;
-            long idEmpreinte = _Master.LockEmpreinte.idEmpreinte;
-
             DBEntities DB = new DBEntities();
-            ZoneMorte zoneMorteSelection = new ZoneMorte();
+            Empreinte empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == _Master.LockEmpreinte.idEmpreinte).FirstOrDefault();
+            ZoneMorte zoneMorteSelection = DB.ZoneMorte.Where(i => i.idZoneMorte == (int)empreinteSelection.idZoneMorte).FirstOrDefault();
+            Zone zone = new Zone();
+            zone.ZoneMorteCoordonee(zoneMorteSelection);
 
+            int zoneMorteTailleX = zone.zoneMorteTailleX;
+            int zoneMorteTailleY = zone.zoneMorteTailleY;
+            int zoneMorteCoordX = zone.zoneMorteCoordX;
+            int zoneMorteCoordY = zone.zoneMorteCoordY;
 
-            Empreinte empreinteSelection = new Empreinte();
-            empreinteSelection = DB.Empreinte.Where(i => i.idEmpreinte == idEmpreinte).FirstOrDefault();
-
-            if (empreinteSelection.idZoneMorte != null)
-            {
-                idZoneMorte = (int)empreinteSelection.idZoneMorte;
-            }
-
-            zoneMorteSelection = DB.ZoneMorte.Where(i => i.idZoneMorte == idZoneMorte).FirstOrDefault();
-            if ((int)zoneMorteSelection.coordonneeX != 0)
-            {
-                zoneMorteCoordX = ((int)zoneMorteSelection.coordonneeX * 2 + 1);
-                zoneMorteTailleX = ((int)zoneMorteSelection.longueur * 2 + 1);
-            }
-            else
-            {
-                zoneMorteTailleX = ((int)zoneMorteSelection.longueur * 2 + 1) + 1;
-            }
-            if ((int)zoneMorteSelection.coordonneeY != 0)
-            {
-                zoneMorteCoordY = ((int)zoneMorteSelection.coordonneeY * 2 + 1);
-                zoneMorteTailleY = ((int)zoneMorteSelection.largeur * 2 + 1);
-            }
-            else
-            {
-                zoneMorteTailleY = ((int)zoneMorteSelection.largeur * 2 + 1) + 1;
-            }
-
-
-
+            //Balayer les lignes
             for (int y = 0; y < grid2D.RowDefinitions.Count; y++)
             {
+                //Balayer les colonnes
                 for (int x = 0; x < grid2D.ColumnDefinitions.Count; x++)
                 {
-                    //ne tracer que les murs
+                    //Ne tracer que les murs
                     if ((((y % 2) == 0) && ((x % 2) != 0)) || (((y % 2) != 0) && ((x % 2) == 0)))
                     {
                         Module_Maison ModMaison = new Module_Maison();
-                        //ne pas tracer la zone morte
+                        //Ne pas tracer la zone morte
                         if ((col - zoneMorteCoordX - zoneMorteTailleX + 1 != 0 && x == zoneMorteCoordX + zoneMorteTailleX - 2) ||
                             (lig - zoneMorteCoordY - zoneMorteTailleY + 1 != 0 && y == zoneMorteCoordY + zoneMorteTailleY - 2) ||
                             y < zoneMorteCoordY ||
@@ -263,71 +232,35 @@ namespace Madera.View.Pages.PlanVues
                                      y == zoneMorteCoordY + zoneMorteTailleY - 2 && !(x < zoneMorteCoordX || x > zoneMorteCoordX + zoneMorteTailleX - 2) ||
                                      x == zoneMorteCoordX + zoneMorteTailleX - 2 && !(y < zoneMorteCoordY || y > zoneMorteCoordY + zoneMorteTailleY - 2))
                                 {
-
                                     var brush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative)) };
                                     MyControl1.Background = brush;
-                                    //Ajouter evenement pour mur exterieur
+
+                                    //Ajouter evenement pour click sur mur exterieur
                                     MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
+                                    //Calcule de la position du module
+                                    ModMaisonPos MMP = new ModMaisonPos();
+                                    MMP.position(x, y);
 
-
-                                    Module module = DB.Module.Where(i => i.idModule == 1).FirstOrDefault();
-                                    ModMaison.distanceSol = 0;
-                                    ModMaison.idModule = module.idModule;
                                     ModMaison.idMaison = _Master.NewMaison.idMaison;
+                                    ModMaison.idModule = 1;                             //id module = 1 (mur de base le moins cher)
+                                    ModMaison.distanceSol = 0;                          //Hauteur a 0
+                                    ModMaison.historiquePrixModule = 100;               //Mur exterieur par defaut
+                                    ModMaison.historiquePrixCouleur = 0;                //Pas de surplus
+                                    ModMaison.idCouleur = 1;                            //Couleur par defaut
+                                    ModMaison.posXDebut = MMP.posXDebut ;
+                                    ModMaison.posYDebut = MMP.posYDebut;
+                                    ModMaison.posXFin = MMP.posXFin;
+                                    ModMaison.posYFin = MMP.posYFin;
 
-
-                                    //test si horizotal ou vertical
-                                    if ((x % 2) == 0)
-                                    {
-                                        switch (x)
-                                        {
-                                            case 0:
-                                                ModMaison.posXDebut = x;
-                                                break;
-                                            default:
-                                                ModMaison.posXDebut = (x) / 2;
-                                                break;
-                                        }
-                                        switch (y)
-                                        {
-                                            case 1:
-                                                ModMaison.posYDebut = y - 1;
-                                                break;
-                                            default:
-                                                ModMaison.posYDebut = (y - 1) / 2;
-                                                break;
-                                        }
-                                        ModMaison.posXFin = ModMaison.posXDebut;
-                                        ModMaison.posYFin = ModMaison.posYDebut + 1;
-                                    }
-                                    else
-                                    {
-                                        switch (x)
-                                        {
-                                            case 1:
-                                                ModMaison.posXDebut = x - 1;
-                                                break;
-                                            default:
-                                                ModMaison.posXDebut = (x - 1) / 2;
-                                                break;
-                                        }
-                                        switch (y)
-                                        {
-                                            case 0:
-                                                ModMaison.posYDebut = y;
-                                                break;
-                                            default:
-                                                ModMaison.posYDebut = (y) / 2;
-                                                break;
-                                        }
-                                        ModMaison.posXFin = ModMaison.posXDebut + 1;
-                                        ModMaison.posYFin = ModMaison.posYDebut;
-                                    }
-
+                                    //Done: Lier moduleMaison au bouton
                                     MyControl1.SetValue(FrameworkElement.TagProperty, ModMaison);
-                                    //Done: Enregistrer Mur en base en brouillon
+                                    //Done: Enregistrer Mur en base
                                     DB.Module_Maison.Add(ModMaison);
-                                    DB.SaveChanges();
+
+                                    //Done: Maj prix projet 
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixFabrication = xx.prixFabrication + ModMaison.historiquePrixModule + ModMaison.historiquePrixCouleur);
 
                                     //Done: Enregistrer sur le master
                                     if (_Master.NewModuleMaison == null)
@@ -338,7 +271,7 @@ namespace Madera.View.Pages.PlanVues
                                 }
                                 else
                                 {
-                                    //Ajouter evenement pour mur interieur
+                                    //Done: Ajouter evenement pour mur interieur
                                     MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
                                 }
                             }
@@ -347,7 +280,16 @@ namespace Madera.View.Pages.PlanVues
                     }
                 }
             }
-            if (isNew != true)
+            if (isNew == true)
+            {
+                var Proj = DB.Projet.Where(i => i.idProjet == _Master.NewProjet.idProjet).ToList();
+                Proj.ForEach(xx => xx.prixComposant = xx.prixFabrication * 0.3);
+                Proj.ForEach(xx => xx.prixInstallation = xx.prixFabrication * 0.8);
+                Proj.ForEach(xx => xx.prixFinal = xx.prixFabrication + xx.prixInstallation + xx.prixComposant);
+
+                DB.SaveChanges();
+            }
+            else
             {
                 //Done:Placer les btn de la base
                 PlacerLesObjectsSurLesBoutons();
@@ -355,6 +297,9 @@ namespace Madera.View.Pages.PlanVues
 
         }
 
+        /// <summary>
+        /// Lier les objects ModuleMaison au bouton
+        /// </summary>
         private void PlacerLesObjectsSurLesBoutons()
         {
             //Done:Placer les btn de la base
@@ -427,145 +372,9 @@ namespace Madera.View.Pages.PlanVues
                     grid2D.RowDefinitions[i].Height = new GridLength(25);
             }
         }
-
-        /// <summary>
-        /// Ajouter les Murs existant
-        /// </summary>
-        //private void AjouterLesBoutons()
-        //{
-        //    //: Ajouter les boutons pour un devis a éditer
-        //    foreach (Module_Maison moduleMaison in _Master.NewModuleMaison)
-        //    {
-        //        Button MyControl1 = new Button() { Content = "" };
-        //        int x = 0;
-        //        int y = 0;
-
-
-        //        //si verticale
-
-
-        //        MyControl1.Name = "ExtButton" + ("x" + (x + 1).ToString() + "y" + (y + 1).ToString());
-        //        var brush = new ImageBrush();
-        //        //: Récuperer les X et Y créer les boutons et associer l'object 
-
-        //        //Si mur exterieur
-        //        if (moduleMaison.Module.TypeModule.nomType.Contains("Exterieur"))
-        //        {
-        //            //Done: calculer si hori ou vertic
-        //            if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
-        //            {
-        //                y = (int)moduleMaison.posYDebut * 2 + 1;
-        //                if (moduleMaison.posXDebut == 0)
-        //                {
-        //                    x = 0;
-        //                }
-        //                else
-        //                {
-        //                    x = (int)moduleMaison.posXDebut * 2 + 1;
-        //                }
-        //            }
-        //            //si hori
-        //            else
-        //            {
-        //                x = (int)moduleMaison.posXDebut * 2 + 1;
-        //                if ((int)moduleMaison.posYDebut == 0)
-        //                {
-        //                    y = 0;
-        //                }
-        //                else
-        //                {
-        //                    y = (int)moduleMaison.posYDebut * 2 + 1;
-        //                }
-        //            }
-
-        //            //Ajouter evenement pour mur exterieur
-        //            MyControl1.Click += new RoutedEventHandler(BtnClickMurExt);
-
-        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
-        //            {
-        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
-        //                //: Modifier object pour avoir coordonnées type etc...
-        //                //ModMaison.idModule = 1;
-        //            }
-
-        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
-        //            {
-        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
-        //                //: Modifier object pour avoir coordonnées type etc...
-        //            }
-
-        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
-        //            {
-        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
-        //                //: Modifier object pour avoir coordonnées type etc...
-        //            }
-
-
-        //        }
-        //        else
-        //        {
-        //            //Ajouter evenement pour mur exterieur
-        //            MyControl1.Click += new RoutedEventHandler(BtnClickMurInt);
-
-        //            //Done: calculer si hori ou vertic
-        //            if (moduleMaison.posXDebut - moduleMaison.posXFin == 0)
-        //            {
-        //                y = (int)moduleMaison.posYDebut * 2;
-        //                if (moduleMaison.posXDebut == 0)
-        //                {
-        //                    x = 0;
-        //                }
-        //                else
-        //                {
-        //                    x = (int)moduleMaison.posXDebut * 2 + 1;
-        //                }
-        //            }
-        //            //si hori
-        //            else
-        //            {
-        //                x = (int)moduleMaison.posXDebut * 2;
-        //                if ((int)moduleMaison.posYDebut == 0)
-        //                {
-        //                    y = 0;
-        //                }
-        //                else
-        //                {
-        //                    y = (int)moduleMaison.posYDebut * 2 + 1;
-        //                }
-        //            }
-
-        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Porte"))
-        //            {
-        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/PorteHorizontal.png", UriKind.Relative));
-        //                //: Modifier object pour avoir coordonnées type etc...
-        //                //ModMaison.idModule = 1;
-        //            }
-
-        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Fenetre"))
-        //            {
-        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/FenetreHorizontal.png", UriKind.Relative));
-        //                //: Modifier object pour avoir coordonnées type etc...
-        //            }
-
-        //            if (moduleMaison.Module.TypeModule.nomType.Contains("Mur"))
-        //            {
-        //                brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative));
-        //                //: Modifier object pour avoir coordonnées type etc...
-        //            }
-
-        //        }
-
-        //        Grid.SetColumn(MyControl1, x);
-        //        Grid.SetRow(MyControl1, y);
-
-        //        MyControl1.Background = brush;
-        //        MyControl1.SetValue(FrameworkElement.TagProperty, moduleMaison);
-        //        grid2D.Children.Add(MyControl1);
-        //    }
-        //}
         #endregion
 
-        #region click
+        #region SelectionChange
         private void ListTypeModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DBEntities DB = new DBEntities();
@@ -575,6 +384,9 @@ namespace Madera.View.Pages.PlanVues
             ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
              && i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
             listModule.ItemsSource = ModuleList;
+            listModule.SelectedValuePath = "idModule";
+
+            RemplirLabel();
         }
 
         private void ListGamme_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -586,8 +398,51 @@ namespace Madera.View.Pages.PlanVues
                 ModuleList = DB.Module.Where(i => i.TypeModule.idType == (long)listTypeModule.SelectedValue
                  && (long)i.Gamme.idGamme == (long)listGamme.SelectedValue).ToList();
                 listModule.ItemsSource = ModuleList;
+                listModule.SelectedValuePath = "idModule";
             }
+
+            RemplirLabel();
         }
+
+        private void listModule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RemplirLabel();
+        }
+
+        private void listCouleur_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RemplirLabel();
+        }
+
+        #endregion
+
+        #region RBchange
+        private void rbSelectionner_Click(object sender, RoutedEventArgs e)
+        {
+            listCouleur.IsEnabled = false;
+            listGamme.IsEnabled = false;
+            listModule.IsEnabled = false;
+            listTypeModule.IsEnabled = false;
+        }
+
+        private void rbVider_Click(object sender, RoutedEventArgs e)
+        {
+            listCouleur.IsEnabled = false;
+            listGamme.IsEnabled = false;
+            listModule.IsEnabled = false;
+            listTypeModule.IsEnabled = false;
+        }
+
+        private void rbAjout_Click(object sender, RoutedEventArgs e)
+        {
+            listCouleur.IsEnabled = true;
+            listGamme.IsEnabled = true;
+            listModule.IsEnabled = true;
+            listTypeModule.IsEnabled = true;
+        }
+        #endregion
+
+        #region Click
 
         /// <summary>
         /// appuis sur un mur exterieur
@@ -596,75 +451,124 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void BtnClickMurExt(object sender, RoutedEventArgs e)
         {
-            if (listModule.SelectedItem != null)
+            if (rbSelectionner.IsChecked == true)
             {
-                //Done: Récupérer l'object dans le boutton et le modifier
-                DBEntities DB = new DBEntities();
-                Button btn = ((Button)sender);
-                //Grid grid = (Grid)btn.Parent;
-                int row = Grid.GetRow(btn);
-                ImageBrush brush = new ImageBrush();
-                int col = Grid.GetColumn(btn);
-                Module_Maison ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
-
-                //MessageBox.Show(((Button)sender).Background.GetType().ToString());
-
-                if (rbAjout.IsChecked == true)
-                {
-                    //Done: Modifier le btn existant
-                    string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
-                    if (test.Contains("Exterieur"))
-                    {
-                        Function2D F2D = new Function2D();
-                        brush = F2D.ChoisirLeBrush(test);
-                        ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
-                        ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Bug impossible !!!!");
-                    }
-                }
-                else
-                {
-                    //Done: Reset le button
-                    brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
-
-                    //Done: Changer le id module en murExterieur basique
-                    ModMaison.distanceSol = 0;
-                    ModMaison.idModule = 1; //Module mur Ext classic
-                }
-
-                ((Button)sender).Background = brush;
-                //Done: Enregistrer les modif modules
-                //Module
-                (from x in DB.Module_Maison
-                 where x.idModule_maison == ModMaison.idModule_maison
-                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
-
-                //Hauteur
-                (from x in DB.Module_Maison
-                 where x.idModule_maison == ModMaison.idModule_maison
-                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
-
-                //TODO: Voir table des couleurs finition....
-
-                btn.SetValue(FrameworkElement.TagProperty, ModMaison);
-
-                DB.SaveChanges();
-
-                //TODO: Modifier dans le master
-                (from x in _Master.NewModuleMaison
-                 where x.idModule_maison == ModMaison.idModule_maison
-                 select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
-                //Hauteur
-                (from x in _Master.NewModuleMaison
-                 where x.idModule_maison == ModMaison.idModule_maison
-                 select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                info((Button)sender);
             }
             else
             {
-                MessageBox.Show("Choisir un module");
+                if (listModule.SelectedItem != null && listCouleur.SelectedItem != null)
+                {
+                    //Done: Récupérer l'object dans le boutton et le modifier
+                    DBEntities DB = new DBEntities();
+                    Button btn = ((Button)sender);
+                    //Grid grid = (Grid)btn.Parent;
+                    int row = Grid.GetRow(btn);
+                    double? lastPrixModule = 0;
+                    double? lastPrixCouleur = 0;
+                    ImageBrush brush = new ImageBrush();
+                    int col = Grid.GetColumn(btn);
+                    Module_Maison ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+                    lastPrixModule = ModMaison.historiquePrixModule;
+                    lastPrixCouleur = ModMaison.historiquePrixCouleur;
+                    //MessageBox.Show(((Button)sender).Background.GetType().ToString());
+
+                    if (rbAjout.IsChecked == true)
+                    {
+                        //Done: Modifier le btn existant
+                        string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
+                        if (test.Contains("Exterieur"))
+                        {
+                            Function2D F2D = new Function2D();
+                            brush = F2D.ChoisirLeBrush(test);
+                            ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
+                            ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
+                            ModMaison.historiquePrixModule = _Master.LockModule.Where(i => i.idModule == ModMaison.idModule).FirstOrDefault().prix;
+                            ModMaison.idCouleur = ((Couleur)listCouleur.SelectedItem).idCouleur;
+                            ModMaison.historiquePrixCouleur = ModMaison.historiquePrixModule * (_Master.LockCouleur.Where(i => i.idCouleur == ModMaison.idCouleur).FirstOrDefault().surCout / 100);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Bug impossible !!!!");
+                        }
+                    }
+                    else
+                    {
+                        //Done: Reset le button
+                        brush.ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurExt.jpg", UriKind.Relative));
+                        //Done: Changer le id module en murExterieur basique
+                        ModMaison.distanceSol = 0;
+                        ModMaison.idModule = 1; //Module mur Ext classic
+                        ModMaison.historiquePrixModule = 100;
+                        ModMaison.idCouleur = 1; //Couleur classic
+                        ModMaison.historiquePrixCouleur = 0;
+
+                    }
+
+                    ((Button)sender).Background = brush;
+                    //Done: Enregistrer les modif modules
+                    //Module
+                    (from x in DB.Module_Maison
+                     where x.idModule_maison == ModMaison.idModule_maison
+                     select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                    //PrixModule
+                    (from x in DB.Module_Maison
+                     where x.idModule_maison == ModMaison.idModule_maison
+                     select x).ToList().ForEach(xx => xx.historiquePrixModule = ModMaison.historiquePrixModule);
+                    //Couleur
+                    (from x in DB.Module_Maison
+                     where x.idModule_maison == ModMaison.idModule_maison
+                     select x).ToList().ForEach(xx => xx.idCouleur = ModMaison.idCouleur);
+                    //PrixCouleur
+                    (from x in DB.Module_Maison
+                     where x.idModule_maison == ModMaison.idModule_maison
+                     select x).ToList().ForEach(xx => xx.historiquePrixCouleur = ModMaison.historiquePrixCouleur);
+                    //Hauteur
+                    (from x in DB.Module_Maison
+                     where x.idModule_maison == ModMaison.idModule_maison
+                     select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+
+
+                    //Maj prix Projet
+                    (from proj in DB.Projet
+                     where proj.idProjet == _Master.NewProjet.idProjet
+                     select proj).ToList().ForEach(xx => xx.prixFabrication = xx.prixFabrication - lastPrixModule - lastPrixCouleur + ModMaison.historiquePrixModule + ModMaison.historiquePrixCouleur);
+
+                    (from proj in DB.Projet
+                     where proj.idProjet == _Master.NewProjet.idProjet
+                     select proj).ToList().ForEach(xx => xx.prixComposant = xx.prixFabrication * 0.3);
+
+                    (from proj in DB.Projet
+                     where proj.idProjet == _Master.NewProjet.idProjet
+                     select proj).ToList().ForEach(xx => xx.prixInstallation = xx.prixFabrication * 0.8);
+
+                    (from proj in DB.Projet
+                     where proj.idProjet == _Master.NewProjet.idProjet
+                     select proj).ToList().ForEach(xx => xx.prixFinal = xx.prixFabrication + xx.prixInstallation + xx.prixComposant);
+
+
+                    btn.SetValue(FrameworkElement.TagProperty, ModMaison);
+
+                    DB.SaveChanges();
+
+                    //Done: Remplacer l'object d'un coup
+                    //Done: Modifier dans le master
+
+                    var Mast = _Master.NewModuleMaison.Where(i => i.idModule_maison == ModMaison.idModule_maison).ToList();
+                    Mast.ForEach(xx => xx.idModule = ModMaison.idModule);
+                    Mast.ForEach(xx => xx.historiquePrixModule = ModMaison.historiquePrixModule);
+                    Mast.ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                    Mast.ForEach(xx => xx.idCouleur = ModMaison.idCouleur); 
+                    Mast.ForEach(xx => xx.historiquePrixCouleur = ModMaison.historiquePrixCouleur);
+                    
+                    //Update projet
+                    _Master.NewProjet = DB.Projet.Where(i => i.idProjet == _Master.NewProjet.idProjet).FirstOrDefault();
+
+                }
+                else
+                {
+                    MessageBox.Show("Choisir un module et une couleur");
+                }
             }
 
         }
@@ -676,205 +580,360 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void BtnClickMurInt(object sender, RoutedEventArgs e)
         {
-            if (listModule.SelectedItem != null || rbVider.IsChecked == true)
+            if (rbSelectionner.IsChecked == true)
             {
-                //TODO: Récupérer l'object dans le boutton et le modifier
-                DBEntities DB = new DBEntities();
-                Button btn = ((Button)sender);
-                //Grid grid = (Grid)btn.Parent;
-                int row = Grid.GetRow(btn);
-                ImageBrush brush = new ImageBrush();
-                int col = Grid.GetColumn(btn);
-                Module_Maison ModMaison = new Module_Maison();
-
-                //Done: Changer algo ==> verif si bouton rb checked en 1er
-                if (rbAjout.IsChecked == true)
+                info((Button)sender);
+            }
+            else
+            {
+                if (listModule.SelectedItem != null || rbVider.IsChecked == true)
                 {
-                    ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
-                    if (ModMaison == null)
+                    //Done: Récupérer l'object dans le boutton et le modifier
+                    DBEntities DB = new DBEntities();
+                    Button btn = ((Button)sender);
+                    //Grid grid = (Grid)btn.Parent;
+                    int row = Grid.GetRow(btn);
+                    ImageBrush brush = new ImageBrush();
+                    int col = Grid.GetColumn(btn);
+                    Module_Maison ModMaison = new Module_Maison();
+                    double? lastPrixModule = 0;
+                    double? lastPrixCouleur = 0;
+
+                    //Done: Changer algo ==> verif si bouton rb checked en 1er
+                    if (rbAjout.IsChecked == true)
                     {
-                        ModMaison = new Module_Maison();
-                        ModMaison.idMaison = _Master.NewMaison.idMaison;
-                        if ((col % 2) == 0)
+                        ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+                        if (ModMaison == null)
                         {
-                            switch (col)
-                            {
-                                case 0:
-                                    ModMaison.posXDebut = col;
-                                    break;
-                                default:
-                                    ModMaison.posXDebut = (col) / 2;
-                                    break;
-                            }
-                            switch (row)
-                            {
-                                case 1:
-                                    ModMaison.posYDebut = row - 1;
-                                    break;
-                                default:
-                                    ModMaison.posYDebut = (row - 1) / 2;
-                                    break;
-                            }
-                            ModMaison.posXFin = ModMaison.posXDebut;
-                            ModMaison.posYFin = ModMaison.posYDebut + 1;
+                            ModMaisonPos MMP = new ModMaisonPos();
+                            MMP.position(col, row);
+
+                            ModMaison = new Module_Maison();
+                            ModMaison.idMaison = _Master.NewMaison.idMaison;
+                            ModMaison.posXDebut = MMP.posXDebut;
+                            ModMaison.posYDebut = MMP.posYDebut;
+                            ModMaison.posXFin = MMP.posXFin;
+                            ModMaison.posYFin = MMP.posYFin;
+
+
+                            //if ((col % 2) == 0)
+                            //{
+                            //    switch (col)
+                            //    {
+                            //        case 0:
+                            //            ModMaison.posXDebut = col;
+                            //            break;
+                            //        default:
+                            //            ModMaison.posXDebut = (col) / 2;
+                            //            break;
+                            //    }
+                            //    switch (row)
+                            //    {
+                            //        case 1:
+                            //            ModMaison.posYDebut = row - 1;
+                            //            break;
+                            //        default:
+                            //            ModMaison.posYDebut = (row - 1) / 2;
+                            //            break;
+                            //    }
+                            //    ModMaison.posXFin = ModMaison.posXDebut;
+                            //    ModMaison.posYFin = ModMaison.posYDebut + 1;
+                            //}
+                            //else
+                            //{
+                            //    switch (col)
+                            //    {
+                            //        case 1:
+                            //            ModMaison.posXDebut = col - 1;
+                            //            break;
+                            //        default:
+                            //            ModMaison.posXDebut = (col - 1) / 2;
+                            //            break;
+                            //    }
+                            //    switch (row)
+                            //    {
+                            //        case 0:
+                            //            ModMaison.posYDebut = row;
+                            //            break;
+                            //        default:
+                            //            ModMaison.posYDebut = (row) / 2;
+                            //            break;
+                            //    }
+                            //    ModMaison.posXFin = ModMaison.posXDebut + 1;
+                            //    ModMaison.posYFin = ModMaison.posYDebut;
+                            //}
+
+                            Grid.SetColumn(btn, col);
+                            Grid.SetRow(btn, row);
+
+                            btn.SetValue(FrameworkElement.TagProperty, ModMaison);
                         }
                         else
                         {
-                            switch (col)
-                            {
-                                case 1:
-                                    ModMaison.posXDebut = col - 1;
-                                    break;
-                                default:
-                                    ModMaison.posXDebut = (col - 1) / 2;
-                                    break;
-                            }
-                            switch (row)
-                            {
-                                case 0:
-                                    ModMaison.posYDebut = row;
-                                    break;
-                                default:
-                                    ModMaison.posYDebut = (row) / 2;
-                                    break;
-                            }
-                            ModMaison.posXFin = ModMaison.posXDebut + 1;
-                            ModMaison.posYFin = ModMaison.posYDebut;
+                            lastPrixModule = ModMaison.historiquePrixModule;
+                            lastPrixCouleur = ModMaison.historiquePrixCouleur;
                         }
 
-                        Grid.SetColumn(btn, col);
-                        Grid.SetRow(btn, row);
-
-                        btn.SetValue(FrameworkElement.TagProperty, ModMaison);
-                    }
-
-                    //Test si vertical ou horizontal
-                    if (row % 2 == 0)
-                    {
-                        //Bouton en ligne
-                        if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 0 && Grid.GetColumn(i) == col + 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 0 && Grid.GetColumn(i) == col - 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                        //Test si vertical ou horizontal
+                        if (row % 2 == 0)
                         {
-                            string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
-                            if (test.Contains("Interieur"))
+                            //Bouton en ligne
+                            if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 0 && Grid.GetColumn(i) == col + 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 0 && Grid.GetColumn(i) == col - 2)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
                             {
-                                Function2D F2D = new Function2D();
-                                brush = F2D.ChoisirLeBrush(test);
-                                ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
-                                ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
-                                //Done: Enregistrer les modif modules
-                                //Création
-                                if (ModMaison.idModule_maison == 0)
+                                string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
+                                if (test.Contains("Interieur"))
                                 {
-                                    DB.Module_Maison.Add(ModMaison);
+                                    Function2D F2D = new Function2D();
+                                    brush = F2D.ChoisirLeBrush(test);
+                                    ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
+                                    ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
+                                    ModMaison.historiquePrixModule = _Master.LockModule.Where(i => i.idModule == ModMaison.idModule).FirstOrDefault().prix;
+                                    ModMaison.idCouleur = ((Couleur)listCouleur.SelectedItem).idCouleur;
+                                    ModMaison.historiquePrixCouleur = ModMaison.historiquePrixModule * (_Master.LockCouleur.Where(i => i.idCouleur == ModMaison.idCouleur).FirstOrDefault().surCout / 100);
+
+                                    //Done: Enregistrer les modif modules
+                                    //Création
+                                    if (ModMaison.idModule_maison == 0)
+                                    {
+                                        DB.Module_Maison.Add(ModMaison);
+                                    }
+                                    //MAJ
+                                    else
+                                    {
+                                        //Done: Enregistrer les modif modules
+                                        //Module
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                                        //PrixModule
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixModule = ModMaison.historiquePrixModule);
+                                        //Couleur
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idCouleur = ModMaison.idCouleur);
+                                        //PrixCouleur
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixCouleur = ModMaison.historiquePrixCouleur);
+                                        //Hauteur
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+
+                                        //Done: Modifier dans le master
+                                        //Module
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                                        //PrixModule
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixModule = ModMaison.historiquePrixModule);
+                                        //Hauteur
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                                        //Couleur
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idCouleur = ModMaison.idCouleur);
+                                        //PrixCouleur
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixCouleur = ModMaison.historiquePrixCouleur);
+                                    }
+
+                                    //Maj prix Projet
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixFabrication = xx.prixFabrication - lastPrixModule - lastPrixCouleur + ModMaison.historiquePrixModule + ModMaison.historiquePrixCouleur);
+
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixComposant = xx.prixFabrication * 0.3);
+
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixInstallation = xx.prixFabrication * 0.8);
+
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixFinal = xx.prixFabrication + xx.prixInstallation + xx.prixComposant);
+
+                                    DB.SaveChanges();
+                                    btn.Background = brush;
                                 }
-                                //MAJ
                                 else
                                 {
-                                    //Module
-                                    (from x in DB.Module_Maison
-                                     where x.idModule_maison == ModMaison.idModule_maison
-                                     select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
-
-                                    //hauteur
-                                    (from x in DB.Module_Maison
-                                     where x.idModule_maison == ModMaison.idModule_maison
-                                     select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                                    MessageBox.Show("Choisir un module pour mur interieur !!!!");
                                 }
-                                DB.SaveChanges();
-                                btn.Background = brush;
                             }
                             else
                             {
-                                MessageBox.Show("Choisir un module pour mur interieur !!!!");
+                                MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //Bouton en colonne
+                            if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
+                                ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 2 && Grid.GetColumn(i) == col - 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
+                            {
+                                string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
+                                if (test.Contains("Interieur"))
+                                {
+                                    Function2D F2D = new Function2D();
+                                    brush = F2D.ChoisirLeBrush(test);
+                                    ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
+                                    ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
+                                    ModMaison.historiquePrixModule = _Master.LockModule.Where(i => i.idModule == ModMaison.idModule).FirstOrDefault().prix;
+                                    ModMaison.idCouleur = ((Couleur)listCouleur.SelectedItem).idCouleur;
+                                    ModMaison.historiquePrixCouleur = ModMaison.historiquePrixModule * (_Master.LockCouleur.Where(i => i.idCouleur == ModMaison.idCouleur).FirstOrDefault().surCout / 100);
+                                    //Done: Enregistrer les modif modules
+                                    //Création
+                                    if (ModMaison.idModule_maison == 0)
+                                    {
+                                        DB.Module_Maison.Add(ModMaison);
+                                    }
+                                    //MAJ
+                                    else
+                                    {
+                                        //Done: Enregistrer les modif modules
+                                        //Module
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                                        //PrixModule
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixModule = ModMaison.historiquePrixModule);
+                                        //Couleur
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idCouleur = ModMaison.idCouleur);
+                                        //PrixCouleur
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixCouleur = ModMaison.historiquePrixCouleur);
+                                        //Hauteur
+                                        (from x in DB.Module_Maison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+
+                                        //Done: Modifier dans le master
+                                        //Module
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
+                                        //PrixModule
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixModule = ModMaison.historiquePrixModule);
+                                        //Hauteur
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
+                                        //Couleur
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.idCouleur = ModMaison.idCouleur);
+                                        //PrixCouleur
+                                        (from x in _Master.NewModuleMaison
+                                         where x.idModule_maison == ModMaison.idModule_maison
+                                         select x).ToList().ForEach(xx => xx.historiquePrixCouleur = ModMaison.historiquePrixCouleur);
+                                    }
+
+                                    //Maj prix Projet
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixFabrication = xx.prixFabrication - lastPrixModule - lastPrixCouleur + ModMaison.historiquePrixModule + ModMaison.historiquePrixCouleur);
+
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixComposant = xx.prixFabrication * 0.3);
+
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixInstallation = xx.prixFabrication * 0.8);
+
+                                    (from proj in DB.Projet
+                                     where proj.idProjet == _Master.NewProjet.idProjet
+                                     select proj).ToList().ForEach(xx => xx.prixFinal = xx.prixFabrication + xx.prixInstallation + xx.prixComposant);
+
+                                    DB.SaveChanges();
+
+                                    //MAJ visuel
+                                    btn.Background = brush;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Choisir un module pour mur interieur !!!!");
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
+
                     }
                     else
                     {
-                        //Bouton en colonne
-                        if (((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col - 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 1 && Grid.GetColumn(i) == col + 1)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row + 2 && Grid.GetColumn(i) == col + 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush" ||
-                            ((Button)grid2D.Children.Cast<UIElement>().First(i => Grid.GetRow(i) == row - 2 && Grid.GetColumn(i) == col - 0)).Background.GetType().ToString() == "System.Windows.Media.ImageBrush")
-                        {
-                            string test = DB.TypeModule.Where(i => i.idType == ((long)listTypeModule.SelectedValue)).FirstOrDefault().nomType;
-                            if (test.Contains("Interieur"))
-                            {
-                                Function2D F2D = new Function2D();
-                                brush = F2D.ChoisirLeBrush(test);
-                                ModMaison.distanceSol = F2D.ChoisirLaHauteur(test, _Master, (Module)listModule.SelectedItem);
-                                ModMaison.idModule = ((Module)listModule.SelectedItem).idModule;
-                                //Done: Enregistrer les modif modules
-                                //Création
-                                if (ModMaison.idModule_maison == 0)
-                                {
-                                    DB.Module_Maison.Add(ModMaison);
-                                }
-                                //MAJ
-                                else
-                                {
-                                    //Module
-                                    (from x in DB.Module_Maison
-                                     where x.idModule_maison == ModMaison.idModule_maison
-                                     select x).ToList().ForEach(xx => xx.idModule = ModMaison.idModule);
-
-                                    //hauteur
-                                    (from x in DB.Module_Maison
-                                     where x.idModule_maison == ModMaison.idModule_maison
-                                     select x).ToList().ForEach(xx => xx.distanceSol = ModMaison.distanceSol);
-                                }
-                                DB.SaveChanges();
-
-                                //MAJ visuel
-                                btn.Background = brush;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Choisir un module pour mur interieur !!!!");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Un item interieur doit etre accrocher a un autre", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-
-                }
-                else
-                {
-                    //Done: Verifier la présence d'un object lier si oui ==> supprimer l'object du Master + BDD
-                    ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
-                    if (ModMaison != null)
-                    {
-                        //Recup l'object
+                        //Done: Verifier la présence d'un object lier si oui ==> supprimer l'object du Master + BDD
                         ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+                        if (ModMaison != null)
+                        {
+                            //Recup l'object
+                            ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+                            lastPrixModule = ModMaison.historiquePrixModule;
+                            lastPrixCouleur = ModMaison.historiquePrixCouleur;
+                            //supprimer objet sur le button
+                            btn.SetValue(FrameworkElement.TagProperty, null);
 
-                        //supprimer objet sur le button
-                        btn.SetValue(FrameworkElement.TagProperty, null);
+                            //supprimer l'objet en base
+                            var delet = DB.Module_Maison.Where(i => i.idModule_maison == ModMaison.idModule_maison).FirstOrDefault();
+                            DB.Module_Maison.Remove(delet);
 
-                        //supprimer l'objet en base
-                        var delet = DB.Module_Maison.Where(i => i.idModule_maison == ModMaison.idModule_maison).FirstOrDefault();
-                        DB.Module_Maison.Remove(delet);
+                            //supprimer en master
+                            _Master.NewModuleMaison.Remove(ModMaison);
 
-                        //supprimer en master
-                        _Master.NewModuleMaison.Remove(ModMaison);
+                            //Maj prix Projet
+                            (from proj in DB.Projet
+                             where proj.idProjet == _Master.NewProjet.idProjet
+                             select proj).ToList().ForEach(xx => xx.prixFabrication = xx.prixFabrication - lastPrixModule - lastPrixCouleur);
 
-                        //supprimer l'image
-                        ((Button)sender).Background = null;
+                            (from proj in DB.Projet
+                             where proj.idProjet == _Master.NewProjet.idProjet
+                             select proj).ToList().ForEach(xx => xx.prixComposant = xx.prixFabrication * 0.3);
+
+                            (from proj in DB.Projet
+                             where proj.idProjet == _Master.NewProjet.idProjet
+                             select proj).ToList().ForEach(xx => xx.prixInstallation = xx.prixFabrication * 0.8);
+
+                            (from proj in DB.Projet
+                             where proj.idProjet == _Master.NewProjet.idProjet
+                             select proj).ToList().ForEach(xx => xx.prixFinal = xx.prixFabrication + xx.prixInstallation + xx.prixComposant);
+
+                            //Maj Master Projet
+                            _Master.NewProjet = DB.Projet.Where(i => i.idProjet == _Master.NewProjet.idProjet).FirstOrDefault();
+
+                            //supprimer l'image
+                            ((Button)sender).Background = null;
+                        }
+
+                        DB.SaveChanges();
                     }
-
-                    DB.SaveChanges();
                 }
             }
         }
@@ -897,26 +956,97 @@ namespace Madera.View.Pages.PlanVues
         /// <param name="e"></param>
         private void BtnRet_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Vider la Classe Master (Garder Client et Commercial)
+            //UseLess: Vider la Classe Master (Garder Client et Commercial)
             Index emp = new Index(_Master);
             ((MetroWindow)this.Parent).Content = emp;
         }
 
+        /// <summary>
+        /// Sauvegarder le brouillon en devis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnSav_Click(object sender, RoutedEventArgs e)
         {
+            //Done: test si déja enregistre ==> MAJ
             //Done: Passer l'état du projet de Brouillon à Devis
             DBEntities db = new DBEntities();
-            Projet_EtatCommande addProjetEtatCommande = new Projet_EtatCommande()
+
+            if (_Master.NewProjet.DernierEtatCommande == 2)
             {
-                idEtatCommande = 2, // Brouillon
-                idProjet = _Master.NewProjet.idProjet,
-                dates = 1254488,
-                prix = 0,
-                paiementValide = 0
-            };
-            db.Projet_EtatCommande.Add(addProjetEtatCommande);
+                //Done: Mettre a jour la date + prix
+                Projet_EtatCommande PEC = _Master.NewProjetEtatCommande.Where(i => i.idProjet == _Master.NewProjet.idProjet && i.idEtatCommande == 2).FirstOrDefault();
+                PEC.prix = _Master.NewProjet.prixFinal;
+                PEC.paiementValide = 0;
+                PEC.dates = DateTime.Now.ToString();
+            }
+                //Done: Mettre a jour Projet.DernierEtatCommande
+            else
+            {
+                Projet_EtatCommande addProjetEtatCommande = new Projet_EtatCommande()
+                {
+                    idEtatCommande = 2, // Devis
+                    idProjet = _Master.NewProjet.idProjet,
+                    prix = _Master.NewProjet.prixFinal,
+                    paiementValide = 0,
+                    dates = DateTime.Now.ToString()
+                };
+                db.Projet_EtatCommande.Add(addProjetEtatCommande);
+                _Master.NewProjet.DernierEtatCommande = 2; //Devis
+                var Proj = db.Projet.Where(i => i.idProjet == _Master.NewProjet.idProjet).ToList();
+                Proj.ForEach(xx => xx.DernierEtatCommande = 2); //Devis
+            }
             db.SaveChanges();
         }
         #endregion
+
+        /// <summary>
+        /// Mise a jour des informations lors d'un click sur un mur et RBselection == true
+        /// </summary>
+        /// <param name="btn"></param>
+        private void info(Button btn) 
+        {
+            Module_Maison ModMaison = new Module_Maison();
+            ModMaison = (Module_Maison)btn.GetValue(FrameworkElement.TagProperty);
+            if (ModMaison != null)
+            {
+                Module Mod = _Master.LockModule.Where(i => i.idModule == ModMaison.idModule).FirstOrDefault();
+
+                lblCouverture.Content = _Master.LockGamme.Where(i => i.idGamme == Mod.idGamme).FirstOrDefault().couverture;
+                lblFinition.Content = _Master.LockGamme.Where(i => i.idGamme == Mod.idGamme).FirstOrDefault().finition;
+                LblHuisserie.Content = _Master.LockGamme.Where(i => i.idGamme == Mod.idGamme).FirstOrDefault().huisserie;
+                lblIsolation.Content = _Master.LockGamme.Where(i => i.idGamme == Mod.idGamme).FirstOrDefault().isolation;
+
+                lblModule.Content = Mod.nom;
+                lblCouleur.Content = _Master.LockCouleur.Where(i => i.idCouleur == ModMaison.idCouleur).FirstOrDefault().nom;
+                lblPrixCouleur.Content = ModMaison.historiquePrixCouleur + "€";
+                lblPrixModule.Content = ModMaison.historiquePrixModule + "€";
+
+                DBEntities DB = new DBEntities();
+
+                //Selectionner le TypeModule
+                listTypeModule.SelectedIndex = (int)DB.Module.Where(i => i.idModule == ModMaison.idModule).FirstOrDefault().idType - 1;
+
+                //Selectionner la Gamme
+                listGamme.SelectedIndex = (int)DB.Module.Where(i => i.idModule == ModMaison.idModule).FirstOrDefault().idGamme - 1;
+
+                //Selectionner la Couleur
+                listCouleur.SelectedIndex = (int)ModMaison.idCouleur - 1;
+
+                //Selectionner le Module
+                int sel = 0;
+
+                for (int i = 0; i < listModule.Items.Count; i++)
+                {
+                    Module test = (Module)listModule.Items[i];
+                    if (test.idModule == ModMaison.idModule)
+                    {
+                        sel = i;
+                        break;
+                    }
+                }
+                listModule.SelectedIndex = sel;
+            }
+        }
     }
 }

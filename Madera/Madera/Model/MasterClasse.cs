@@ -25,8 +25,6 @@ namespace Madera.Model
         public List<EtatCommande> LockEtatCommande { get; set; }
 
         public List<Couleur> LockCouleur { get; set; }
-        public List<Couleur_Module> NewCouleurModule { get; set; }
-        public List<Finition> LockFinition { get; set; }
         public List<Module_Maison> NewModuleMaison { get; set; }
         public List<TypeModule> LockTypeModule { get; set; }
         public List<Module> LockModule { get; set; }
