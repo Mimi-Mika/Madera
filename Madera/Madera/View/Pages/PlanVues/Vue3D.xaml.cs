@@ -21,6 +21,12 @@ namespace Madera.View.Pages.PlanVues
     /// </summary>
     public partial class Vue3D : Page
     {
+        private bool mouseDown;
+        private double currentPositionX = 0;
+        private double currentPositionY = 0;
+
+        public bool CanMoveCamera { get; set; }
+
         // Materials used for normal and selected models.
         private Material NormalMaterial, SelectedMaterial;
 
@@ -38,7 +44,7 @@ namespace Madera.View.Pages.PlanVues
         {
             Master = _Master;
             InitializeComponent();
-
+            CanMoveCamera = true;
         }
 
         // The main object model group.
@@ -111,8 +117,7 @@ namespace Madera.View.Pages.PlanVues
         private void DefineLights()
         {
             AmbientLight ambient_light = new AmbientLight(Colors.Gray);
-            DirectionalLight directional_light =
-                new DirectionalLight(Colors.Gray, new Vector3D(-1.0, -3.0, -2.0));
+            DirectionalLight directional_light = new DirectionalLight(Colors.Gray, new Vector3D(-1.0, -3.0, -2.0));
             MainModel3Dgroup.Children.Add(ambient_light);
             MainModel3Dgroup.Children.Add(directional_light);
         }
@@ -122,14 +127,27 @@ namespace Madera.View.Pages.PlanVues
         {
             MeshGeometry3D meshGround = new MeshGeometry3D();
             DiffuseMaterial surface_materialGround = new DiffuseMaterial(Brushes.LightGray);
-            GeometryModel3D surface_modelGround = new GeometryModel3D(meshGround, surface_materialGround);
+
+            ImageBrush imgBrush = new ImageBrush() { ImageSource = new BitmapImage(new Uri("../../Pictures/Vue2D/imgMurInt.jpg", UriKind.Relative)) };
+            imgBrush.ViewportUnits = BrushMappingMode.Absolute;
+            imgBrush.ViewboxUnits = BrushMappingMode.Absolute;
+            imgBrush.TileMode = TileMode.None;
+            imgBrush.Stretch = Stretch.None;
+            imgBrush.AlignmentX = AlignmentX.Left;
+            imgBrush.AlignmentY = AlignmentY.Top;
+
+
+            DiffuseMaterial test = new DiffuseMaterial(imgBrush);
+
+            GeometryModel3D surface_modelGround = new GeometryModel3D(meshGround, test);
             surface_modelGround.BackMaterial = surface_materialGround;
             model_group.Children.Add(surface_modelGround);
 
             CameraXCentre = 15;
             CameraYCentre = 20;
 
-            dessiner(meshGround, 0 - CameraXCentre, 31 - CameraXCentre, 0 - CameraYCentre, 41 - CameraYCentre, -2, -0.01);    // Plancher
+            //chercher le plancher
+            dessiner(meshGround, 0 - CameraXCentre, Convert.ToDouble(Master.LockEmpreinte.longueur) * 10 - CameraXCentre, 0 - CameraYCentre, Convert.ToDouble(Master.LockEmpreinte.largeur) * 10 - CameraYCentre, -2, -0.01);    // Plancher
 
             foreach (var item in _listModulesMaison)
             {
@@ -346,12 +364,12 @@ namespace Madera.View.Pages.PlanVues
         private void dessiner(MeshGeometry3D mesh, double xdeb, double xfin, double zdeb, double zfin, double hdeb, double hfin)
         {
 
-            double xDeb = xdeb / 10;
-            double zDeb = zdeb / 10;
-            double xFin = xfin / 10;
-            double zFin = zfin / 10;
-            double hDeb = hdeb / 10;
-            double hFin = hfin / 10;
+            double xDeb = Convert.ToDouble(xdeb / 10);
+            double zDeb = Convert.ToDouble(zdeb / 10);
+            double xFin = Convert.ToDouble(xfin / 10);
+            double zFin = Convert.ToDouble(zfin / 10);
+            double hDeb = Convert.ToDouble(hdeb / 10);
+            double hFin = Convert.ToDouble(hfin / 10);
 
             Point3D p00 = new Point3D(xDeb, hDeb, zDeb);
             Point3D p01 = new Point3D(xFin, hDeb, zDeb);
@@ -365,14 +383,14 @@ namespace Madera.View.Pages.PlanVues
             AddTriangle(mesh, p00, p02, p01);
             AddTriangle(mesh, p00, p04, p02);
             AddTriangle(mesh, p00, p01, p07);
-            AddTriangle(mesh, p00, p06, p07);
+            AddTriangle(mesh, p07, p06, p00);
             AddTriangle(mesh, p00, p06, p05);
-            AddTriangle(mesh, p00, p04, p05);
-            AddTriangle(mesh, p03, p02, p01);
-            AddTriangle(mesh, p03, p04, p02);
-            AddTriangle(mesh, p03, p01, p07);
+            AddTriangle(mesh, p05, p04, p00);
+            AddTriangle(mesh, p01, p02, p03);
+            AddTriangle(mesh, p02, p04, p03);
+            AddTriangle(mesh, p07, p01, p03);
             AddTriangle(mesh, p03, p06, p07);
-            AddTriangle(mesh, p03, p06, p05);
+            AddTriangle(mesh, p05, p06, p03);
             AddTriangle(mesh, p03, p04, p05);
 
         }
@@ -579,8 +597,7 @@ namespace Madera.View.Pages.PlanVues
         }
 
         // See what was clicked.
-        private void MainViewport_MouseDown(
-            object sender, MouseButtonEventArgs e)
+        private void MainViewport_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // Deselect the prevously selected model.
             if (SelectedModel != null)
@@ -618,5 +635,85 @@ namespace Madera.View.Pages.PlanVues
                 }
             }
         }
+
+
+        #region MouseCamera
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (this.CanMoveCamera)
+            {
+                if (e.RightButton != MouseButtonState.Pressed)
+                {
+                    MainViewport_MouseDown(sender, e);
+                }
+                else
+                {
+                    // Indicate that the right-mouse button is down
+                    mouseDown = true;
+
+                    // Hide the cursor
+                    this.Cursor = Cursors.None;
+                }
+            }
+        }
+
+        private void Grid_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            // Indicate that the mouse is no longer pressed and make the cursor visible again
+            mouseDown = false;
+            this.Cursor = Cursors.Arrow;
+            //currentPositionX = 0;
+            //currentPositionY = 0;
+        }
+
+        private void Grid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+            this.Cursor = Cursors.Arrow;
+        }
+
+        private void Grid_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.CanMoveCamera)
+            {
+                if (mouseDown)
+                {
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl))
+                    {
+                        CameraPhi += (currentPositionY - e.GetPosition(this).Y) / 50;
+                        if (CameraPhi > Math.PI / 2.0) CameraPhi = Math.PI / 2.0;
+                    }
+                    else if (Keyboard.IsKeyDown(Key.LeftAlt))
+                    {
+                        CameraTheta += (currentPositionX - e.GetPosition(this).X) / 50;
+                    }
+                    else
+                    {
+                        CameraPhi += (currentPositionY - e.GetPosition(this).Y) / 50;
+                        if (CameraPhi > Math.PI / 2.0) CameraPhi = Math.PI / 2.0;
+                        CameraTheta += (currentPositionX - e.GetPosition(this).X) / 50;
+                    }
+                    PositionCamera();
+                }
+            }
+            currentPositionX = e.GetPosition(this).X;
+            currentPositionY = e.GetPosition(this).Y;
+        }
+
+        private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (this.CanMoveCamera)
+            {
+                // Zoom. Change 100 to a higher value for slower zooming, and vice versa
+                this.Zoom(e.Delta / 100);
+            }
+        }
+
+        public void Zoom(double amount)
+        {
+            CameraR = CameraR - amount;
+            PositionCamera();
+        }
+        #endregion
     }
 }
